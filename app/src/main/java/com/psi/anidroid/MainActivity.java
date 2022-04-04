@@ -19,7 +19,9 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
     RecyclerView recyclerView;
+    //teste
     FloatingActionButton add_button;
+    String teste;
 
     MyDatabaseHelper myDB;
     ArrayList<String> book_id, book_title, book_author, book_pages;

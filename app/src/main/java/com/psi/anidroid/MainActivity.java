@@ -3,21 +3,14 @@ package com.psi.anidroid;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.tabs.TabLayout;
-
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.psi.anidroid.ui.main.SectionsPagerAdapter;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.psi.anidroid.databinding.ActivityMainBinding;
 
 import java.util.ArrayList;
@@ -30,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
     MyDatabaseHelper myDB;
     ArrayList<String> book_id, book_title, book_author, book_pages;
+    CustomAdapter customAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,14 +46,25 @@ public class MainActivity extends AppCompatActivity {
         book_author = new ArrayList<>();
         book_pages = new ArrayList<>();
 
-        void displayData(){
-            Cursor cursor = myDB.readAllData();
-            if (cursor.getCount() == 0){
-                Toast.makeText(this, "No data.", Toast.LENGTH_SHORT).show();
-            }else{
-                while (cursor.moveToNext())
+        storeDataInArrays();
+        customAdapter = new CustomAdapter(MainActivity.this, book_id, book_title, book_author, book_pages);
+        recyclerView.setAdapter(customAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+
+    }
+    void storeDataInArrays(){
+        Cursor cursor = myDB.readAllData();
+        if (cursor.getCount() == 0){
+            Toast.makeText(this, "No data.", Toast.LENGTH_SHORT).show();
+        }else{
+            while (cursor.moveToNext()){
+                book_id.add(cursor.getString(0));
+                book_title.add(cursor.getString(1));
+                book_author.add(cursor.getString(2));
+                book_pages.add(cursor.getString(3));
             }
         }
+    }
 
         //binding = ActivityMainBinding.inflate(getLayoutInflater());
         //setContentView(binding.getRoot());
@@ -77,5 +82,4 @@ public class MainActivity extends AppCompatActivity {
         //                .setAction("Action", null).show();
         //    }
         //});
-    }
 }

@@ -7,13 +7,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import java.util.ArrayList;
-
 public class AddActivity extends AppCompatActivity {
 
     EditText title_input, author_input, pages_input;
     Button add_button;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,8 +26,8 @@ public class AddActivity extends AppCompatActivity {
             public void onClick(View view) {
                 MyDatabaseHelper myDB = new MyDatabaseHelper(AddActivity.this);
                 myDB.addBook(title_input.getText().toString().trim(),
-                             author_input.getText().toString().trim(),
-                             Integer.valueOf(pages_input.getText().toString().trim()));
+                        author_input.getText().toString().trim(),
+                        Integer.valueOf(pages_input.getText().toString().trim()));
             }
         });
     }

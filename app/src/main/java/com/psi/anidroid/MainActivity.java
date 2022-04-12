@@ -1,23 +1,23 @@
 package com.psi.anidroid;
 
-import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.psi.anidroid.databinding.ActivityMainBinding;
+import java.util.List;
 
-import java.util.ArrayList;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ActivityMainBinding binding;
+    private TextView textViewResult;
+
+    /*private ActivityMainBinding binding;
     RecyclerView recyclerView;
     //teste
     FloatingActionButton add_button;
@@ -25,14 +25,53 @@ public class MainActivity extends AppCompatActivity {
 
     MyDatabaseHelper myDB;
     ArrayList<String> book_id, book_title, book_author, book_pages;
-    CustomAdapter customAdapter;
+    CustomAdapter customAdapter;*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        recyclerView = findViewById(R.id.recyclerView);
+        textViewResult = findViewById(R.id.text_view_result);
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://jsonplaceholder.typicode.com/") //o URL base
+                .addConverterFactory(GsonConverterFactory.create()) //dizer que queremos usar o gson para os pedidos
+                .build();
+
+        JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
+
+        Call<List<Post>> call = jsonPlaceHolderApi.getPosts(); //o retrofit cria a implementação destes métodos
+
+        call.enqueue(new Callback<List<Post>>() {
+            @Override
+            public void onResponse(Call<List<Post>> call, Response<List<Post>> response) {
+                if (!response.isSuccessful()){
+                    textViewResult.setText("Code: " + response);
+                    return; //não fazer nada com null, parar com a app
+                }
+
+                List<Post> posts = response.body();
+
+                for (Post post : posts){
+                    String content = "";
+                    content += "ID: " + post.getId() + "\n";
+                    content += "User ID: " + post.getUserId() + "\n";
+                    content += "Title: " + post.getTitle() + "\n";
+                    content += "Text: " + post.getText() + "\n\n";
+
+                    textViewResult.append(content);
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Post>> call, Throwable t) {
+                textViewResult.setText(t.getMessage());
+            }
+        });
+
+        /*recyclerView = findViewById(R.id.recyclerView);
         add_button = findViewById(R.id.add_button);
         add_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
                 book_author.add(cursor.getString(2));
                 book_pages.add(cursor.getString(3));
             }
-        }
+        }*/
     }
 
         //binding = ActivityMainBinding.inflate(getLayoutInflater());

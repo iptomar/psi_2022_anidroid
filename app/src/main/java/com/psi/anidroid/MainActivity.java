@@ -1,12 +1,10 @@
 package com.psi.anidroid;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import java.util.HashMap;
 import java.util.List;
@@ -40,20 +38,31 @@ public class MainActivity extends AppCompatActivity {
 
         textViewResult = findViewById(R.id.text_view_result);
 
-        Gson gson = new GsonBuilder().serializeNulls().create(); //alterar o comportamento do gson, para meter mesmo os valores nulos no telemovel
+        //Gson gson = new GsonBuilder().serializeNulls().create(); //alterar o comportamento do gson, para meter mesmo os valores nulos no telemovel
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://jsonplaceholder.typicode.com/") //o URL base, ATENÇÃO PÔR SEMPRE O BACKSLASH
-                .addConverterFactory(GsonConverterFactory.create(gson)) //dizer que queremos usar o gson para os pedidos
+                .baseUrl("https://api.jikan.moe/v4/") //o URL base, ATENÇÃO PÔR SEMPRE O BACKSLASH
+                .addConverterFactory(GsonConverterFactory.create(/*gson*/)) //dizer que queremos usar o gson para os pedidos
                 .build();
 
         jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
+
+        /*Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://jsonplaceholder.typicode.com/") //o URL base, ATENÇÃO PÔR SEMPRE O BACKSLASH
+                .addConverterFactory(GsonConverterFactory.create(gson)) //dizer que queremos usar o gson para os pedidos
+                .build();*/
 
         //getPosts();
         //getComments();
         //createPost();
         //updatePost();
-        deletePost();
+        //deletePost();
+
+        //getSampleJsonResponse();
+        //getMidgetAPI();
+        //getAllMidgetAPI();
+
+        getAnime();
 
         /*recyclerView = findViewById(R.id.recyclerView);
         add_button = findViewById(R.id.add_button);
@@ -90,6 +99,112 @@ public class MainActivity extends AppCompatActivity {
             }
         }*/
     }
+
+    private void getAllMidgetAPI() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://midgetbee.azurewebsites.net/") //o URL base, ATENÇÃO PÔR SEMPRE O BACKSLASH
+                .addConverterFactory(GsonConverterFactory.create(/*gson*/)) //dizer que queremos usar o gson para os pedidos
+                .build();
+
+        MidgetAPI midgetAPI = retrofit.create(MidgetAPI.class);
+        Call<List<Anime1>> call = midgetAPI.requestAllAnimes();
+
+        call.enqueue(new Callback<List<Anime1>>() {
+            @Override
+            public void onResponse(Call<List<Anime1>> call, Response<List<Anime1>> response) {
+                List<Anime1> animes = response.body();
+
+                for (Anime1 anime : animes) {
+                    String content = "";
+                    content += "ID: " + anime.getIdAnime() + "\n";
+                    content += "Nome: " + anime.getNome() + "\n";
+                    content += "Autor: " + anime.getAutor() + "\n\n";
+                    //content += "Sinopse: " + anime.getSinopse() + "\n\n";
+
+                    textViewResult.append(content);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Anime1>> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void getMidgetAPI() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://midgetbee.azurewebsites.net/") //o URL base, ATENÇÃO PÔR SEMPRE O BACKSLASH
+                .addConverterFactory(GsonConverterFactory.create(/*gson*/)) //dizer que queremos usar o gson para os pedidos
+                .build();
+
+        MidgetAPI midgetAPI = retrofit.create((MidgetAPI.class));
+        Call<Anime1> call = midgetAPI.requestAnime();
+
+        call.enqueue(new Callback<Anime1>() {
+            @Override
+            public void onResponse(Call<Anime1> call, Response<Anime1> response) {
+                textViewResult.setText("id: " + response.body().getIdAnime() +
+                        "\nNome: " + response.body().getNome());
+            }
+
+            @Override
+            public void onFailure(Call<Anime1> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void getSampleJsonResponse() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://navneet7k.github.io/") //o URL base, ATENÇÃO PÔR SEMPRE O BACKSLASH
+                .addConverterFactory(GsonConverterFactory.create(/*gson*/)) //dizer que queremos usar o gson para os pedidos
+                .build();
+
+        RequestInterface requestInterface = retrofit.create(RequestInterface.class);
+        Call<SampleResponse> call = requestInterface.getSampleResponse();
+
+        call.enqueue(new Callback<SampleResponse>() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onResponse(Call<SampleResponse> call, Response<SampleResponse> response) {
+                if (response.isSuccessful()){
+                    textViewResult.setText("ID: " + response.body().getId() + "\nName: "
+                            + response.body().getName() + "\nDesc: "
+                            + response.body().getDescription());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SampleResponse> call, Throwable t) {
+                textViewResult.setText(t.getMessage());
+            }
+        });
+    }
+
+    private void getAnime() {
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://api.jikan.moe/v4/") //o URL base, ATENÇÃO PÔR SEMPRE O BACKSLASH
+                .addConverterFactory(GsonConverterFactory.create(/*gson*/)) //dizer que queremos usar o gson para os pedidos
+                .build();
+
+        AnimeAPI animeAPI = retrofit.create(AnimeAPI.class);
+        Call<Anime> call = animeAPI.requestAnime();
+
+        call.enqueue(new Callback<Anime>() {
+            @Override
+            public void onResponse(Call<Anime> call, Response<Anime> response) {
+                textViewResult.setText("id: " + response.body().getMalId());
+            }
+
+            @Override
+            public void onFailure(Call<Anime> call, Throwable t) {
+
+            }
+        });
+    }
+
 
     private void getPosts(){
         Map<String, String> parameters = new HashMap<>();

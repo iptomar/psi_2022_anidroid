@@ -7,7 +7,7 @@
     android:padding="8dp"
     tools:context=".MainActivity" >
 
-    <!-- <androidx.recyclerview.widget.RecyclerView
+    <!--<androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="449dp"
         android:layout_height="742dp"
@@ -18,7 +18,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
-
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_button"
@@ -41,13 +40,12 @@
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="-11dp">
 
-        <TextView
-            android:id="@+id/text_view_result"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#000" />
+    <TextView
+        android:id="@+id/text_view_result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#000" />
 
     </androidx.core.widget.NestedScrollView>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

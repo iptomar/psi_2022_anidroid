@@ -36,6 +36,9 @@ public class Anime1 {
     @SerializedName("fotografia")
     @Expose
     private String fotografia;
+    @SerializedName("linkFoto")
+    @Expose
+    private String linkFoto;
     @SerializedName("listaDeReviews")
     @Expose
     private List<Object> listaDeReviews = null;
@@ -96,5 +99,9 @@ public class Anime1 {
 
     public List<Object> getListaDeCategorias() {
         return listaDeCategorias;
+    }
+
+    public String getLinkFoto() {
+        return linkFoto;
     }
 }

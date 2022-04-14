@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +22,8 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView textViewResult;
     private JsonPlaceHolderApi jsonPlaceHolderApi;
+    RecyclerView recyclerView;
+    MyAdapter myAdapter;
 
     /*private ActivityMainBinding binding;
     RecyclerView recyclerView;
@@ -35,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //recyclerView = findViewById(R.id.recyclerView);
 
         textViewResult = findViewById(R.id.text_view_result);
 
@@ -60,9 +66,9 @@ public class MainActivity extends AppCompatActivity {
 
         //getSampleJsonResponse();
         //getMidgetAPI();
-        //getAllMidgetAPI();
+        getAllMidgetAPI();
 
-        getAnime();
+        //getAnime();
 
         /*recyclerView = findViewById(R.id.recyclerView);
         add_button = findViewById(R.id.add_button);
@@ -106,6 +112,11 @@ public class MainActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create(/*gson*/)) //dizer que queremos usar o gson para os pedidos
                 .build();
 
+        ArrayList<String> idAnimeList = new ArrayList<String>();
+        ArrayList<String> nomeAnimeList = new ArrayList<String>();
+        ArrayList<String> qntEpisList = new ArrayList<String>();
+        ArrayList<String> fotoAnimeList = new ArrayList<String>();
+
         MidgetAPI midgetAPI = retrofit.create(MidgetAPI.class);
         Call<List<Anime1>> call = midgetAPI.requestAllAnimes();
 
@@ -115,14 +126,26 @@ public class MainActivity extends AppCompatActivity {
                 List<Anime1> animes = response.body();
 
                 for (Anime1 anime : animes) {
+                    nomeAnimeList.add(anime.getNome());
+                    idAnimeList.add(anime.getIdAnime().toString());
+                    qntEpisList.add(anime.getQuantEpisodios());
+                    fotoAnimeList.add(anime.getLinkFoto());
+
                     String content = "";
                     content += "ID: " + anime.getIdAnime() + "\n";
                     content += "Nome: " + anime.getNome() + "\n";
-                    content += "Autor: " + anime.getAutor() + "\n\n";
-                    //content += "Sinopse: " + anime.getSinopse() + "\n\n";
+                    content += "Autor: " + anime.getAutor() + "\n";
+                    content += "linkFoto: " + anime.getLinkFoto() + "\n\n";
+
+
 
                     textViewResult.append(content);
+
+
                 }
+                /*myAdapter = new MyAdapter(MainActivity.this, nomeAnimeList,qntEpisList,idAnimeList,fotoAnimeList);
+                recyclerView.setAdapter(myAdapter);
+                recyclerView.setLayoutManager((new LinearLayoutManager((MainActivity.this))));*/
             }
 
             @Override
@@ -185,8 +208,8 @@ public class MainActivity extends AppCompatActivity {
     private void getAnime() {
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://api.jikan.moe/v4/") //o URL base, ATENÇÃO PÔR SEMPRE O BACKSLASH
-                .addConverterFactory(GsonConverterFactory.create(/*gson*/)) //dizer que queremos usar o gson para os pedidos
+                .baseUrl("https://api.jikan.moe/v4/")
+                .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         AnimeAPI animeAPI = retrofit.create(AnimeAPI.class);

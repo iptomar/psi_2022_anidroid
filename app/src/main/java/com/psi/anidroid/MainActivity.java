@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -40,9 +41,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //recyclerView = findViewById(R.id.recyclerView);
+        recyclerView = findViewById(R.id.recyclerView);
 
-        textViewResult = findViewById(R.id.text_view_result);
+        //textViewResult = findViewById(R.id.text_view_result);
 
         //Gson gson = new GsonBuilder().serializeNulls().create(); //alterar o comportamento do gson, para meter mesmo os valores nulos no telemovel
 
@@ -139,13 +140,13 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-                    textViewResult.append(content);
+                    //textViewResult.append(content);
 
 
                 }
-                /*myAdapter = new MyAdapter(MainActivity.this, nomeAnimeList,qntEpisList,idAnimeList,fotoAnimeList);
+                myAdapter = new MyAdapter(MainActivity.this, nomeAnimeList,qntEpisList,idAnimeList,fotoAnimeList);
                 recyclerView.setAdapter(myAdapter);
-                recyclerView.setLayoutManager((new LinearLayoutManager((MainActivity.this))));*/
+                recyclerView.setLayoutManager((new LinearLayoutManager((MainActivity.this))));
             }
 
             @Override

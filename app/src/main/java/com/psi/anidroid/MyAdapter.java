@@ -10,6 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
@@ -39,14 +41,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         holder.epAnime.setText(String.valueOf(epAnime.get(position)));
         holder.idAnime.setText(String.valueOf(idAnime.get(position)));
 
-        /*InputStream is = null;
-        try {
-            is = (InputStream) new URL(String.valueOf(imageAnime.get(position))).getContent();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Drawable d = Drawable.createFromStream(is, "src name");
-        holder.fotoAnime.setImageDrawable(d);*/
+        Glide.with(context).load(imageAnime.get(position)).into(holder.fotoAnime);
+
+        //holder.Glide.with
     }
 
     @Override

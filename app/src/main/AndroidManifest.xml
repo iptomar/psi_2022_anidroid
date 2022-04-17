@@ -13,6 +13,9 @@
         android:theme="@style/Theme.Anidroid"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".EditProfileActivity"
+            android:exported="false" />
+        <activity
             android:name=".NewPassActivity"
             android:exported="false" />
         <activity

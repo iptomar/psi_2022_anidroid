@@ -20,8 +20,9 @@
             tools:ignore="MissingConstraints" />
         <Button
             android:id="@+id/btnBack"
-            android:layout_width="30dp"
-            android:layout_height="50dp" />
+            android:layout_width="35dp"
+            android:layout_height="50dp"
+            />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -38,8 +39,10 @@
             android:layout_alignParentRight="true"
             android:id="@+id/btnLogout"
             android:text="Logout"
-            android:textColor="@color/black"
-            android:textSize="14dp" />
+            android:textColor="@color/white"
+            android:textSize="14dp"
+            android:backgroundTint="#AA0000"
+            />
     </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

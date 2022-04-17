@@ -21,6 +21,8 @@ public class NewPassActivity extends AppCompatActivity {
                 openMain();
             }
         });
+        //Old password tem de coincidir com a passe do utilizador
+        //New password irá substituir a passe do utilizador (talvez precise de limitações - pelo menos 8 caracteres por exemplo)
     }
     public void openMain() {
         Intent intent_main = new Intent(this, MainActivity.class);

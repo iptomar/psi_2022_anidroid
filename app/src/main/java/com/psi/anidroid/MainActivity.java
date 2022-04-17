@@ -113,10 +113,20 @@ public class MainActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create(/*gson*/)) //dizer que queremos usar o gson para os pedidos
                 .build();
 
+        //id do anime
         ArrayList<String> idAnimeList = new ArrayList<String>();
+        //nome do anime
         ArrayList<String> nomeAnimeList = new ArrayList<String>();
+        //quantidade de episodios do anime
         ArrayList<String> qntEpisList = new ArrayList<String>();
+        //link da foto para o anime
         ArrayList<String> fotoAnimeList = new ArrayList<String>();
+        //nome do estudio
+        ArrayList<String> studioAnimeList = new ArrayList<String>();
+        //rating do anime
+        ArrayList<String> ratingAnimeList = new ArrayList<String>();
+        //sinopse do anime
+        ArrayList<String> sinopseAnimeList = new ArrayList<String>();
 
         MidgetAPI midgetAPI = retrofit.create(MidgetAPI.class);
         Call<List<Anime1>> call = midgetAPI.requestAllAnimes();
@@ -131,6 +141,10 @@ public class MainActivity extends AppCompatActivity {
                     idAnimeList.add(anime.getIdAnime().toString());
                     qntEpisList.add(anime.getQuantEpisodios());
                     fotoAnimeList.add(anime.getLinkFoto());
+                    studioAnimeList.add(anime.getEstudio());
+                    ratingAnimeList.add(anime.getRating().toString());
+                    sinopseAnimeList.add(anime.getSinopse());
+
 
                     String content = "";
                     content += "ID: " + anime.getIdAnime() + "\n";
@@ -144,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                 }
-                myAdapter = new MyAdapter(MainActivity.this, nomeAnimeList,qntEpisList,idAnimeList,fotoAnimeList);
+                myAdapter = new MyAdapter(MainActivity.this, nomeAnimeList,qntEpisList,idAnimeList,fotoAnimeList,studioAnimeList,ratingAnimeList,sinopseAnimeList);
                 recyclerView.setAdapter(myAdapter);
                 recyclerView.setLayoutManager((new LinearLayoutManager((MainActivity.this))));
             }

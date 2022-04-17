@@ -1,10 +1,13 @@
 package com.psi.anidroid;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,15 +20,19 @@ import java.util.ArrayList;
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     private Context context;
-    private ArrayList nomeAnime, epAnime, idAnime, imageAnime;
+    private final ArrayList nomeAnime, epAnime, idAnime, imageAnime, studioAnime, ratingAnime, sinopseAnime;
 
-    MyAdapter(Context context, ArrayList nomeAnime, ArrayList epAnime, ArrayList idAnime, ArrayList imageAnime){
+    MyAdapter(Context context, ArrayList nomeAnime, ArrayList epAnime, ArrayList idAnime, ArrayList imageAnime, ArrayList<String> studioAnime, ArrayList<String> ratingAnime, ArrayList<String> sinopseAnime){
         this.context = context;
         this.nomeAnime = nomeAnime;
         this.epAnime = epAnime;
         this.idAnime = idAnime;
         this.imageAnime = imageAnime;
+        this.studioAnime = studioAnime;
+        this.ratingAnime = ratingAnime;
+        this.sinopseAnime = sinopseAnime;
     }
+
 
     @NonNull
     @Override
@@ -35,15 +42,28 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         return new MyViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.nomeAnime.setText(String.valueOf(nomeAnime.get(position)));
-        holder.epAnime.setText(String.valueOf(epAnime.get(position)));
+    public void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
+        holder.nomeAnime.setText("Nome: " + String.valueOf(nomeAnime.get(position)));
+        holder.epAnime.setText("Episódios: " + String.valueOf(epAnime.get(position)));
         holder.idAnime.setText(String.valueOf(idAnime.get(position)));
 
         Glide.with(context).load(imageAnime.get(position)).into(holder.fotoAnime);
 
-        //holder.Glide.with
+        holder.mainLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, DetailsAnime.class);
+                intent.putExtra("nome", String.valueOf(nomeAnime.get(position)));
+                intent.putExtra("epis", String.valueOf(epAnime.get(position)));
+                intent.putExtra("image", String.valueOf(imageAnime.get(position)));
+                intent.putExtra("studio", String.valueOf(studioAnime.get(position)));
+                intent.putExtra("rating", String.valueOf(ratingAnime.get(position)));
+                intent.putExtra("sinopse", String.valueOf(sinopseAnime.get(position)));
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -55,6 +75,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
         TextView nomeAnime, epAnime, idAnime;
         ImageView fotoAnime;
+        LinearLayout mainLayout;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -62,6 +83,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             epAnime = itemView.findViewById(R.id.qntEpis);
             idAnime = itemView.findViewById(R.id.idAnime);
             fotoAnime = itemView.findViewById(R.id.fotoAnime);
+            mainLayout = itemView.findViewById(R.id.mainLayoutL);
         }
     }
 }

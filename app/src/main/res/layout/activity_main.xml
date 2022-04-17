@@ -32,6 +32,15 @@
         app:srcCompat="@drawable/ic_add"
         tools:ignore="ImageContrastCheck" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnProfile"
+        android:text="Profile"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="27dp"
+        tools:layout_editor_absoluteY="635dp" />
+
     <!--<androidx.core.widget.NestedScrollView
         android:layout_width="416dp"
         android:layout_height="724dp"

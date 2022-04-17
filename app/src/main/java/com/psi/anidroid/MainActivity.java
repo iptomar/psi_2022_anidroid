@@ -1,7 +1,10 @@
 package com.psi.anidroid;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private JsonPlaceHolderApi jsonPlaceHolderApi;
     RecyclerView recyclerView;
     MyAdapter myAdapter;
+    private Button btnProfile;
 
     /*private ActivityMainBinding binding;
     RecyclerView recyclerView;
@@ -42,6 +46,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         recyclerView = findViewById(R.id.recyclerView);
+        btnProfile = (Button) findViewById(R.id.btnProfile);
+
+        btnProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                OpenProfile();
+            }
+        });
 
         //textViewResult = findViewById(R.id.text_view_result);
 
@@ -105,6 +117,10 @@ public class MainActivity extends AppCompatActivity {
                 book_pages.add(cursor.getString(3));
             }
         }*/
+    }
+    private void OpenProfile(){
+        Intent intent_profile = new Intent(this, ProfileActivity.class);
+        startActivity(intent_profile);
     }
 
     private void getAllMidgetAPI() {

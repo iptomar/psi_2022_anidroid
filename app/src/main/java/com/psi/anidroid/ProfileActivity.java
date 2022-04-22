@@ -8,12 +8,16 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class ProfileActivity extends AppCompatActivity {
     private Button btnLogout;
     private Button btnChngPass;
     private Button btnBack;
     private Button btnEdit;
+    private Button btnDelete;
+    private TextView tvUsername;
+    private TextView tvEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +29,11 @@ public class ProfileActivity extends AppCompatActivity {
         btnLogout = (Button) findViewById(R.id.btnLogout);
         btnEdit = (Button) findViewById(R.id.btnEdit);
         btnChngPass = (Button) findViewById(R.id.btnChngPass);
+        btnDelete = (Button) findViewById(R.id.btnDelete);
+        tvUsername = (TextView) findViewById(R.id.tvUsername);
+        tvEmail = (TextView) findViewById(R.id.tvEmail);
+        tvUsername.setText(DBUsers.COL_2);
+        tvEmail.setText(DBUsers.COL_3);
 
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,6 +55,22 @@ public class ProfileActivity extends AppCompatActivity {
                 openChngPass();
             }
         });
+
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //boolean del = DB.deleteUser();
+                //openLogin();
+            }
+        });
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //openLogin();
+            }
+        });
+
+        tvUsername.setText(DBUsers.TABLE_NAME.username);
     }
     public void openMain() {
         Intent intent_main = new Intent(this, MainActivity.class);

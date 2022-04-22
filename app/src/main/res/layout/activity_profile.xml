@@ -22,6 +22,7 @@
         tools:layout_editor_absoluteY="59dp" />
 
     <ImageView
+        android:id="@+id/imageView4"
         android:layout_width="64dp"
         android:layout_height="62dp"
         android:layout_marginStart="173dp"
@@ -37,21 +38,21 @@
         tools:ignore="MissingConstraints" />
 
     <TextView
+        android:text="Username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="159dp"
         android:layout_marginTop="209dp"
         android:layout_marginEnd="159dp"
         android:layout_marginBottom="495dp"
-        android:text="Username"
         android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/include"
         app:layout_constraintEnd_toEndOf="@+id/include"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/include"
         app:layout_constraintTop_toTopOf="@+id/include"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_bias="1.0"
         tools:ignore="MissingConstraints" />
 
     <ImageView
@@ -69,20 +70,20 @@
         tools:ignore="MissingConstraints" />
 
     <TextView
+        android:id="@+id/tvUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="123dp"
         android:layout_marginTop="327dp"
         android:layout_marginEnd="196dp"
         android:layout_marginBottom="377dp"
-        android:text="Username"
         android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/include"
         app:layout_constraintEnd_toEndOf="@+id/include"
         app:layout_constraintStart_toStartOf="@+id/include"
         app:layout_constraintTop_toTopOf="@+id/include"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="DuplicateIds,MissingConstraints" />
 
     <ImageView
         android:layout_width="50dp"
@@ -99,13 +100,13 @@
         tools:ignore="MissingConstraints" />
 
     <TextView
+        android:id="@+id/tvEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="122dp"
         android:layout_marginTop="420dp"
         android:layout_marginEnd="98dp"
         android:layout_marginBottom="284dp"
-        android:text="example@gmail.com"
         android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/include"
@@ -162,15 +163,32 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="588dp"
-        android:layout_marginEnd="113dp"
+        android:layout_marginEnd="112dp"
         android:layout_marginBottom="95dp"
+        android:backgroundTint="#AAAA00"
         android:text="Change password"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="@+id/include"
         app:layout_constraintEnd_toEndOf="@+id/include"
         app:layout_constraintTop_toTopOf="@+id/include"
-        tools:ignore="MissingConstraints"
-        android:backgroundTint="#AAAA00"/>
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/btnDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:backgroundTint="#AA0000"
+        android:text="Delete Account"
+        android:textColor="@color/white"
+        android:textSize="14dp"
+        app:layout_constraintBottom_toBottomOf="@+id/include"
+        app:layout_constraintEnd_toEndOf="@+id/include"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/include"
+        app:layout_constraintVertical_bias="0.951" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

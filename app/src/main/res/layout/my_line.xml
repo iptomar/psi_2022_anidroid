@@ -14,48 +14,40 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@drawable/border"
             android:paddingLeft="12dp"
             android:paddingTop="12dp"
             android:paddingRight="12dp"
-            android:paddingBottom="12dp"
-            android:background="@drawable/border">
+            android:paddingBottom="12dp">
 
             <TextView
                 android:id="@+id/qntEpis"
                 android:layout_width="wrap_content"
-                android:layout_height="29dp"
-                android:layout_marginEnd="24dp"
+                android:layout_height="45dp"
+                android:layout_marginTop="96dp"
                 android:fontFamily="@font/roboto_medium"
                 android:text="EpisTxt"
                 android:textSize="17sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.6"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.75" />
+                app:layout_constraintStart_toEndOf="@+id/fotoAnime"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/nomeAnimeTxt"
-                android:layout_width="241dp"
-                android:layout_height="58dp"
+                android:layout_width="190dp"
+                android:layout_height="45dp"
+                android:layout_marginTop="28dp"
                 android:fontFamily="@font/roboto_medium"
                 android:text="nomeTxt"
                 android:textSize="17sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.118" />
+                app:layout_constraintStart_toEndOf="@+id/fotoAnime"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/fotoAnime"
-                android:layout_width="230dp"
-                android:layout_height="150dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
+                android:layout_width="199dp"
+                android:layout_height="156dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:srcCompat="@tools:sample/avatars" />
@@ -64,15 +56,11 @@
                 android:id="@+id/idAnime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_medium"
                 android:text="TextView"
                 android:textSize="17sp"
-                android:fontFamily="@font/roboto_medium"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="1.0" />
+                app:layout_constraintEnd_toEndOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

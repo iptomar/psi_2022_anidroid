@@ -13,18 +13,29 @@ public class EditProfileActivity extends AppCompatActivity {
     DBUsers DB;
     EditText username, email;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
         username = findViewById(R.id.editUser);
         email = findViewById(R.id.editEmail);
+
+        Intent intent = getIntent();
+        if(intent.getExtras()!=null) {
+            username.setText(intent.getStringExtra("Username"));
+            email.setText(intent.getStringExtra("Email"));
+        }
+
         btnExitEdit = (Button) findViewById(R.id.btnExitEdit);
         btnExitEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                boolean update = DB.updateUser(username.toString(), email.toString());
+                /*UserModel userModel;
+                try (DBUsers DBUsers = new DBUsers(EditProfileActivity.this)) {
+                    //DBUsers.insertUser(userModel);
+                }*/
+                //DB.updateUser(username.getText().toString(), email.getText().toString());
                 openProfile();
             }
         });
@@ -32,6 +43,8 @@ public class EditProfileActivity extends AppCompatActivity {
     }
     public void openProfile(){
         Intent intent_profile = new Intent(this, ProfileActivity.class);
+        //intent_profile.putExtra("Username", username.getText().toString());
+        //intent_profile.putExtra("Email", email.getText().toString());
         startActivity(intent_profile);
     }
 }

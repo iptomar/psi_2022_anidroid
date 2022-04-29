@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -16,8 +18,8 @@ public class ProfileActivity extends AppCompatActivity {
     private Button btnBack;
     private Button btnEdit;
     private Button btnDelete;
-    private TextView tvUsername;
-    private TextView tvEmail;
+    public TextView tvUsername;
+    public TextView tvEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,21 @@ public class ProfileActivity extends AppCompatActivity {
         tvEmail = (TextView) findViewById(R.id.tvEmail);
         tvUsername.setText(DBUsers.COL_2);
         tvEmail.setText(DBUsers.COL_3);
+        Intent intent = getIntent();
+        if(intent.getExtras()!=null) {
+            int id = Integer.parseInt(intent.getStringExtra("id"));
+            DBUsers DB = new DBUsers(ProfileActivity.this);
+            Cursor setUser = DB.getUsername(id);
+            Cursor setEmail = DB.getEmail(id);
+            if (setUser.moveToFirst()) {
+                String usr = setUser.getString(0);
+                tvUsername.setText(usr);
+            }
+            if (setEmail.moveToFirst()) {
+                String ml = setEmail.getString(0);
+                tvEmail.setText(ml);
+            }
+        }
 
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,7 +87,7 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        tvUsername.setText(DBUsers.TABLE_NAME.username);
+        //tvUsername.setText(DBUsers.TABLE_NAME.username);
     }
     public void openMain() {
         Intent intent_main = new Intent(this, MainActivity.class);
@@ -79,11 +96,16 @@ public class ProfileActivity extends AppCompatActivity {
 
     public void openEdit() {
         Intent intent_edit = new Intent(this, EditProfileActivity.class);
+        intent_edit.putExtra("Username", tvUsername.getText().toString());
+        intent_edit.putExtra("Email", tvEmail.getText().toString());
         startActivity(intent_edit);
     }
 
     public void openChngPass() {
         Intent intent_pass = new Intent(this, NewPassActivity.class);
         startActivity(intent_pass);
+    }
+    public String getUser(){
+        return tvUsername.getText().toString();
     }
 }

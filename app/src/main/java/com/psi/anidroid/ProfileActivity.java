@@ -1,17 +1,27 @@
 package com.psi.anidroid;
 
+<<<<<<< Updated upstream
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+=======
+import android.content.Intent;
+import android.database.Cursor;
+>>>>>>> Stashed changes
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+<<<<<<< Updated upstream
+=======
+import androidx.appcompat.app.AppCompatActivity;
+
+>>>>>>> Stashed changes
 public class ProfileActivity extends AppCompatActivity {
     private Button btnLogout;
     private Button btnChngPass;
@@ -20,6 +30,10 @@ public class ProfileActivity extends AppCompatActivity {
     private Button btnDelete;
     public TextView tvUsername;
     public TextView tvEmail;
+<<<<<<< Updated upstream
+=======
+    int id;
+>>>>>>> Stashed changes
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,10 +50,17 @@ public class ProfileActivity extends AppCompatActivity {
         tvEmail = (TextView) findViewById(R.id.tvEmail);
         tvUsername.setText(DBUsers.COL_2);
         tvEmail.setText(DBUsers.COL_3);
+<<<<<<< Updated upstream
         Intent intent = getIntent();
         if(intent.getExtras()!=null) {
             int id = Integer.parseInt(intent.getStringExtra("id"));
             DBUsers DB = new DBUsers(ProfileActivity.this);
+=======
+        DBUsers DB = new DBUsers(ProfileActivity.this);
+        Intent intent = getIntent();
+        if(intent.getExtras()!=null) {
+            id = Integer.parseInt(intent.getStringExtra("id"));
+>>>>>>> Stashed changes
             Cursor setUser = DB.getUsername(id);
             Cursor setEmail = DB.getEmail(id);
             if (setUser.moveToFirst()) {
@@ -76,18 +97,29 @@ public class ProfileActivity extends AppCompatActivity {
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+<<<<<<< Updated upstream
                 //boolean del = DB.deleteUser();
                 //openLogin();
+=======
+                DB.deleteUser(id+"");
+                openMain();
+>>>>>>> Stashed changes
             }
         });
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+<<<<<<< Updated upstream
                 //openLogin();
             }
         });
 
         //tvUsername.setText(DBUsers.TABLE_NAME.username);
+=======
+                openMain();
+            }
+        });
+>>>>>>> Stashed changes
     }
     public void openMain() {
         Intent intent_main = new Intent(this, MainActivity.class);
@@ -96,16 +128,28 @@ public class ProfileActivity extends AppCompatActivity {
 
     public void openEdit() {
         Intent intent_edit = new Intent(this, EditProfileActivity.class);
+<<<<<<< Updated upstream
         intent_edit.putExtra("Username", tvUsername.getText().toString());
         intent_edit.putExtra("Email", tvEmail.getText().toString());
+=======
+        intent_edit.putExtra("ID", id+"");
+        //intent_edit.putExtra("Username", tvUsername.getText().toString());
+        //intent_edit.putExtra("Email", tvEmail.getText().toString());
+>>>>>>> Stashed changes
         startActivity(intent_edit);
     }
 
     public void openChngPass() {
         Intent intent_pass = new Intent(this, NewPassActivity.class);
+<<<<<<< Updated upstream
         startActivity(intent_pass);
     }
     public String getUser(){
         return tvUsername.getText().toString();
     }
+=======
+        intent_pass.putExtra("ID", id+"");
+        startActivity(intent_pass);
+    }
+>>>>>>> Stashed changes
 }

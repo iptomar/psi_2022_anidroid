@@ -1,9 +1,13 @@
 package com.psi.anidroid;
 
 import android.annotation.SuppressLint;
-import android.os.Bundle;
 import android.content.Intent;
 import android.os.Bundle;
+<<<<<<< Updated upstream
+import android.content.Intent;
+import android.os.Bundle;
+=======
+>>>>>>> Stashed changes
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -25,7 +29,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextView textViewResult;
+    private TextView textViewResult, tv_id;
     private JsonPlaceHolderApi jsonPlaceHolderApi;
     RecyclerView recyclerView;
     MyAdapter myAdapter;
@@ -33,6 +37,9 @@ public class MainActivity extends AppCompatActivity {
     private JsonPlaceHolderApi jsonPlaceHolderApi;
     RecyclerView recyclerView;
     MyAdapter myAdapter;
+    private Button btnProfile;
+    private Button btnLogin;
+
     private Button btnProfile;
     private Button btnLogin;
 
@@ -53,6 +60,9 @@ public class MainActivity extends AppCompatActivity {
 
 
         recyclerView = findViewById(R.id.recyclerView);
+        tv_id = findViewById(R.id.tv_id);
+        btnProfile = (Button) findViewById(R.id.btnProfile);
+        btnLogin = (Button) findViewById(R.id.btn_login);
 
         //textViewResult = findViewById(R.id.text_view_result);
 
@@ -64,6 +74,24 @@ public class MainActivity extends AppCompatActivity {
                 .build();
 
         jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
+
+        Intent intent = getIntent();
+        if(intent.getExtras()!=null) {
+            tv_id.setText(intent.getStringExtra("id"));
+        }
+
+        btnProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                OpenProfile();
+            }
+        });
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                OpenLogin();
+            }
+        });
 
         /*Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://jsonplaceholder.typicode.com/") //o URL base, ATENÇÃO PÔR SEMPRE O BACKSLASH

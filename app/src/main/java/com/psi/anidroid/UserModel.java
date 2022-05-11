@@ -6,8 +6,13 @@ public class UserModel {
     private String email;
     private String password;
 
+<<<<<<< Updated upstream
     public UserModel(int id, String username, String email, String password) {
         this.id = id;
+=======
+    public UserModel(String username, String email, String password) {
+        //this.id = id;
+>>>>>>> Stashed changes
         this.username = username;
         this.email = email;
         this.password = password;

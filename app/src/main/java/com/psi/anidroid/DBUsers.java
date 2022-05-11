@@ -5,7 +5,10 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+<<<<<<< Updated upstream
 import android.widget.EditText;
+=======
+>>>>>>> Stashed changes
 
 public class DBUsers extends SQLiteOpenHelper {
     public static final String DB_NAME = "User.db";
@@ -63,9 +66,25 @@ public class DBUsers extends SQLiteOpenHelper {
         }
         return true;
     }
+<<<<<<< Updated upstream
     public Cursor getID(String username){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor= db.rawQuery("SELECT " + COL_1 + " FROM " + TABLE_NAME + " WHERE " + COL_2 + " = " + username, null);
+=======
+
+    public boolean deleteUser(String id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        long result = db.delete(TABLE_NAME, "id=?", new String[]{id});
+        if (result==-1){
+            return false;
+        }
+        return true;
+    }
+
+    public Cursor getMaxID(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor= db.rawQuery("SELECT MAX(" + COL_1 + ") FROM " + TABLE_NAME, null);
+>>>>>>> Stashed changes
         return cursor;
     }
 

@@ -1,6 +1,7 @@
 package com.psi.anidroid;
 
 import android.annotation.SuppressLint;
+import android.os.Bundle;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -24,13 +25,16 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
+    private TextView textViewResult;
+    private JsonPlaceHolderApi jsonPlaceHolderApi;
+    RecyclerView recyclerView;
+    MyAdapter myAdapter;
     private TextView textViewResult,tv_id;
     private JsonPlaceHolderApi jsonPlaceHolderApi;
     RecyclerView recyclerView;
     MyAdapter myAdapter;
     private Button btnProfile;
     private Button btnLogin;
-
 
     /*private ActivityMainBinding binding;
     RecyclerView recyclerView;
@@ -46,6 +50,36 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        recyclerView = findViewById(R.id.recyclerView);
+
+        //textViewResult = findViewById(R.id.text_view_result);
+
+        //Gson gson = new GsonBuilder().serializeNulls().create(); //alterar o comportamento do gson, para meter mesmo os valores nulos no telemovel
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://api.jikan.moe/v4/") //o URL base, ATENÇÃO PÔR SEMPRE O BACKSLASH
+                .addConverterFactory(GsonConverterFactory.create(/*gson*/)) //dizer que queremos usar o gson para os pedidos
+                .build();
+
+        jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
+
+        /*Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://jsonplaceholder.typicode.com/") //o URL base, ATENÇÃO PÔR SEMPRE O BACKSLASH
+                .addConverterFactory(GsonConverterFactory.create(gson)) //dizer que queremos usar o gson para os pedidos
+                .build();*/
+
+        //getPosts();
+        //getComments();
+        //createPost();
+        //updatePost();
+        //deletePost();
+
+        //getSampleJsonResponse();
+        //getMidgetAPI();
+        getAllMidgetAPI();
+
         //DBUsers.onCreate(dbUsers.getWritableDatabase());
 
         tv_id = findViewById(R.id.tv_id);
@@ -134,6 +168,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }*/
     }
+
     private void OpenProfile(){
         Intent intent_profile = new Intent(this, ProfileActivity.class);
         intent_profile.putExtra("id",tv_id.getText().toString());
@@ -150,6 +185,21 @@ public class MainActivity extends AppCompatActivity {
                 .baseUrl("https://midgetbee.azurewebsites.net/") //o URL base, ATENÇÃO PÔR SEMPRE O BACKSLASH
                 .addConverterFactory(GsonConverterFactory.create(/*gson*/)) //dizer que queremos usar o gson para os pedidos
                 .build();
+
+        //id do anime
+        ArrayList<String> idAnimeList = new ArrayList<String>();
+        //nome do anime
+        ArrayList<String> nomeAnimeList = new ArrayList<String>();
+        //quantidade de episodios do anime
+        ArrayList<String> qntEpisList = new ArrayList<String>();
+        //link da foto para o anime
+        ArrayList<String> fotoAnimeList = new ArrayList<String>();
+        //nome do estudio
+        ArrayList<String> studioAnimeList = new ArrayList<String>();
+        //rating do anime
+        ArrayList<String> ratingAnimeList = new ArrayList<String>();
+        //sinopse do anime
+        ArrayList<String> sinopseAnimeList = new ArrayList<String>();
 
         ArrayList<String> idAnimeList = new ArrayList<String>();
         ArrayList<String> nomeAnimeList = new ArrayList<String>();
@@ -170,6 +220,10 @@ public class MainActivity extends AppCompatActivity {
                     qntEpisList.add(anime.getQuantEpisodios());
                     fotoAnimeList.add(anime.getLinkFoto());
 
+                    studioAnimeList.add(anime.getEstudio());
+                    ratingAnimeList.add(anime.getRating().toString());
+                    sinopseAnimeList.add(anime.getSinopse());
+
                     String content = "";
                     content += "ID: " + anime.getIdAnime() + "\n";
                     content += "Nome: " + anime.getNome() + "\n";
@@ -182,7 +236,9 @@ public class MainActivity extends AppCompatActivity {
 
 
                 }
-                myAdapter = new MyAdapter(MainActivity.this, nomeAnimeList,qntEpisList,idAnimeList,fotoAnimeList);
+              
+                myAdapter = new MyAdapter(MainActivity.this, nomeAnimeList,qntEpisList,idAnimeList,fotoAnimeList,studioAnimeList,ratingAnimeList,sinopseAnimeList);
+
                 recyclerView.setAdapter(myAdapter);
                 recyclerView.setLayoutManager((new LinearLayoutManager((MainActivity.this))));
             }
@@ -267,6 +323,56 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+
+    private void getSampleJsonResponse() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://navneet7k.github.io/") //o URL base, ATENÇÃO PÔR SEMPRE O BACKSLASH
+                .addConverterFactory(GsonConverterFactory.create(/*gson*/)) //dizer que queremos usar o gson para os pedidos
+                .build();
+
+        RequestInterface requestInterface = retrofit.create(RequestInterface.class);
+        Call<SampleResponse> call = requestInterface.getSampleResponse();
+
+        call.enqueue(new Callback<SampleResponse>() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onResponse(Call<SampleResponse> call, Response<SampleResponse> response) {
+                if (response.isSuccessful()){
+                    textViewResult.setText("ID: " + response.body().getId() + "\nName: "
+                            + response.body().getName() + "\nDesc: "
+                            + response.body().getDescription());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SampleResponse> call, Throwable t) {
+                textViewResult.setText(t.getMessage());
+            }
+        });
+    }
+
+    private void getAnime() {
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://api.jikan.moe/v4/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        AnimeAPI animeAPI = retrofit.create(AnimeAPI.class);
+        Call<Anime> call = animeAPI.requestAnime();
+
+        call.enqueue(new Callback<Anime>() {
+            @Override
+            public void onResponse(Call<Anime> call, Response<Anime> response) {
+                textViewResult.setText("id: " + response.body().getMalId());
+            }
+
+            @Override
+            public void onFailure(Call<Anime> call, Throwable t) {
+
+            }
+        });
+    }
 
     private void getPosts(){
         Map<String, String> parameters = new HashMap<>();

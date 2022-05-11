@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:id="@+id/mainLayoutL">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -13,74 +14,40 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@drawable/border"
             android:paddingLeft="12dp"
             android:paddingTop="12dp"
             android:paddingRight="12dp"
             android:paddingBottom="12dp">
 
             <TextView
-                android:id="@+id/EpisTxt"
-                android:layout_width="66dp"
-                android:layout_height="23dp"
-
-                android:layout_marginStart="148dp"
-                android:clickable="false"
-                android:text="Episódios:"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/nomeAnimeTxt"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.652" />
-
-            <TextView
                 android:id="@+id/qntEpis"
-                android:layout_width="89dp"
-                android:layout_height="29dp"
-                android:layout_marginTop="12dp"
-                android:layout_marginEnd="84dp"
-                android:layout_marginBottom="27dp"
-                android:text="nomeTxt"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/EpisTxt"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.90999997" />
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:layout_marginTop="96dp"
+                android:fontFamily="@font/roboto_medium"
+                android:text="EpisTxt"
+                android:textSize="17sp"
+                app:layout_constraintStart_toEndOf="@+id/fotoAnime"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/nomeAnimeTxt"
-                android:layout_width="89dp"
-                android:layout_height="29dp"
-                android:layout_marginTop="12dp"
-                android:layout_marginEnd="109dp"
-                android:layout_marginBottom="75dp"
+                android:layout_width="190dp"
+                android:layout_height="45dp"
+                android:layout_marginTop="28dp"
+                android:fontFamily="@font/roboto_medium"
                 android:text="nomeTxt"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/nomeTxt"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.100000024" />
-
-            <TextView
-                android:id="@+id/nomeTxt"
-                android:layout_width="43dp"
-                android:layout_height="26dp"
-                android:layout_marginStart="148dp"
-                android:text="Nome:"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/nomeAnimeTxt"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.13" />
+                android:textSize="17sp"
+                app:layout_constraintStart_toEndOf="@+id/fotoAnime"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/fotoAnime"
-                android:layout_width="119dp"
-                android:layout_height="119dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
+                android:layout_width="199dp"
+                android:layout_height="156dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:srcCompat="@tools:sample/avatars" />
@@ -89,17 +56,11 @@
                 android:id="@+id/idAnime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="58dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="4dp"
-                android:layout_marginBottom="88dp"
+                android:fontFamily="@font/roboto_medium"
                 android:text="TextView"
+                android:textSize="17sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.86"
-                app:layout_constraintStart_toEndOf="@+id/nomeAnimeTxt"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.100000024" />
+                app:layout_constraintEnd_toEndOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

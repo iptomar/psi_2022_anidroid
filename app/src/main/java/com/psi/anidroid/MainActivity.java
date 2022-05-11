@@ -1,7 +1,10 @@
 package com.psi.anidroid;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,10 +24,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextView textViewResult;
+    private TextView textViewResult, tv_id;
     private JsonPlaceHolderApi jsonPlaceHolderApi;
     RecyclerView recyclerView;
     MyAdapter myAdapter;
+
+    private Button btnProfile;
+    private Button btnLogin;
 
     /*private ActivityMainBinding binding;
     RecyclerView recyclerView;
@@ -53,6 +59,30 @@ public class MainActivity extends AppCompatActivity {
                 .build();
 
         jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
+
+        tv_id = findViewById(R.id.tv_id);
+        recyclerView = findViewById(R.id.recyclerView);
+        btnProfile = (Button) findViewById(R.id.btnProfile);
+        btnLogin = (Button) findViewById(R.id.btn_login);
+
+        Intent intent = getIntent();
+        if(intent.getExtras()!=null) {
+            tv_id.setText(intent.getStringExtra("id"));
+        }
+
+        btnProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                OpenProfile();
+            }
+        });
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                OpenLogin();
+            }
+        });
+
 
         /*Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://jsonplaceholder.typicode.com/") //o URL base, ATENÇÃO PÔR SEMPRE O BACKSLASH
@@ -105,6 +135,17 @@ public class MainActivity extends AppCompatActivity {
                 book_pages.add(cursor.getString(3));
             }
         }*/
+    }
+
+    private void OpenProfile(){
+        Intent intent_profile = new Intent(this, ProfileActivity.class);
+        intent_profile.putExtra("id",tv_id.getText().toString());
+        startActivity(intent_profile);
+    }
+
+    private void OpenLogin(){
+        Intent intent_login = new Intent(this, LoginActivity.class);
+        startActivity(intent_login);
     }
 
     private void getAllMidgetAPI() {

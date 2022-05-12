@@ -1,0 +1,22 @@
+[
+    {
+        "merged": "C:\\Users\\Bernardo\\Documents\\GitHub\\psi_2022_anidroid\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\my_row.xml",
+        "source": "C:\\Users\\Bernardo\\Documents\\GitHub\\psi_2022_anidroid\\app\\src\\main\\res\\layout\\my_row.xml"
+    },
+    {
+        "merged": "C:\\Users\\Bernardo\\Documents\\GitHub\\psi_2022_anidroid\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_main.xml",
+        "source": "C:\\Users\\Bernardo\\Documents\\GitHub\\psi_2022_anidroid\\app\\src\\main\\res\\layout\\activity_main.xml"
+    },
+    {
+        "merged": "C:\\Users\\Bernardo\\Documents\\GitHub\\psi_2022_anidroid\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_add.xml",
+        "source": "C:\\Users\\Bernardo\\Documents\\GitHub\\psi_2022_anidroid\\app\\src\\main\\res\\layout\\activity_add.xml"
+    },
+    {
+        "merged": "C:\\Users\\Bernardo\\Documents\\GitHub\\psi_2022_anidroid\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_update.xml",
+        "source": "C:\\Users\\Bernardo\\Documents\\GitHub\\psi_2022_anidroid\\app\\src\\main\\res\\layout\\activity_update.xml"
+    },
+    {
+        "merged": "C:\\Users\\Bernardo\\Documents\\GitHub\\psi_2022_anidroid\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\fragment_main.xml",
+        "source": "C:\\Users\\Bernardo\\Documents\\GitHub\\psi_2022_anidroid\\app\\src\\main\\res\\layout\\fragment_main.xml"
+    }
+]

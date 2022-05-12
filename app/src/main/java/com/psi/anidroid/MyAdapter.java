@@ -55,6 +55,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, DetailsAnime.class);
+                intent.putExtra("id", String.valueOf(idAnime.get(position)));
                 intent.putExtra("nome", String.valueOf(nomeAnime.get(position)));
                 intent.putExtra("epis", String.valueOf(epAnime.get(position)));
                 intent.putExtra("image", String.valueOf(imageAnime.get(position)));

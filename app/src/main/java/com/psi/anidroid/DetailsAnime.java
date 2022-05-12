@@ -1,6 +1,9 @@
 package com.psi.anidroid;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -13,8 +16,12 @@ public class DetailsAnime extends AppCompatActivity {
 
     TextView nomeAnime, qntEpis, studioName, ratingAnime, sinopseAnime;
     ImageView fotoAnime;
+    Button btnAddToFavorites;
 
-    String nome, epis, studio, rating, sinopse, imagem;
+    String id, nome, epis, studio, rating, sinopse, imagem;
+
+    //dizer que o contexto é esta classe
+    DatabaseFavorites database = new DatabaseFavorites(DetailsAnime.this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,13 +34,24 @@ public class DetailsAnime extends AppCompatActivity {
         ratingAnime = findViewById(R.id.ratingAnimeD);
         sinopseAnime = findViewById(R.id.sinopseAnimeD);
         fotoAnime = findViewById(R.id.fotoAnimeD);
+        btnAddToFavorites = findViewById(R.id.add_favoritos);
 
         getAndSetIntentData();
+
+        btnAddToFavorites.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                database.addToFavorites(id, "teste");
+            }
+        });
     }
 
+
     private void getAndSetIntentData(){
-        if (getIntent().hasExtra("nome") && getIntent().hasExtra("epis") && getIntent().hasExtra("image") && getIntent().hasExtra("studio") && getIntent().hasExtra("rating") && getIntent().hasExtra("sinopse")){
+        if (getIntent().hasExtra("nome") && getIntent().hasExtra("epis") && getIntent().hasExtra("image") && getIntent().hasExtra("studio") && getIntent().hasExtra("rating") && getIntent().hasExtra("sinopse") && getIntent().hasExtra("id")){
             //Buscar os dados pelo Intent
+            id = getIntent().getStringExtra("id");
+            System.out.println(id);
             nome = getIntent().getStringExtra("nome");
             epis = getIntent().getStringExtra("epis");
             imagem = getIntent().getStringExtra("image");

@@ -53,12 +53,12 @@ public class MainActivity extends AppCompatActivity {
 
         //Gson gson = new GsonBuilder().serializeNulls().create(); //alterar o comportamento do gson, para meter mesmo os valores nulos no telemovel
 
-        Retrofit retrofit = new Retrofit.Builder()
+        /*Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://api.jikan.moe/v4/") //o URL base, ATENÇÃO PÔR SEMPRE O BACKSLASH
-                .addConverterFactory(GsonConverterFactory.create(/*gson*/)) //dizer que queremos usar o gson para os pedidos
+                .addConverterFactory(GsonConverterFactory.create(*//*gson*//*)) //dizer que queremos usar o gson para os pedidos
                 .build();
 
-        jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
+        jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);*/
 
         tv_id = findViewById(R.id.tv_id);
         recyclerView = findViewById(R.id.recyclerView);
@@ -150,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void getAllMidgetAPI() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://midgetbee.azurewebsites.net/") //o URL base, ATENÇÃO PÔR SEMPRE O BACKSLASH
+                .baseUrl("https://raw.githubusercontent.com/rbento01/") //o URL base, ATENÇÃO PÔR SEMPRE O BACKSLASH
                 .addConverterFactory(GsonConverterFactory.create(/*gson*/)) //dizer que queremos usar o gson para os pedidos
                 .build();
 

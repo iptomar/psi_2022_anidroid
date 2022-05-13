@@ -175,6 +175,7 @@ public class MainActivity extends AppCompatActivity {
         call.enqueue(new Callback<List<Anime1>>() {
             @Override
             public void onResponse(Call<List<Anime1>> call, Response<List<Anime1>> response) {
+                //O retrofit automaticamente separa os objetos, para ficar um array de objetos
                 List<Anime1> animes = response.body();
 
                 for (Anime1 anime : animes) {

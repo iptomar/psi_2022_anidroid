@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Button btnProfile;
     private Button btnLogin;
+    private Button btnRegister;
 
     /*private ActivityMainBinding binding;
     RecyclerView recyclerView;
@@ -64,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         btnProfile = (Button) findViewById(R.id.btnProfile);
         btnLogin = (Button) findViewById(R.id.btn_login);
+        btnRegister = (Button) findViewById(R.id.btnRegister);
 
         Intent intent = getIntent();
         if(intent.getExtras()!=null) {
@@ -80,6 +82,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 OpenLogin();
+            }
+        });
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                OpenRegister();
             }
         });
 
@@ -146,6 +154,10 @@ public class MainActivity extends AppCompatActivity {
     private void OpenLogin(){
         Intent intent_login = new Intent(this, LoginActivity.class);
         startActivity(intent_login);
+    }
+    private void OpenRegister(){
+        Intent intent_register = new Intent(this, RegisterActivity.class);
+        startActivity(intent_register);
     }
 
     private void getAllMidgetAPI() {

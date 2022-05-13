@@ -20,7 +20,7 @@ public class DBUsers extends SQLiteOpenHelper {
     }
 
     public void onCreate(SQLiteDatabase db){
-        db.execSQL("CREATE TABLE User_table (ID INTEGER PRIMARY KEY AUTOINCREMENT, Username TEXT UNIQUE, Email TEXT, Password TEXT)");
+        db.execSQL("CREATE TABLE User_table (ID INTEGER PRIMARY KEY AUTOINCREMENT, Username STRING UNIQUE, Email STRING, Password STRING)");
     }
 
     public void onUpgrade(SQLiteDatabase db, int i, int i1){
@@ -72,6 +72,17 @@ public class DBUsers extends SQLiteOpenHelper {
         return true;
     }
 
+    public Cursor checkUsernamePassword(String username, String password){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select "+COL_1+" FROM " + TABLE_NAME + " WHERE " + COL_2 + " = " + username + " AND " + COL_4 + " = " + password, null);
+        return cursor;
+    }
+    public Cursor getIdByUserPass(String username, String password){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor= db.rawQuery("SELECT " + COL_1 + " FROM " + TABLE_NAME + " WHERE " + COL_2 + " LIKE '%" + username + "%' AND " + COL_4 + " LIKE '%" + password + "%'", null);
+        return cursor;
+    }
+
     public Cursor getMaxID(){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor= db.rawQuery("SELECT MAX(" + COL_1 + ") FROM " + TABLE_NAME, null);
@@ -95,4 +106,5 @@ public class DBUsers extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery("SELECT " + COL_4 + " FROM " + TABLE_NAME + " WHERE " + COL_1 + " = " + id, null);
         return cursor;
     }
+
 }

@@ -105,6 +105,8 @@ public class MainActivity extends AppCompatActivity {
         btnProfile = (Button) findViewById(R.id.btnProfile);
         btnLogin = (Button) findViewById(R.id.btn_login);
         btnFavoritos = (Button) findViewById(R.id.btnFavoritos);
+        btnRegister = (Button) findViewById(R.id.btnRegister);
+
 
         Intent intent = getIntent();
         if(intent.getExtras()!=null) {
@@ -123,10 +125,16 @@ public class MainActivity extends AppCompatActivity {
                 OpenLogin();
             }
         });
+
         btnFavoritos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 switchViewsFav();
+
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                OpenRegister();
             }
         });
 
@@ -261,6 +269,10 @@ public class MainActivity extends AppCompatActivity {
     private void OpenLogin(){
         Intent intent_login = new Intent(this, LoginActivity.class);
         startActivity(intent_login);
+    }
+    private void OpenRegister(){
+        Intent intent_register = new Intent(this, RegisterActivity.class);
+        startActivity(intent_register);
     }
 
     private void getAllMidgetAPI() {

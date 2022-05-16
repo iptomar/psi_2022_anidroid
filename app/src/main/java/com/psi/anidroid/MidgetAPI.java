@@ -9,6 +9,6 @@ public interface MidgetAPI {
     @GET("api/API/1")
     Call<Anime1> requestAnime();
 
-    @GET("api/API")
+    @GET("API/main/api")
     Call<List<Anime1>> requestAllAnimes();
 }

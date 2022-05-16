@@ -19,7 +19,7 @@ import java.util.ArrayList;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
-    private Context context;
+    private final Context context;
     private final ArrayList nomeAnime, epAnime, idAnime, imageAnime, studioAnime, ratingAnime, sinopseAnime;
 
     MyAdapter(Context context, ArrayList nomeAnime, ArrayList epAnime, ArrayList idAnime, ArrayList imageAnime, ArrayList<String> studioAnime, ArrayList<String> ratingAnime, ArrayList<String> sinopseAnime){
@@ -45,8 +45,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        holder.nomeAnime.setText("Nome: " + String.valueOf(nomeAnime.get(position)));
-        holder.epAnime.setText("Episódios: " + String.valueOf(epAnime.get(position)));
+        holder.nomeAnime.setText("Nome: " + nomeAnime.get(position));
+        holder.epAnime.setText("Episódios: " + epAnime.get(position));
         holder.idAnime.setText(String.valueOf(idAnime.get(position)));
 
         Glide.with(context).load(imageAnime.get(position)).into(holder.fotoAnime);
@@ -55,6 +55,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, DetailsAnime.class);
+                intent.putExtra("id", String.valueOf(idAnime.get(position)));
                 intent.putExtra("nome", String.valueOf(nomeAnime.get(position)));
                 intent.putExtra("epis", String.valueOf(epAnime.get(position)));
                 intent.putExtra("image", String.valueOf(imageAnime.get(position)));
@@ -85,5 +86,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             fotoAnime = itemView.findViewById(R.id.fotoAnime);
             mainLayout = itemView.findViewById(R.id.mainLayoutL);
         }
+    }
+
+    public void clear() {
+        int size = nomeAnime.size();
+        nomeAnime.clear();
+        notifyItemRangeRemoved(0, size);
     }
 }

@@ -42,8 +42,8 @@ public class NewPassActivity extends AppCompatActivity {
                     DB.updatePass(id+"", newpass.getText().toString());
                     openMain();
                 } else Toast.makeText(NewPassActivity.this, "Antiga passe está errada ", Toast.LENGTH_SHORT).show();
-        };
-        //Old password tem de coincidir com a passe do utilizador
+        }
+            //Old password tem de coincidir com a passe do utilizador
         //New password irá substituir a passe do utilizador (talvez precise de limitações - pelo menos 8 caracteres por exemplo)
     });
     }

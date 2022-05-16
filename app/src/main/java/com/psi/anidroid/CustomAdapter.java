@@ -15,8 +15,11 @@ import java.util.ArrayList;
 
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHolder> {
 
-    private Context context;
-    private ArrayList book_id, book_title, book_author, book_pages;
+    private final Context context;
+    private final ArrayList book_id;
+    private final ArrayList book_title;
+    private final ArrayList book_author;
+    private final ArrayList book_pages;
 
     int position;
 

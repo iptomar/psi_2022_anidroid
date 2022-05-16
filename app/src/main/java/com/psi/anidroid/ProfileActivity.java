@@ -88,6 +88,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
     public void openMain() {
         Intent intent_main = new Intent(this, MainActivity.class);
+        intent_main.putExtra("id", id+"");
         startActivity(intent_main);
     }
 

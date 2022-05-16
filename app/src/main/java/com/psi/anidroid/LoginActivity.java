@@ -1,54 +1,53 @@
 package com.psi.anidroid;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
+import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 public class LoginActivity extends AppCompatActivity {
-    TextView username, email, password;
-    Button btnLogin;
-    UserModel userModel;
-    DBUsers dbUsers = new DBUsers(LoginActivity.this);
+
+    EditText username, password;
+    Button signin;
+    DBUsers DB= new DBUsers(LoginActivity.this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login2);
 
-        username = findViewById(R.id.log_user);
-        email = findViewById(R.id.log_mail);
-        password = findViewById(R.id.log_pass);
-        btnLogin = findViewById(R.id.btn_login);
+        username = findViewById(R.id.username1);
+        password = findViewById(R.id.password1);
+        signin = findViewById(R.id.signin1);
 
-        btnLogin.setOnClickListener(new View.OnClickListener() {
+        signin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try {
-                    userModel = new UserModel(username.getText().toString(), email.getText().toString(), password.getText().toString());
-                    //Toast.makeText(LoginActivity.this, "sucesso", Toast.LENGTH_SHORT).show();
+                String user = username.getText().toString();
+                String pass = password.getText().toString();
+
+                if(TextUtils.isEmpty(user) || TextUtils.isEmpty(pass))
+                    Toast.makeText(LoginActivity.this, "All fields required", Toast.LENGTH_SHORT).show();
+                else{
+                    Cursor checkuserpassword = DB.getIdByUserPass(user, pass);
+                    if(checkuserpassword.moveToFirst()){
+
+                        Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                        Intent intent_lgn = new Intent(LoginActivity.this, MainActivity.class);
+                        String cursor_id = checkuserpassword.getString(0);
+                        intent_lgn.putExtra("id",cursor_id+"");
+                        startActivity(intent_lgn);
+                    }else{
+                        Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
+                    }
                 }
-                catch(Exception e) {
-                    Toast.makeText(LoginActivity.this, "erro", Toast.LENGTH_SHORT).show();
-                }
-                boolean b = dbUsers.insertUser(userModel);
-                Toast.makeText(LoginActivity.this, "resulta "+b, Toast.LENGTH_SHORT).show();
-                openMain();
             }
         });
-    }
-    public void openMain(){
-        Intent intent_main = new Intent(this, MainActivity.class);
-        Cursor c_id = dbUsers.getMaxID();
-        if (c_id.moveToFirst()) {
-            String cid = c_id.getString(0)  ;
-            intent_main.putExtra("id", cid);
-        }
-        startActivity(intent_main);
     }
 }

@@ -1,6 +1,7 @@
 package com.psi.anidroid;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +13,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
+
 public class DetailsAnime extends AppCompatActivity {
 
     TextView nomeAnime, qntEpis, studioName, ratingAnime, sinopseAnime;
@@ -19,6 +22,12 @@ public class DetailsAnime extends AppCompatActivity {
     Button btnAddToFavorites;
 
     String id, nome, epis, studio, rating, sinopse, imagem;
+
+    ArrayList<String> id_User = new ArrayList<String>();
+    ArrayList<String> id_Anime = new ArrayList<String>();
+
+    //Para verificar se o anime está com fav ou não, 0 se não, 1 se sim
+    int count;
 
     //dizer que o contexto é esta classe
     DatabaseFavorites database = new DatabaseFavorites(DetailsAnime.this);
@@ -41,9 +50,31 @@ public class DetailsAnime extends AppCompatActivity {
         btnAddToFavorites.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if (count == 0){
+                    btnAddToFavorites.setText("Unadd to Favorites");
+                    count = 1;
+                }else{
+                    btnAddToFavorites.setText("Add to Favorites");
+                    count = 0;
+                }
+
                 database.addToFavorites(id, "teste");
+                displayData();
             }
         });
+    }
+
+    private void displayData() {
+        Cursor cursor = database.readAllData();
+        if (cursor.getCount() == 0){
+            Toast.makeText(this, "No data", Toast.LENGTH_SHORT).show();
+        }else{
+            while(cursor.moveToNext()){
+                id_Anime.add(cursor.getString(1));
+                id_User.add(cursor.getString(2));
+            }
+        }
     }
 
 

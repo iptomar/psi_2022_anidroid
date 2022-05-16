@@ -35,10 +35,7 @@ public class DBUsers extends SQLiteOpenHelper {
         values.put(COL_4, UserModel.getPassword());
         long result = db.insert(TABLE_NAME,null, values);
         db.close();
-        if (result==-1){
-            return false;
-        }
-        return true;
+        return result != -1;
     }
     public boolean updateUser(String id, String username, String email){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -46,10 +43,7 @@ public class DBUsers extends SQLiteOpenHelper {
         values.put(COL_2, username);
         values.put(COL_3, email);
         long result = db.update(TABLE_NAME,values,"id=?", new String[]{id});
-        if (result==-1){
-            return false;
-        }
-        return true;
+        return result != -1;
     }
 
     public boolean updatePass(String id, String password){
@@ -57,19 +51,13 @@ public class DBUsers extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(COL_4, password);
         long result = db.update(TABLE_NAME,values,"id=?", new String[]{id});
-        if (result==-1){
-            return false;
-        }
-        return true;
+        return result != -1;
     }
 
     public boolean deleteUser(String id){
         SQLiteDatabase db = this.getWritableDatabase();
         long result = db.delete(TABLE_NAME, "id=?", new String[]{id});
-        if (result==-1){
-            return false;
-        }
-        return true;
+        return result != -1;
     }
 
     public Cursor getMaxID(){

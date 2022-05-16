@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     MyAdapter myAdapter;
 
-    private Button btnProfile, btnLogin, btnFavoritos;
+    private Button btnProfile, btnLogin, btnFavoritos, btnRegister;
 
     DatabaseFavorites database = new DatabaseFavorites(MainActivity.this);
 
@@ -130,7 +130,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 switchViewsFav();
-
+            }
+        });
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -260,13 +261,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void OpenProfile(){
+     void OpenProfile(){
         Intent intent_profile = new Intent(this, ProfileActivity.class);
         intent_profile.putExtra("id",tv_id.getText().toString());
         startActivity(intent_profile);
     }
 
-    private void OpenLogin(){
+     void OpenLogin(){
         Intent intent_login = new Intent(this, LoginActivity.class);
         startActivity(intent_login);
     }
@@ -391,7 +392,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
 
     private void getPosts(){
         Map<String, String> parameters = new HashMap<>();

@@ -41,13 +41,13 @@ public class Anime1 {
     private String linkFoto;
     @SerializedName("listaDeReviews")
     @Expose
-    private List<Object> listaDeReviews = null;
+    private final List<Object> listaDeReviews = null;
     @SerializedName("listaDeFavoritos")
     @Expose
-    private List<Object> listaDeFavoritos = null;
+    private final List<Object> listaDeFavoritos = null;
     @SerializedName("listaDeCategorias")
     @Expose
-    private List<Object> listaDeCategorias = null;
+    private final List<Object> listaDeCategorias = null;
 
     public Integer getIdAnime() {
         return idAnime;

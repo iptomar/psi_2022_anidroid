@@ -1,49 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="10dp"
+    android:orientation="vertical"
     tools:context=".NewPassActivity">
 
-    <EditText
-        android:id="@+id/oldpass"
-        android:layout_width="142dp"
-        android:layout_height="41dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Old password:"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.297"
-        tools:ignore="MissingConstraints" />
+
+
 
     <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/oldpass"
+        android:hint="Old password:"
+        android:textSize="25dp"
+        android:textColorHint="@color/black"
+        android:background="@drawable/edittextbackground"
+        android:layout_marginBottom="30dp"
+        android:paddingLeft="20dp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
         android:id="@+id/newpass"
-        android:layout_width="149dp"
-        android:layout_height="45dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="New password:"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints" />
+        android:hint="New password:"
+        android:textSize="25dp"
+        android:textColorHint="@color/black"
+        android:background="@drawable/edittextbackground"
+        android:layout_marginBottom="30dp"
+        android:paddingLeft="20dp"/>
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.633"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:id="@+id/btnSubmit"
         android:text="Confirm new password"
-        android:id="@+id/btnSubmit"/>
+        android:textSize="20dp"
+        android:backgroundTint="@color/black"
+        android:layout_marginBottom="30dp"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</LinearLayout>

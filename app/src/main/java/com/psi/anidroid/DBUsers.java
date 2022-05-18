@@ -13,6 +13,7 @@ public class DBUsers extends SQLiteOpenHelper {
     public static final String COL_2 = "Username";
     public static final String COL_3 = "Email";
     public static final String COL_4 = "Password";
+    public static final String COL_5 = "Roles";
 
 
     public DBUsers(Context context){
@@ -20,7 +21,11 @@ public class DBUsers extends SQLiteOpenHelper {
     }
 
     public void onCreate(SQLiteDatabase db){
-        db.execSQL("CREATE TABLE User_table (ID INTEGER PRIMARY KEY AUTOINCREMENT, Username STRING UNIQUE, Email STRING, Password STRING)");
+        db.execSQL("CREATE TABLE User_table (ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "Username STRING UNIQUE, " +
+                "Email STRING, " +
+                "Password STRING,  " +
+                "Roles STRING)");
     }
 
     public void onUpgrade(SQLiteDatabase db, int i, int i1){
@@ -33,6 +38,8 @@ public class DBUsers extends SQLiteOpenHelper {
         values.put(COL_2, UserModel.getUsername());
         values.put(COL_3, UserModel.getEmail());
         values.put(COL_4, UserModel.getPassword());
+        values.put(COL_4, UserModel.getPassword());
+        values.put(COL_5, UserModel.getRoles());
         long result = db.insert(TABLE_NAME,null, values);
         db.close();
         return result != -1;
@@ -92,6 +99,12 @@ public class DBUsers extends SQLiteOpenHelper {
     public Cursor getPassword(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery("SELECT " + COL_4 + " FROM " + TABLE_NAME + " WHERE " + COL_1 + " = " + id, null);
+        return cursor;
+    }
+
+    public Cursor getRoles(int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("SELECT " + COL_5 + " FROM " + TABLE_NAME + " WHERE " + COL_1 + " = " + id, null);
         return cursor;
     }
 

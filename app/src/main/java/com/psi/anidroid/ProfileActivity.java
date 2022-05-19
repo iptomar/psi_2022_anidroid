@@ -9,16 +9,33 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
 
 public class ProfileActivity extends AppCompatActivity {
+    RecyclerView recyclerView;
+    AccountsMyAdapter myAccountAdapter;
+
     private Button btnLogout;
     private Button btnChngPass;
     private Button btnBack;
     private Button btnEdit;
     private Button btnDelete;
+    private Button btnCheckUsers;
     public TextView tvUsername;
     public TextView tvEmail;
     int id;
+
+    //id do anime
+    ArrayList<String> idUserAccount = new ArrayList<String>();
+    //nome do anime
+    ArrayList<String> nameUserAccount = new ArrayList<String>();
+    //
+    ArrayList<String> emailUserAccount = new ArrayList<String>();
+    //
+    ArrayList<String> roleUserAccount = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +48,7 @@ public class ProfileActivity extends AppCompatActivity {
         btnEdit = (Button) findViewById(R.id.btnEdit);
         btnChngPass = (Button) findViewById(R.id.btnChngPass);
         btnDelete = (Button) findViewById(R.id.btnDelete);
+        btnCheckUsers = (Button) findViewById(R.id.btnCheckUsers);
         tvUsername = (TextView) findViewById(R.id.tvUsername);
         tvEmail = (TextView) findViewById(R.id.tvEmail);
         tvUsername.setText(DBUsers.COL_2);
@@ -85,6 +103,13 @@ public class ProfileActivity extends AppCompatActivity {
                 openMain();
             }
         });
+
+        btnCheckUsers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openUsers();
+            }
+        });
     }
     public void openMain() {
         Intent intent_main = new Intent(this, MainActivity.class);
@@ -95,8 +120,6 @@ public class ProfileActivity extends AppCompatActivity {
     public void openEdit() {
         Intent intent_edit = new Intent(this, EditProfileActivity.class);
         intent_edit.putExtra("ID", id+"");
-        //intent_edit.putExtra("Username", tvUsername.getText().toString());
-        //intent_edit.putExtra("Email", tvEmail.getText().toString());
         startActivity(intent_edit);
     }
 
@@ -104,5 +127,11 @@ public class ProfileActivity extends AppCompatActivity {
         Intent intent_pass = new Intent(this, NewPassActivity.class);
         intent_pass.putExtra("ID", id+"");
         startActivity(intent_pass);
+    }
+
+    public void openUsers() {
+        myAccountAdapter = new AccountsMyAdapter(ProfileActivity.this, idUserAccount,nameUserAccount,emailUserAccount,roleUserAccount);
+        recyclerView.setAdapter(myAccountAdapter);
+        recyclerView.setLayoutManager((new LinearLayoutManager((ProfileActivity.this))));
     }
 }

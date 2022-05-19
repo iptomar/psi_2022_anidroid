@@ -67,6 +67,8 @@ public class DBUsers extends SQLiteOpenHelper {
         return result != -1;
     }
 
+
+
     public Cursor checkUsernamePassword(String username, String password){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("select "+COL_1+" FROM " + TABLE_NAME + " WHERE " + COL_2 + " = " + username + " AND " + COL_4 + " = " + password, null);
@@ -105,6 +107,18 @@ public class DBUsers extends SQLiteOpenHelper {
     public Cursor getRoles(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery("SELECT " + COL_5 + " FROM " + TABLE_NAME + " WHERE " + COL_1 + " = " + id, null);
+        return cursor;
+    }
+
+
+    Cursor readAllData(){
+        String query = "SELECT * FROM " + TABLE_NAME;
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (db != null){
+            cursor = db.rawQuery(query, null);
+        }
         return cursor;
     }
 

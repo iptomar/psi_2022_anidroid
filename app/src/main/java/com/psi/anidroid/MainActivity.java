@@ -31,54 +31,44 @@ public class MainActivity extends AppCompatActivity {
     private JsonPlaceHolderApi jsonPlaceHolderApi;
     RecyclerView recyclerView;
     MyAdapter myAdapter;
-    AccountsMyAdapter myAccountAdapter;
 
     private Button btnProfile, btnLogin, btnFavoritos, btnRegister, btnCheckUsers;
 
     DatabaseFavorites database = new DatabaseFavorites(MainActivity.this);
-    DBUsers databaseAccount = new DBUsers(MainActivity.this);
 
     //id do anime
-    ArrayList<String> idAnimeList = new ArrayList<String>();
+    ArrayList<String> idAnimeList = new ArrayList<>();
     //nome do anime
-    ArrayList<String> nomeAnimeList = new ArrayList<String>();
+    ArrayList<String> nomeAnimeList = new ArrayList<>();
     //quantidade de episodios do anime
-    ArrayList<String> qntEpisList = new ArrayList<String>();
+    ArrayList<String> qntEpisList = new ArrayList<>();
     //link da foto para o anime
-    ArrayList<String> fotoAnimeList = new ArrayList<String>();
+    ArrayList<String> fotoAnimeList = new ArrayList<>();
     //nome do estudio
-    ArrayList<String> studioAnimeList = new ArrayList<String>();
+    ArrayList<String> studioAnimeList = new ArrayList<>();
     //rating do anime
-    ArrayList<String> ratingAnimeList = new ArrayList<String>();
+    ArrayList<String> ratingAnimeList = new ArrayList<>();
     //sinopse do anime
-    ArrayList<String> sinopseAnimeList = new ArrayList<String>();
+    ArrayList<String> sinopseAnimeList = new ArrayList<>();
     //id do anime
-    ArrayList<String> idAnimeListF = new ArrayList<String>();
+    ArrayList<String> idAnimeListF = new ArrayList<>();
     //nome do anime
-    ArrayList<String> nomeAnimeListF = new ArrayList<String>();
+    ArrayList<String> nomeAnimeListF = new ArrayList<>();
     //quantidade de episodios do anime
-    ArrayList<String> qntEpisListF = new ArrayList<String>();
+    ArrayList<String> qntEpisListF = new ArrayList<>();
     //link da foto para o anime
-    ArrayList<String> fotoAnimeListF = new ArrayList<String>();
+    ArrayList<String> fotoAnimeListF = new ArrayList<>();
     //nome do estudio
-    ArrayList<String> studioAnimeListF = new ArrayList<String>();
+    ArrayList<String> studioAnimeListF = new ArrayList<>();
     //rating do anime
-    ArrayList<String> ratingAnimeListF = new ArrayList<String>();
+    ArrayList<String> ratingAnimeListF = new ArrayList<>();
     //sinopse do anime
-    ArrayList<String> sinopseAnimeListF = new ArrayList<String>();
+    ArrayList<String> sinopseAnimeListF = new ArrayList<>();
     //id do user
-    ArrayList<String> id_User = new ArrayList<String>();
+    ArrayList<String> id_User = new ArrayList<>();
     //id's dos animes que o user deu fav
-    ArrayList<String> id_Anime = new ArrayList<String>();
+    ArrayList<String> id_Anime = new ArrayList<>();
 
-    //id do anime
-    ArrayList<String> idUserAccount = new ArrayList<String>();
-    //nome do anime
-    ArrayList<String> nameUserAccount = new ArrayList<String>();
-    //
-    ArrayList<String> emailUserAccount = new ArrayList<String>();
-    //
-    ArrayList<String> roleUserAccount = new ArrayList<String>();
 
     //Determina se já está na view dos favoritos, 0 se não estiver, 1 se estiver
     int count = 0;
@@ -117,7 +107,6 @@ public class MainActivity extends AppCompatActivity {
         btnLogin = (Button) findViewById(R.id.btn_login);
         btnFavoritos = (Button) findViewById(R.id.btnFavoritos);
         btnRegister = (Button) findViewById(R.id.btnRegister);
-        btnCheckUsers = (Button) findViewById(R.id.btnCheckUsers);
 
         Intent intent = getIntent();
         if(intent.getExtras()!=null) {
@@ -147,12 +136,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 OpenRegister();
-            }
-        });
-        btnCheckUsers.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openUsers();
             }
         });
 
@@ -277,33 +260,6 @@ public class MainActivity extends AppCompatActivity {
                 id_User.add(cursor.getString(2));
             }
         }
-    }
-
-    private void storeAccountsinArrays(DBUsers databaseAccount) {
-        idUserAccount.clear();
-        nameUserAccount.clear();
-        emailUserAccount.clear();
-        roleUserAccount.clear();
-        Cursor cursor = databaseAccount.readAllData();
-        if (cursor.getCount() == 0){
-            //Toast.makeText(this, "No data", Toast.LENGTH_SHORT).show();
-        }else{
-            while(cursor.moveToNext()){
-                idUserAccount.add(cursor.getString(0));
-                nameUserAccount.add(cursor.getString(1));
-                emailUserAccount.add(cursor.getString(2));
-                roleUserAccount.add(cursor.getString(4));
-            }
-        }
-    }
-
-
-   private void openUsers(){
-        storeAccountsinArrays(databaseAccount);
-
-        myAccountAdapter = new AccountsMyAdapter(MainActivity.this, idUserAccount,nameUserAccount,emailUserAccount,roleUserAccount);
-        recyclerView.setAdapter(myAccountAdapter);
-        recyclerView.setLayoutManager((new LinearLayoutManager((MainActivity.this))));
     }
 
      void OpenProfile(){

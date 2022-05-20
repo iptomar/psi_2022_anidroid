@@ -87,10 +87,4 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             mainLayout = itemView.findViewById(R.id.mainLayoutL);
         }
     }
-
-    public void clear() {
-        int size = nomeAnime.size();
-        nomeAnime.clear();
-        notifyItemRangeRemoved(0, size);
-    }
 }

@@ -47,7 +47,7 @@ public class AccountsMyAdapter extends RecyclerView.Adapter<AccountsMyAdapter.My
         holder.roleUser.setText("Role: " + roleUser.get(position));
         holder.idUser.setText(String.valueOf(idUser.get(position)));
 
-        holder.accountlayout.setOnClickListener(new View.OnClickListener() {
+        /*holder.accountlayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, DetailsAnime.class);
@@ -58,7 +58,7 @@ public class AccountsMyAdapter extends RecyclerView.Adapter<AccountsMyAdapter.My
 
                 context.startActivity(intent);
             }
-        });
+        });*/
     }
 
     @Override
@@ -69,21 +69,15 @@ public class AccountsMyAdapter extends RecyclerView.Adapter<AccountsMyAdapter.My
     public class MyViewHolder extends RecyclerView.ViewHolder{
 
         TextView nameUser, emailUser, idUser, roleUser;
-        ImageView fotoUser;
         LinearLayout accountlayout;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
+            idUser = itemView.findViewById(R.id.id_User);
             nameUser = itemView.findViewById(R.id.username_Account);
             emailUser = itemView.findViewById(R.id.email_Account);
             roleUser = itemView.findViewById(R.id.roles_Account);
             accountlayout = itemView.findViewById(R.id.accountLayout);
         }
-    }
-
-    public void clear() {
-        int size = nameUser.size();
-        nameUser.clear();
-        notifyItemRangeRemoved(0, size);
     }
 }

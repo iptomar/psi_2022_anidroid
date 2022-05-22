@@ -10,10 +10,11 @@
     <include
         android:id="@+id/include"
         layout="@layout/toolbar"
-        tools:layout_editor_absoluteX="103dp"
+        tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp" />
 
     <View
+        android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/teal_700"
@@ -54,6 +55,8 @@
         app:layout_constraintTop_toTopOf="@+id/include"
         app:layout_constraintVertical_bias="1.0"
         tools:ignore="MissingConstraints" />
+
+
 
     <ImageView
         android:layout_width="50dp"
@@ -144,6 +147,31 @@
         app:layout_constraintTop_toTopOf="@+id/include"
         tools:ignore="MissingConstraints"
         android:backgroundTint="#AAAA00"/>
+
+    <!-- <Button
+         android:id="@+id/btnCheckUsers"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_marginEnd="36dp"
+         android:backgroundTint="#AAAA00"
+         android:text="Users Accounts"
+         android:textColor="@color/black"
+         app:layout_constraintEnd_toEndOf="@+id/include"
+         tools:ignore="MissingConstraints"
+         tools:layout_editor_absoluteY="264dp" /> -->
+
+    <Button
+        android:id="@+id/btnCheckUsers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="16dp"
+        android:backgroundTint="#AAAA00"
+        android:text="Check Users"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="@+id/include"
+        app:layout_constraintTop_toTopOf="@+id/include"
+        tools:ignore="MissingConstraints" />
 
     <ImageView
         android:id="@+id/imageView2"

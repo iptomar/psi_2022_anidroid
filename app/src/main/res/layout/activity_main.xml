@@ -60,7 +60,7 @@
         android:id="@+id/tv_id"
         android:layout_width="103dp"
         android:layout_height="119dp"
-        android:text="7"
+        android:text="30"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.003"

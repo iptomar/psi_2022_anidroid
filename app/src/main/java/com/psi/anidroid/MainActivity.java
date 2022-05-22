@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private JsonPlaceHolderApi jsonPlaceHolderApi;
     RecyclerView recyclerView;
     MyAdapter myAdapter;
+    String user_id;
 
     private Button btnProfile, btnLogin, btnFavoritos, btnRegister;
 
@@ -113,6 +114,8 @@ public class MainActivity extends AppCompatActivity {
             tv_id.setText(intent.getStringExtra("id"));
         }
 
+
+
         btnProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -154,6 +157,14 @@ public class MainActivity extends AppCompatActivity {
         //getSampleJsonResponse();
         //getMidgetAPI();
         getAllMidgetAPI();
+
+        user_id = tv_id.getText().toString();
+        //Se o utilizador não estiver autenticado
+        if(user_id.equals("30")){
+            btnFavoritos.setVisibility(View.INVISIBLE);
+        }else{
+            btnFavoritos.setVisibility(View.VISIBLE);
+        }
 
         //getAnime();
 
@@ -222,15 +233,16 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
 
+            user_id = tv_id.getText().toString();
             count = 1;
             btnFavoritos.setText("Unsee Favorites");
 
-            myAdapter = new MyAdapter(MainActivity.this, nomeAnimeListF,qntEpisListF,idAnimeListF,fotoAnimeListF,studioAnimeListF,ratingAnimeListF,sinopseAnimeListF);
+            myAdapter = new MyAdapter(MainActivity.this, nomeAnimeListF,qntEpisListF,idAnimeListF,fotoAnimeListF,studioAnimeListF,ratingAnimeListF,sinopseAnimeListF, user_id);
 
         }else{
             count = 0;
             btnFavoritos.setText("See Favorites");
-            myAdapter = new MyAdapter(MainActivity.this, nomeAnimeList,qntEpisList,idAnimeList,fotoAnimeList,studioAnimeList,ratingAnimeList,sinopseAnimeList);
+            myAdapter = new MyAdapter(MainActivity.this, nomeAnimeList,qntEpisList,idAnimeList,fotoAnimeList,studioAnimeList,ratingAnimeList,sinopseAnimeList, user_id);
 
         }
         recyclerView.setAdapter(myAdapter);
@@ -250,13 +262,19 @@ public class MainActivity extends AppCompatActivity {
     private void storeDatainArrays(DatabaseFavorites database) {
         id_Anime.clear();
         id_User.clear();
+        user_id = tv_id.getText().toString();
         Cursor cursor = database.readAllData();
         if (cursor.getCount() == 0){
             //Toast.makeText(this, "No data", Toast.LENGTH_SHORT).show();
         }else{
             while(cursor.moveToNext()){
-                id_Anime.add(cursor.getString(1));
-                id_User.add(cursor.getString(2));
+                //Se o user atual é igual ao user que está na linha atual
+                if (user_id.equals(cursor.getString(2))){
+                    //foi feito com a razão de apenas colocar nos arrays os favoritos do user atual
+                    id_Anime.add(cursor.getString(1));
+                    id_User.add(cursor.getString(2));
+                }
+
             }
         }
     }
@@ -308,7 +326,8 @@ public class MainActivity extends AppCompatActivity {
                     content += "linkFoto: " + anime.getLinkFoto() + "\n\n";
                     textViewResult.append(content);*/
                 }
-                myAdapter = new MyAdapter(MainActivity.this, nomeAnimeList,qntEpisList,idAnimeList,fotoAnimeList,studioAnimeList,ratingAnimeList,sinopseAnimeList);
+                user_id = tv_id.getText().toString();
+                myAdapter = new MyAdapter(MainActivity.this, nomeAnimeList,qntEpisList,idAnimeList,fotoAnimeList,studioAnimeList,ratingAnimeList,sinopseAnimeList, user_id);
                 recyclerView.setAdapter(myAdapter);
                 recyclerView.setLayoutManager((new LinearLayoutManager((MainActivity.this))));
             }

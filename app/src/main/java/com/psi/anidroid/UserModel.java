@@ -5,12 +5,19 @@ public class UserModel {
     private String username;
     private String email;
     private String password;
+    private String roles;
 
     public UserModel(String username, String email, String password) {
         //this.id = id;
         this.username = username;
         this.email = email;
         this.password = password;
+        if (email.equals("admin@admin.ipt")){
+            this.roles = "Admin";
+        }else{
+            this.roles = "User";
+        }
+
     }
     //toString
 
@@ -52,6 +59,10 @@ public class UserModel {
 
     public String getPassword() {
         return password;
+    }
+
+    public String getRoles(){
+        return roles;
     }
 
     public void setPassword(String password) {

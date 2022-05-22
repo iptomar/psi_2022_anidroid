@@ -33,42 +33,43 @@ public class MainActivity extends AppCompatActivity {
     MyAdapter myAdapter;
     String user_id;
 
-    private Button btnProfile, btnLogin, btnFavoritos, btnRegister;
+    private Button btnProfile, btnLogin, btnFavoritos, btnRegister, btnCheckUsers;
 
     DatabaseFavorites database = new DatabaseFavorites(MainActivity.this);
 
     //id do anime
-    ArrayList<String> idAnimeList = new ArrayList<String>();
+    ArrayList<String> idAnimeList = new ArrayList<>();
     //nome do anime
-    ArrayList<String> nomeAnimeList = new ArrayList<String>();
+    ArrayList<String> nomeAnimeList = new ArrayList<>();
     //quantidade de episodios do anime
-    ArrayList<String> qntEpisList = new ArrayList<String>();
+    ArrayList<String> qntEpisList = new ArrayList<>();
     //link da foto para o anime
-    ArrayList<String> fotoAnimeList = new ArrayList<String>();
+    ArrayList<String> fotoAnimeList = new ArrayList<>();
     //nome do estudio
-    ArrayList<String> studioAnimeList = new ArrayList<String>();
+    ArrayList<String> studioAnimeList = new ArrayList<>();
     //rating do anime
-    ArrayList<String> ratingAnimeList = new ArrayList<String>();
+    ArrayList<String> ratingAnimeList = new ArrayList<>();
     //sinopse do anime
-    ArrayList<String> sinopseAnimeList = new ArrayList<String>();
+    ArrayList<String> sinopseAnimeList = new ArrayList<>();
     //id do anime
-    ArrayList<String> idAnimeListF = new ArrayList<String>();
+    ArrayList<String> idAnimeListF = new ArrayList<>();
     //nome do anime
-    ArrayList<String> nomeAnimeListF = new ArrayList<String>();
+    ArrayList<String> nomeAnimeListF = new ArrayList<>();
     //quantidade de episodios do anime
-    ArrayList<String> qntEpisListF = new ArrayList<String>();
+    ArrayList<String> qntEpisListF = new ArrayList<>();
     //link da foto para o anime
-    ArrayList<String> fotoAnimeListF = new ArrayList<String>();
+    ArrayList<String> fotoAnimeListF = new ArrayList<>();
     //nome do estudio
-    ArrayList<String> studioAnimeListF = new ArrayList<String>();
+    ArrayList<String> studioAnimeListF = new ArrayList<>();
     //rating do anime
-    ArrayList<String> ratingAnimeListF = new ArrayList<String>();
+    ArrayList<String> ratingAnimeListF = new ArrayList<>();
     //sinopse do anime
-    ArrayList<String> sinopseAnimeListF = new ArrayList<String>();
+    ArrayList<String> sinopseAnimeListF = new ArrayList<>();
     //id do user
-    ArrayList<String> id_User = new ArrayList<String>();
+    ArrayList<String> id_User = new ArrayList<>();
     //id's dos animes que o user deu fav
-    ArrayList<String> id_Anime = new ArrayList<String>();
+    ArrayList<String> id_Anime = new ArrayList<>();
+
 
     //Determina se já está na view dos favoritos, 0 se não estiver, 1 se estiver
     int count = 0;
@@ -107,7 +108,6 @@ public class MainActivity extends AppCompatActivity {
         btnLogin = (Button) findViewById(R.id.btn_login);
         btnFavoritos = (Button) findViewById(R.id.btnFavoritos);
         btnRegister = (Button) findViewById(R.id.btnRegister);
-
 
         Intent intent = getIntent();
         if(intent.getExtras()!=null) {
@@ -206,6 +206,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void switchViewsFav() {
         storeDatainArrays(database);
+
         if (count == 0){
             //Ordenar os ID's
             id_Anime.sort(Comparator.comparing(Double::parseDouble));

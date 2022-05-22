@@ -22,6 +22,8 @@ public class DatabaseFavorites extends SQLiteOpenHelper {
     private static final String ANIME_ID = "anime_id";
     private static final String USER_ID = "user_id";
 
+    private static String user_id;
+
     ArrayList<String> id_User = new ArrayList<String>();
     //id's dos animes que o user deu fav
     ArrayList<String> id_Anime = new ArrayList<String>();
@@ -57,6 +59,9 @@ public class DatabaseFavorites extends SQLiteOpenHelper {
     void addToFavorites(String anime_id, String user_id){
         //O this.getWritableDatabase(); faz com que tenhamos a base de dados criada, dentro de uma variável
         //this.getWritableDatabase() obtém a base de dados criada (do extends SQLiteOpenHelper)
+        DatabaseFavorites.user_id = user_id;
+
+
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
@@ -78,15 +83,17 @@ public class DatabaseFavorites extends SQLiteOpenHelper {
     }
 
     private boolean checkFavorite(String anime_id) {
+
         storeDatainArrays();
         for (String string : id_Anime) {
-            contador++;
-            if (anime_id.equals(string)){
-                id_Anime.remove(contador-1);
-                id_User.remove(contador-1);
+            int aux = contador;
+            if (anime_id.equals(string) && user_id.equals(id_User.get(aux))){
+                id_Anime.remove(contador);
+                id_User.remove(contador);
                 eraseDataandPopulate();
                 return true; //se já estiver na lista de favoritos
             }
+            contador++;
         }
         return false; //se ainda não estiver na lista de favoritos
     }
@@ -110,10 +117,10 @@ public class DatabaseFavorites extends SQLiteOpenHelper {
         long result = db.insert(TABLE_NAME,null, cv);
         if (result == -1){
             //Apresenta mensagem de erro
-            Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
         }else{
             //Aprensenta que conseguiu adicionar
-            Toast.makeText(context, "Added Successfully", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(context, "Added Successfully", Toast.LENGTH_SHORT).show();
         }
     }
 

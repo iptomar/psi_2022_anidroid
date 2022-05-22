@@ -9,33 +9,53 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
 
 public class ProfileActivity extends AppCompatActivity {
-    private Button btnLogout;
-    private Button btnChngPass;
-    private Button btnBack;
-    private Button btnEdit;
-    private Button btnDelete;
+    RecyclerView recyclerView;
+    AccountsMyAdapter myAccountAdapter;
+
+    public Button btnLogout;
+    public Button btnCheckUsers;
+    public Button btnChangPass;
+    public Button btnBack;
+    public Button btnEdit;
+    public Button btnDelete;
     public TextView tvUsername;
     public TextView tvEmail;
     int id;
+
+    DBUsers DB = new DBUsers(ProfileActivity.this);
+
+    //id do do user
+    ArrayList<String> id_User = new ArrayList<>();
+    //username do user
+    ArrayList<String> username = new ArrayList<>();
+    //email do user
+    ArrayList<String> email = new ArrayList<>();
+    //role do user
+    ArrayList<String> roles = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        btnBack = (Button) findViewById(R.id.btnBack);
+        btnBack = findViewById(R.id.btnBack);
         btnBack.setBackgroundColor(Color.TRANSPARENT);
-        btnLogout = (Button) findViewById(R.id.btnLogout);
-        btnEdit = (Button) findViewById(R.id.btnEdit);
-        btnChngPass = (Button) findViewById(R.id.btnChngPass);
-        btnDelete = (Button) findViewById(R.id.btnDelete);
-        tvUsername = (TextView) findViewById(R.id.tvUsername);
-        tvEmail = (TextView) findViewById(R.id.tvEmail);
+        btnLogout = findViewById(R.id.btnLogout);
+        btnEdit = findViewById(R.id.btnEdit);
+        btnChangPass = findViewById(R.id.btnChngPass);
+        btnDelete = findViewById(R.id.btnDelete);
+        btnCheckUsers = findViewById(R.id.btnCheckUsers);
+        tvUsername =  findViewById(R.id.tvUsername);
+        tvEmail = findViewById(R.id.tvEmail);
+        recyclerView = findViewById(R.id.mainLayoutA);
         tvUsername.setText(DBUsers.COL_2);
         tvEmail.setText(DBUsers.COL_3);
-        DBUsers DB = new DBUsers(ProfileActivity.this);
         Intent intent = getIntent();
         if(intent.getExtras()!=null) {
             id = Integer.parseInt(intent.getStringExtra("id"));
@@ -65,10 +85,10 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        btnChngPass.setOnClickListener(new View.OnClickListener() {
+        btnChangPass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openChngPass();
+                openChangPass();
             }
         });
 
@@ -85,6 +105,13 @@ public class ProfileActivity extends AppCompatActivity {
                 openMain();
             }
         });
+
+        btnCheckUsers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openUsers();
+            }
+        });
     }
     public void openMain() {
         Intent intent_main = new Intent(this, MainActivity.class);
@@ -95,14 +122,19 @@ public class ProfileActivity extends AppCompatActivity {
     public void openEdit() {
         Intent intent_edit = new Intent(this, EditProfileActivity.class);
         intent_edit.putExtra("ID", id+"");
-        //intent_edit.putExtra("Username", tvUsername.getText().toString());
-        //intent_edit.putExtra("Email", tvEmail.getText().toString());
         startActivity(intent_edit);
     }
 
-    public void openChngPass() {
+    public void openChangPass() {
         Intent intent_pass = new Intent(this, NewPassActivity.class);
         intent_pass.putExtra("ID", id+"");
         startActivity(intent_pass);
     }
+
+    public void openUsers() {
+        Intent intent_acc = new Intent(this, AccountsAnime.class);
+        startActivity(intent_acc);
+    }
+
+
 }

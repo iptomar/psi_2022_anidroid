@@ -24,22 +24,24 @@
                 android:id="@+id/qntEpis"
                 android:layout_width="wrap_content"
                 android:layout_height="45dp"
-                android:layout_marginTop="96dp"
+                android:layout_marginStart="172dp"
+                android:layout_marginTop="80dp"
                 android:fontFamily="@font/roboto_medium"
                 android:text="EpisTxt"
                 android:textSize="17sp"
-                app:layout_constraintStart_toEndOf="@+id/fotoAnime"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/nomeAnimeTxt"
-                android:layout_width="190dp"
-                android:layout_height="45dp"
-                android:layout_marginTop="28dp"
+                android:layout_width="215dp"
+                android:layout_height="43dp"
+                android:layout_marginStart="172dp"
+                android:layout_marginTop="24dp"
                 android:fontFamily="@font/roboto_medium"
                 android:text="nomeTxt"
                 android:textSize="17sp"
-                app:layout_constraintStart_toEndOf="@+id/fotoAnime"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView

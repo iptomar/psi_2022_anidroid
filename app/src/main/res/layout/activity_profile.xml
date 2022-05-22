@@ -7,16 +7,6 @@
     android:textAlignment="center"
     tools:context=".ProfileActivity">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/mainLayoutA"
-        android:layout_width="366dp"
-        android:layout_height="355dp"
-        android:layout_marginEnd="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnCheckUsers"
-        app:layout_constraintVertical_bias="0.011" />
-
     <include
         android:id="@+id/include"
         layout="@layout/toolbar"
@@ -158,17 +148,17 @@
         tools:ignore="MissingConstraints"
         android:backgroundTint="#AAAA00"/>
 
-   <!-- <Button
-        android:id="@+id/btnCheckUsers"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="36dp"
-        android:backgroundTint="#AAAA00"
-        android:text="Users Accounts"
-        android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="@+id/include"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteY="264dp" /> -->
+    <!-- <Button
+         android:id="@+id/btnCheckUsers"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_marginEnd="36dp"
+         android:backgroundTint="#AAAA00"
+         android:text="Users Accounts"
+         android:textColor="@color/black"
+         app:layout_constraintEnd_toEndOf="@+id/include"
+         tools:ignore="MissingConstraints"
+         tools:layout_editor_absoluteY="264dp" /> -->
 
     <Button
         android:id="@+id/btnCheckUsers"

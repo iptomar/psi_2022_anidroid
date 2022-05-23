@@ -17,17 +17,17 @@ import java.util.ArrayList;
 
 public class DetailsAnime extends AppCompatActivity {
 
-    TextView nomeAnime, qntEpis, studioName, ratingAnime, sinopseAnime;
+    TextView nomeAnime, qntEpis, studioName, ratingAnime, sinopseAnime, genre1, genre2;
     ImageView fotoAnime;
     Button btnAddToFavorites;
 
-    String id, nome, epis, studio, rating, sinopse, imagem;
+    String id, nome, epis, studio, rating, sinopse, imagem, user_id;
 
     ArrayList<String> id_User = new ArrayList<String>();
     ArrayList<String> id_Anime = new ArrayList<String>();
 
-    //Para verificar se o anime está com fav ou não, 0 se não, 1 se sim
-    int count;
+    ArrayList<String> id_User1 = new ArrayList<String>();
+    ArrayList<String> id_Anime1 = new ArrayList<String>();
 
     //dizer que o contexto é esta classe
     DatabaseFavorites database = new DatabaseFavorites(DetailsAnime.this);
@@ -44,42 +44,59 @@ public class DetailsAnime extends AppCompatActivity {
         sinopseAnime = findViewById(R.id.sinopseAnimeD);
         fotoAnime = findViewById(R.id.fotoAnimeD);
         btnAddToFavorites = findViewById(R.id.add_favoritos);
+        genre1 = findViewById(R.id.Genre1);
+        genre2 = findViewById(R.id.Genre2);
 
         getAndSetIntentData();
+
+        if (user_id.equals("30")){
+            btnAddToFavorites.setVisibility(View.INVISIBLE);
+        }else{
+            btnAddToFavorites.setVisibility(View.VISIBLE);
+        }
+        displayData();
+
+        if(storeDatainArrays(database)){
+            btnAddToFavorites.setText("Unadd to Favorites");
+        }else{
+            btnAddToFavorites.setText("Add to Favorites");
+        }
+
+
 
         btnAddToFavorites.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if (count == 0){
-                    btnAddToFavorites.setText("Unadd to Favorites");
-                    count = 1;
-                }else{
+                if (btnAddToFavorites.getText().toString().equals("Unadd to Favorites")){
                     btnAddToFavorites.setText("Add to Favorites");
-                    count = 0;
+                }else{
+                    btnAddToFavorites.setText("Unadd to Favorites");
                 }
 
-                database.addToFavorites(id, "teste");
+                database.addToFavorites(id, user_id);
                 displayData();
             }
         });
     }
 
     private void displayData() {
+        id_Anime1.clear();
+        id_User1.clear();
         Cursor cursor = database.readAllData();
         if (cursor.getCount() == 0){
-            Toast.makeText(this, "No data", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "1st Favorite", Toast.LENGTH_SHORT).show();
         }else{
             while(cursor.moveToNext()){
-                id_Anime.add(cursor.getString(1));
-                id_User.add(cursor.getString(2));
+                id_Anime1.add(cursor.getString(1));
+                id_User1.add(cursor.getString(2));
             }
         }
     }
 
 
     private void getAndSetIntentData(){
-        if (getIntent().hasExtra("nome") && getIntent().hasExtra("epis") && getIntent().hasExtra("image") && getIntent().hasExtra("studio") && getIntent().hasExtra("rating") && getIntent().hasExtra("sinopse") && getIntent().hasExtra("id")){
+        if (getIntent().hasExtra("nome") && getIntent().hasExtra("epis") && getIntent().hasExtra("image") && getIntent().hasExtra("studio") && getIntent().hasExtra("rating") && getIntent().hasExtra("sinopse") && getIntent().hasExtra("id") && getIntent().hasExtra("idUser")){
             //Buscar os dados pelo Intent
             id = getIntent().getStringExtra("id");
             System.out.println(id);
@@ -89,6 +106,7 @@ public class DetailsAnime extends AppCompatActivity {
             studio = getIntent().getStringExtra("studio");
             rating = getIntent().getStringExtra("rating");
             sinopse = getIntent().getStringExtra("sinopse");
+            user_id = getIntent().getStringExtra("idUser");
 
             //Dar valores à activity
             nomeAnime.setText("Name: " + nome);
@@ -98,9 +116,38 @@ public class DetailsAnime extends AppCompatActivity {
             ratingAnime.setText("Rating: " + rating);
             sinopseAnime.setText("Synopsis: " + sinopse);
 
+            //categorias
+            DBCategorias dbCategorias = new DBCategorias(DetailsAnime.this);
+            Cursor c_genres = dbCategorias.getGenre(Integer.parseInt(id));
+            if (c_genres.moveToFirst()){
+                genre1.setText(c_genres.getString(0));
+                c_genres.moveToNext();
+                genre2.setText(c_genres.getString(0));
+            }
+
         }else{
             Toast.makeText(this, "ERROR!!!!", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private Boolean storeDatainArrays(DatabaseFavorites database) {
+        id_Anime.clear();
+        id_User.clear();
+        String userid_tab;
+        String animeid_tab;
+        Cursor cursor = database.readAllData();
+        if (cursor.getCount() == 0){
+            //Toast.makeText(this, "No data", Toast.LENGTH_SHORT).show();
+        }else{
+            while(cursor.moveToNext()){
+                //Se o user atual é igual ao user que está na linha atual
+                if (user_id.equals(cursor.getString(2)) && id.equals(cursor.getString(1))){
+                    //tem como favorito
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
 

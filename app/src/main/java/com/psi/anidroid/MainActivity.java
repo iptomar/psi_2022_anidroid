@@ -3,11 +3,15 @@ package com.psi.anidroid;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -31,10 +35,14 @@ public class MainActivity extends AppCompatActivity {
     private JsonPlaceHolderApi jsonPlaceHolderApi;
     RecyclerView recyclerView;
     MyAdapter myAdapter;
+    String user_id;
+    EditText editText;
 
     private Button btnProfile, btnLogin, btnFavoritos, btnRegister, btnCheckUsers;
 
     DatabaseFavorites database = new DatabaseFavorites(MainActivity.this);
+    DBCategorias dbCategorias = new DBCategorias(MainActivity.this);
+    //boolean fillGenres = dbCategorias.addData();
 
     //id do anime
     ArrayList<String> idAnimeList = new ArrayList<>();
@@ -90,6 +98,25 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recyclerView);
 
+        editText = findViewById(R.id.edittext);
+        editText.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                getFilterdAnimes(editable.toString());
+            }
+        });
+
         //textViewResult = findViewById(R.id.text_view_result);
 
         //Gson gson = new GsonBuilder().serializeNulls().create(); //alterar o comportamento do gson, para meter mesmo os valores nulos no telemovel
@@ -108,10 +135,13 @@ public class MainActivity extends AppCompatActivity {
         btnFavoritos = (Button) findViewById(R.id.btnFavoritos);
         btnRegister = (Button) findViewById(R.id.btnRegister);
 
+        //ir buscar o ID definido em login ou register
         Intent intent = getIntent();
         if(intent.getExtras()!=null) {
             tv_id.setText(intent.getStringExtra("id"));
         }
+
+
 
         btnProfile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -154,6 +184,16 @@ public class MainActivity extends AppCompatActivity {
         //getSampleJsonResponse();
         //getMidgetAPI();
         getAllMidgetAPI();
+
+        user_id = tv_id.getText().toString();
+        //Se o utilizador não estiver autenticado
+        if(user_id.equals("30")){
+            btnFavoritos.setVisibility(View.INVISIBLE);
+            btnProfile.setVisibility(View.INVISIBLE);
+        }else{
+            btnFavoritos.setVisibility(View.VISIBLE);
+            btnProfile.setVisibility(View.VISIBLE);
+        }
 
         //getAnime();
 
@@ -223,16 +263,17 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
 
+            user_id = tv_id.getText().toString();
             count = 1;
             btnFavoritos.setText("Unsee Favorites");
 
-            myAdapter = new MyAdapter(MainActivity.this, nomeAnimeListF,qntEpisListF,idAnimeListF,fotoAnimeListF,studioAnimeListF,ratingAnimeListF,sinopseAnimeListF);
-
+            myAdapter = new MyAdapter(MainActivity.this, nomeAnimeListF,qntEpisListF,idAnimeListF,fotoAnimeListF,studioAnimeListF,ratingAnimeListF,sinopseAnimeListF, user_id);
+            editText.setVisibility(View.INVISIBLE);
         }else{
             count = 0;
             btnFavoritos.setText("See Favorites");
-            myAdapter = new MyAdapter(MainActivity.this, nomeAnimeList,qntEpisList,idAnimeList,fotoAnimeList,studioAnimeList,ratingAnimeList,sinopseAnimeList);
-
+            myAdapter = new MyAdapter(MainActivity.this, nomeAnimeList,qntEpisList,idAnimeList,fotoAnimeList,studioAnimeList,ratingAnimeList,sinopseAnimeList, user_id);
+            editText.setVisibility(View.VISIBLE);
         }
         recyclerView.setAdapter(myAdapter);
         recyclerView.setLayoutManager((new LinearLayoutManager((MainActivity.this))));
@@ -251,18 +292,91 @@ public class MainActivity extends AppCompatActivity {
     private void storeDatainArrays(DatabaseFavorites database) {
         id_Anime.clear();
         id_User.clear();
+        user_id = tv_id.getText().toString();
         Cursor cursor = database.readAllData();
         if (cursor.getCount() == 0){
             //Toast.makeText(this, "No data", Toast.LENGTH_SHORT).show();
         }else{
             while(cursor.moveToNext()){
-                id_Anime.add(cursor.getString(1));
-                id_User.add(cursor.getString(2));
+                //Se o user atual é igual ao user que está na linha atual
+                if (user_id.equals(cursor.getString(2))){
+                    //foi feito com a razão de apenas colocar nos arrays os favoritos do user atual
+                    id_Anime.add(cursor.getString(1));
+                    id_User.add(cursor.getString(2));
+                }
+
             }
         }
     }
 
-     void OpenProfile(){
+    private void getFilterdAnimes(String text) {
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://raw.githubusercontent.com/rbento01/") //o URL base, ATENÇÃO PÔR SEMPRE O BACKSLASH
+                .addConverterFactory(GsonConverterFactory.create(/*gson*/)) //dizer que queremos usar o gson para os pedidos
+                .build();
+
+        //id do anime
+        ArrayList<String> idAnimeList = new ArrayList<String>();
+        //nome do anime
+        ArrayList<String> nomeAnimeList = new ArrayList<String>();
+        //quantidade de episodios do anime
+        ArrayList<String> qntEpisList = new ArrayList<String>();
+        //link da foto para o anime
+        ArrayList<String> fotoAnimeList = new ArrayList<String>();
+        //nome do estudio
+        ArrayList<String> studioAnimeList = new ArrayList<String>();
+        //rating do anime
+        ArrayList<String> ratingAnimeList = new ArrayList<String>();
+        //sinopse do anime
+        ArrayList<String> sinopseAnimeList = new ArrayList<String>();
+
+        MidgetAPI midgetAPI = retrofit.create(MidgetAPI.class);
+        Call<List<Anime1>> call = midgetAPI.requestAllAnimes();
+
+        call.enqueue(new Callback<List<Anime1>>() {
+            @Override
+            public void onResponse(Call<List<Anime1>> call, Response<List<Anime1>> response) {
+                //O retrofit automaticamente separa os objetos, para ficar um array de objetos
+                List<Anime1> animes = response.body();
+
+                for (Anime1 anime : animes) {
+                    if(anime.getNome().toLowerCase().contains(text.toLowerCase())) {
+                        nomeAnimeList.add(anime.getNome());
+                        idAnimeList.add(anime.getIdAnime().toString());
+                        qntEpisList.add(anime.getQuantEpisodios());
+                        fotoAnimeList.add(anime.getLinkFoto());
+                        studioAnimeList.add(anime.getEstudio());
+                        ratingAnimeList.add(anime.getRating().toString());
+                        sinopseAnimeList.add(anime.getSinopse());
+
+
+                        String content = "";
+                        content += "ID: " + anime.getIdAnime() + "\n";
+                        content += "Nome: " + anime.getNome() + "\n";
+                        content += "Autor: " + anime.getAutor() + "\n";
+                        content += "linkFoto: " + anime.getLinkFoto() + "\n\n";
+                    }
+
+
+                    //textViewResult.append(content);
+
+
+                }
+                myAdapter = new MyAdapter(MainActivity.this, nomeAnimeList,qntEpisList,idAnimeList,fotoAnimeList,studioAnimeList,ratingAnimeList,sinopseAnimeList, user_id);
+                recyclerView.setAdapter(myAdapter);
+                recyclerView.setLayoutManager((new LinearLayoutManager((MainActivity.this))));
+            }
+
+            @Override
+            public void onFailure(Call<List<Anime1>> call, Throwable t) {
+
+            }
+        });
+    }
+
+
+    void OpenProfile(){
         Intent intent_profile = new Intent(this, ProfileActivity.class);
         intent_profile.putExtra("id",tv_id.getText().toString());
         startActivity(intent_profile);
@@ -301,15 +415,15 @@ public class MainActivity extends AppCompatActivity {
                     fotoAnimeList.add(anime.getLinkFoto());
                     studioAnimeList.add(anime.getEstudio());
                     ratingAnimeList.add(anime.getRating().toString());
-                    sinopseAnimeList.add(anime.getSinopse());
-                    /*String content = "";
+                    sinopseAnimeList.add(anime.getSinopse());/*String content = "";
                     content += "ID: " + anime.getIdAnime() + "\n";
                     content += "Nome: " + anime.getNome() + "\n";
                     content += "Autor: " + anime.getAutor() + "\n";
                     content += "linkFoto: " + anime.getLinkFoto() + "\n\n";
                     textViewResult.append(content);*/
                 }
-                myAdapter = new MyAdapter(MainActivity.this, nomeAnimeList,qntEpisList,idAnimeList,fotoAnimeList,studioAnimeList,ratingAnimeList,sinopseAnimeList);
+                user_id = tv_id.getText().toString();
+                myAdapter = new MyAdapter(MainActivity.this, nomeAnimeList,qntEpisList,idAnimeList,fotoAnimeList,studioAnimeList,ratingAnimeList,sinopseAnimeList, user_id);
                 recyclerView.setAdapter(myAdapter);
                 recyclerView.setLayoutManager((new LinearLayoutManager((MainActivity.this))));
             }

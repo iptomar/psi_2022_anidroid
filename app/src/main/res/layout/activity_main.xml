@@ -6,19 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity" >
 
-
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="449dp"
-        android:layout_height="742dp"
+        android:layout_height="650dp"
         android:paddingTop="?attr/actionBarSize"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.973"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/btnProfile"
@@ -62,7 +58,7 @@
         android:id="@+id/tv_id"
         android:layout_width="103dp"
         android:layout_height="119dp"
-        android:text="7"
+        android:text="30"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.003"
@@ -83,6 +79,20 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.188"
         tools:ignore="MissingConstraints"/>
+
+    <EditText
+        android:id="@+id/edittext"
+        android:layout_width="387dp"
+        android:layout_height="52dp"
+        android:layout_margin="16dp"
+        android:background="@android:drawable/editbox_dropdown_light_frame"
+        android:hint="Pesquisa Animes"
+        android:inputType="text"
+        android:textColor="@color/black"
+        android:visibility="visible"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="3dp" />
 
     <!--<androidx.core.widget.NestedScrollView
         android:layout_width="416dp"

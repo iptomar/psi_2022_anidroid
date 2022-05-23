@@ -3,6 +3,8 @@ package com.psi.anidroid;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -39,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
     private Button btnProfile, btnLogin, btnFavoritos, btnRegister, btnCheckUsers;
 
     DatabaseFavorites database = new DatabaseFavorites(MainActivity.this);
+    DBCategorias dbCategorias = new DBCategorias(MainActivity.this);
+    //boolean fillGenres = dbCategorias.addData();
 
     //id do anime
     ArrayList<String> idAnimeList = new ArrayList<>();
@@ -131,6 +135,7 @@ public class MainActivity extends AppCompatActivity {
         btnFavoritos = (Button) findViewById(R.id.btnFavoritos);
         btnRegister = (Button) findViewById(R.id.btnRegister);
 
+        //ir buscar o ID definido em login ou register
         Intent intent = getIntent();
         if(intent.getExtras()!=null) {
             tv_id.setText(intent.getStringExtra("id"));
@@ -184,8 +189,10 @@ public class MainActivity extends AppCompatActivity {
         //Se o utilizador não estiver autenticado
         if(user_id.equals("30")){
             btnFavoritos.setVisibility(View.INVISIBLE);
+            btnProfile.setVisibility(View.INVISIBLE);
         }else{
             btnFavoritos.setVisibility(View.VISIBLE);
+            btnProfile.setVisibility(View.VISIBLE);
         }
 
         //getAnime();
@@ -408,8 +415,7 @@ public class MainActivity extends AppCompatActivity {
                     fotoAnimeList.add(anime.getLinkFoto());
                     studioAnimeList.add(anime.getEstudio());
                     ratingAnimeList.add(anime.getRating().toString());
-                    sinopseAnimeList.add(anime.getSinopse());
-                    /*String content = "";
+                    sinopseAnimeList.add(anime.getSinopse());/*String content = "";
                     content += "ID: " + anime.getIdAnime() + "\n";
                     content += "Nome: " + anime.getNome() + "\n";
                     content += "Autor: " + anime.getAutor() + "\n";

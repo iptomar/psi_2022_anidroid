@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class ProfileActivity extends AppCompatActivity {
+    RecyclerView recyclerView;
+    AccountsMyAdapter myAccountAdapter;
 
     public Button btnLogout;
     public Button btnCheckUsers;
@@ -51,6 +53,7 @@ public class ProfileActivity extends AppCompatActivity {
         btnCheckUsers = findViewById(R.id.btnCheckUsers);
         tvUsername =  findViewById(R.id.tvUsername);
         tvEmail = findViewById(R.id.tvEmail);
+        recyclerView = findViewById(R.id.mainLayoutB);
         tvUsername.setText(DBUsers.COL_2);
         tvEmail.setText(DBUsers.COL_3);
         Intent intent = getIntent();

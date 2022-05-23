@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class DetailsAnime extends AppCompatActivity {
 
-    TextView nomeAnime, qntEpis, studioName, ratingAnime, sinopseAnime;
+    TextView nomeAnime, qntEpis, studioName, ratingAnime, sinopseAnime, genre1, genre2;
     ImageView fotoAnime;
     Button btnAddToFavorites;
 
@@ -44,6 +44,8 @@ public class DetailsAnime extends AppCompatActivity {
         sinopseAnime = findViewById(R.id.sinopseAnimeD);
         fotoAnime = findViewById(R.id.fotoAnimeD);
         btnAddToFavorites = findViewById(R.id.add_favoritos);
+        genre1 = findViewById(R.id.Genre1);
+        genre2 = findViewById(R.id.Genre2);
 
         getAndSetIntentData();
 
@@ -113,6 +115,15 @@ public class DetailsAnime extends AppCompatActivity {
             studioName.setText("Studio: " + studio);
             ratingAnime.setText("Rating: " + rating);
             sinopseAnime.setText("Synopsis: " + sinopse);
+
+            //categorias
+            DBCategorias dbCategorias = new DBCategorias(DetailsAnime.this);
+            Cursor c_genres = dbCategorias.getGenre(Integer.parseInt(id));
+            if (c_genres.moveToFirst()){
+                genre1.setText(c_genres.getString(0));
+                c_genres.moveToNext();
+                genre2.setText(c_genres.getString(0));
+            }
 
         }else{
             Toast.makeText(this, "ERROR!!!!", Toast.LENGTH_SHORT).show();

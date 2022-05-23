@@ -8,7 +8,7 @@
     tools:context=".ProfileActivity">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/mainLayoutA"
+        android:id="@+id/mainLayoutB"
         android:layout_width="366dp"
         android:layout_height="355dp"
         android:layout_marginEnd="20dp"

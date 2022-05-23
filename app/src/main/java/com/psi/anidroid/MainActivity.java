@@ -6,10 +6,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -34,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     MyAdapter myAdapter;
     String user_id;
+    EditText editText;
 
     private Button btnProfile, btnLogin, btnFavoritos, btnRegister, btnCheckUsers;
 
@@ -94,6 +97,25 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         recyclerView = findViewById(R.id.recyclerView);
+
+        editText = findViewById(R.id.edittext);
+        editText.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                getFilterdAnimes(editable.toString());
+            }
+        });
 
         //textViewResult = findViewById(R.id.text_view_result);
 
@@ -245,13 +267,13 @@ public class MainActivity extends AppCompatActivity {
             count = 1;
             btnFavoritos.setText("Unsee Favorites");
 
-            myAdapter = new MyAdapter(MainActivity.this, nomeAnimeListF,qntEpisListF,idAnimeListF,fotoAnimeListF,studioAnimeListF,ratingAnimeListF,sinopseAnimeListF,user_id);
-
+            myAdapter = new MyAdapter(MainActivity.this, nomeAnimeListF,qntEpisListF,idAnimeListF,fotoAnimeListF,studioAnimeListF,ratingAnimeListF,sinopseAnimeListF, user_id);
+            editText.setVisibility(View.INVISIBLE);
         }else{
             count = 0;
             btnFavoritos.setText("See Favorites");
             myAdapter = new MyAdapter(MainActivity.this, nomeAnimeList,qntEpisList,idAnimeList,fotoAnimeList,studioAnimeList,ratingAnimeList,sinopseAnimeList, user_id);
-
+            editText.setVisibility(View.VISIBLE);
         }
         recyclerView.setAdapter(myAdapter);
         recyclerView.setLayoutManager((new LinearLayoutManager((MainActivity.this))));
@@ -287,7 +309,74 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-     void OpenProfile(){
+    private void getFilterdAnimes(String text) {
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://raw.githubusercontent.com/rbento01/") //o URL base, ATENÇÃO PÔR SEMPRE O BACKSLASH
+                .addConverterFactory(GsonConverterFactory.create(/*gson*/)) //dizer que queremos usar o gson para os pedidos
+                .build();
+
+        //id do anime
+        ArrayList<String> idAnimeList = new ArrayList<String>();
+        //nome do anime
+        ArrayList<String> nomeAnimeList = new ArrayList<String>();
+        //quantidade de episodios do anime
+        ArrayList<String> qntEpisList = new ArrayList<String>();
+        //link da foto para o anime
+        ArrayList<String> fotoAnimeList = new ArrayList<String>();
+        //nome do estudio
+        ArrayList<String> studioAnimeList = new ArrayList<String>();
+        //rating do anime
+        ArrayList<String> ratingAnimeList = new ArrayList<String>();
+        //sinopse do anime
+        ArrayList<String> sinopseAnimeList = new ArrayList<String>();
+
+        MidgetAPI midgetAPI = retrofit.create(MidgetAPI.class);
+        Call<List<Anime1>> call = midgetAPI.requestAllAnimes();
+
+        call.enqueue(new Callback<List<Anime1>>() {
+            @Override
+            public void onResponse(Call<List<Anime1>> call, Response<List<Anime1>> response) {
+                //O retrofit automaticamente separa os objetos, para ficar um array de objetos
+                List<Anime1> animes = response.body();
+
+                for (Anime1 anime : animes) {
+                    if(anime.getNome().toLowerCase().contains(text.toLowerCase())) {
+                        nomeAnimeList.add(anime.getNome());
+                        idAnimeList.add(anime.getIdAnime().toString());
+                        qntEpisList.add(anime.getQuantEpisodios());
+                        fotoAnimeList.add(anime.getLinkFoto());
+                        studioAnimeList.add(anime.getEstudio());
+                        ratingAnimeList.add(anime.getRating().toString());
+                        sinopseAnimeList.add(anime.getSinopse());
+
+
+                        String content = "";
+                        content += "ID: " + anime.getIdAnime() + "\n";
+                        content += "Nome: " + anime.getNome() + "\n";
+                        content += "Autor: " + anime.getAutor() + "\n";
+                        content += "linkFoto: " + anime.getLinkFoto() + "\n\n";
+                    }
+
+
+                    //textViewResult.append(content);
+
+
+                }
+                myAdapter = new MyAdapter(MainActivity.this, nomeAnimeList,qntEpisList,idAnimeList,fotoAnimeList,studioAnimeList,ratingAnimeList,sinopseAnimeList, user_id);
+                recyclerView.setAdapter(myAdapter);
+                recyclerView.setLayoutManager((new LinearLayoutManager((MainActivity.this))));
+            }
+
+            @Override
+            public void onFailure(Call<List<Anime1>> call, Throwable t) {
+
+            }
+        });
+    }
+
+
+    void OpenProfile(){
         Intent intent_profile = new Intent(this, ProfileActivity.class);
         intent_profile.putExtra("id",tv_id.getText().toString());
         startActivity(intent_profile);

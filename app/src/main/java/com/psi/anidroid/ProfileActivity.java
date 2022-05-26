@@ -51,7 +51,7 @@ public class ProfileActivity extends AppCompatActivity {
         btnCheckUsers = findViewById(R.id.btnCheckUsers);
         tvUsername =  findViewById(R.id.tvUsername);
         tvEmail = findViewById(R.id.tvEmail);
-        recyclerView = findViewById(R.id.mainLayoutB);
+        //recyclerView = findViewById(R.id.mainLayoutB);
         tvUsername.setText(DBUsers.COL_2);
         tvEmail.setText(DBUsers.COL_3);
         Intent intent = getIntent();
@@ -66,6 +66,11 @@ public class ProfileActivity extends AppCompatActivity {
             if (setEmail.moveToFirst()) {
                 String ml = setEmail.getString(0);
                 tvEmail.setText(ml);
+            }
+            if (tvEmail.getText().toString().equals("admin@admin.ipt")){
+                btnCheckUsers.setVisibility(View.VISIBLE);
+            }else{
+                btnCheckUsers.setVisibility(View.INVISIBLE);
             }
         }
 

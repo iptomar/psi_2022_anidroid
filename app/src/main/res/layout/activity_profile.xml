@@ -12,7 +12,7 @@
         android:id="@+id/include"
         layout="@layout/toolbar"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp" />
+        tools:layout_editor_absoluteY="-39dp" />
 
     <View
         android:id="@+id/view"
@@ -28,126 +28,30 @@
         android:layout_width="64dp"
         android:layout_height="62dp"
         android:layout_marginStart="173dp"
-        android:layout_marginTop="104dp"
+        android:layout_marginTop="64dp"
         android:layout_marginEnd="174dp"
         android:src="@drawable/ic_baseline_person_24"
-        app:layout_constraintBottom_toBottomOf="@+id/include"
         app:layout_constraintEnd_toEndOf="@+id/include"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/include"
-        app:layout_constraintTop_toTopOf="@+id/include"
-        app:layout_constraintVertical_bias="0.019"
+        app:layout_constraintTop_toBottomOf="@+id/view"
         tools:ignore="MissingConstraints" />
 
     <TextView
-        android:text="Username"
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="159dp"
-        android:layout_marginTop="209dp"
         android:layout_marginEnd="159dp"
-        android:layout_marginBottom="495dp"
+        android:text="Username"
         android:textSize="20dp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/include"
         app:layout_constraintEnd_toEndOf="@+id/include"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/include"
-        app:layout_constraintTop_toTopOf="@+id/include"
-        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintTop_toBottomOf="@+id/imageView4"
         tools:ignore="MissingConstraints" />
 
-
-
-    <ImageView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="312dp"
-        android:layout_marginEnd="325dp"
-        android:layout_marginBottom="369dp"
-        android:src="@drawable/ic_baseline_person_24"
-        app:layout_constraintBottom_toBottomOf="@+id/include"
-        app:layout_constraintEnd_toEndOf="@+id/include"
-        app:layout_constraintStart_toStartOf="@+id/include"
-        app:layout_constraintTop_toTopOf="@+id/include"
-        tools:ignore="MissingConstraints" />
-
-    <TextView
-        android:id="@+id/tvUsername"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="123dp"
-        android:layout_marginTop="327dp"
-        android:layout_marginEnd="196dp"
-        android:layout_marginBottom="377dp"
-        android:textSize="20dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/include"
-        app:layout_constraintEnd_toEndOf="@+id/include"
-        app:layout_constraintStart_toStartOf="@+id/include"
-        app:layout_constraintTop_toTopOf="@+id/include"
-        tools:ignore="DuplicateIds,MissingConstraints" />
-
-    <ImageView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="409dp"
-        android:layout_marginEnd="325dp"
-        android:layout_marginBottom="272dp"
-        android:src="@drawable/ic_baseline_email_24"
-        app:layout_constraintBottom_toBottomOf="@+id/include"
-        app:layout_constraintEnd_toEndOf="@+id/include"
-        app:layout_constraintStart_toStartOf="@+id/include"
-        app:layout_constraintTop_toTopOf="@+id/include"
-        tools:ignore="MissingConstraints" />
-
-    <TextView
-        android:id="@+id/tvEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="122dp"
-        android:layout_marginTop="420dp"
-        android:layout_marginEnd="98dp"
-        android:layout_marginBottom="284dp"
-        android:textSize="20dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/include"
-        app:layout_constraintEnd_toEndOf="@+id/include"
-        app:layout_constraintStart_toStartOf="@+id/include"
-        app:layout_constraintTop_toTopOf="@+id/include"
-        tools:ignore="MissingConstraints" />
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="27dp"
-        android:layout_height="37dp"
-        android:layout_marginStart="95dp"
-        android:layout_marginTop="518dp"
-        android:layout_marginBottom="176dp"
-        android:src="@drawable/ic_baseline_edit_24"
-        app:layout_constraintBottom_toBottomOf="@+id/include"
-        app:layout_constraintStart_toStartOf="@+id/include"
-        app:layout_constraintTop_toTopOf="@+id/include"
-        tools:ignore="MissingConstraints" />
-
-    <Button
-        android:id="@+id/btnEdit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="139dp"
-        android:layout_marginTop="507dp"
-        android:layout_marginEnd="138dp"
-        android:layout_marginBottom="176dp"
-        android:text="Edit profile"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="@+id/include"
-        app:layout_constraintEnd_toEndOf="@+id/include"
-        app:layout_constraintStart_toStartOf="@+id/include"
-        app:layout_constraintTop_toTopOf="@+id/include"
-        tools:ignore="MissingConstraints"
-        android:backgroundTint="#AAAA00"/>
 
     <!-- <Button
          android:id="@+id/btnCheckUsers"
@@ -161,46 +65,117 @@
          tools:ignore="MissingConstraints"
          tools:layout_editor_absoluteY="264dp" /> -->
 
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="36dp"
+        android:src="@drawable/ic_baseline_person_24"
+        app:layout_constraintEnd_toStartOf="@+id/tvUsername"
+        app:layout_constraintHorizontal_bias="0.333"
+        app:layout_constraintStart_toStartOf="@+id/include"
+        app:layout_constraintTop_toTopOf="@+id/tvUsername"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/tvUsername"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="60dp"
+        android:background="@drawable/edittextbackground"
+        android:textSize="20dp"
+        android:textStyle="normal"
+        android:paddingLeft="20dp"
+        android:paddingTop="10dp"
+
+    app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        tools:ignore="DuplicateIds,MissingConstraints" />
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="36dp"
+        android:src="@drawable/ic_baseline_email_24"
+        app:layout_constraintEnd_toStartOf="@+id/tvEmail"
+        app:layout_constraintHorizontal_bias="0.333"
+        app:layout_constraintStart_toStartOf="@+id/include"
+        app:layout_constraintTop_toTopOf="@+id/tvEmail"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/tvEmail"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="60dp"
+        android:background="@drawable/edittextbackground"
+        android:textSize="20dp"
+        android:textStyle="normal"
+        android:paddingLeft="20dp"
+        android:paddingTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvUsername"
+        tools:ignore="MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="27dp"
+        android:layout_height="37dp"
+        android:layout_marginTop="5dp"
+        android:src="@drawable/ic_baseline_edit_24"
+        app:layout_constraintEnd_toStartOf="@+id/btnEdit"
+        app:layout_constraintTop_toTopOf="@+id/btnEdit"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/btnEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
+        android:layout_marginEnd="132dp"
+        android:backgroundTint="#AAAA00"
+        android:text="Edit profile"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="@+id/include"
+        app:layout_constraintTop_toBottomOf="@+id/tvEmail"
+        tools:ignore="MissingConstraints" />
+
     <Button
         android:id="@+id/btnCheckUsers"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="136dp"
         android:backgroundTint="#AAAA00"
         android:text="Check Users"
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="@+id/include"
-        app:layout_constraintTop_toTopOf="@+id/include"
+        app:layout_constraintTop_toBottomOf="@+id/btnDelete"
         tools:ignore="MissingConstraints" />
 
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="27dp"
         android:layout_height="37dp"
-        android:layout_marginStart="76dp"
-        android:layout_marginTop="588dp"
-        android:layout_marginBottom="106dp"
+        android:layout_marginTop="5dp"
         android:src="@drawable/ic_baseline_lock_24"
-        app:layout_constraintBottom_toBottomOf="@+id/include"
-        app:layout_constraintStart_toStartOf="@+id/include"
-        app:layout_constraintTop_toTopOf="@+id/include"
+        app:layout_constraintEnd_toStartOf="@+id/btnChngPass"
+        app:layout_constraintTop_toTopOf="@+id/btnChngPass"
         tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/btnChngPass"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="588dp"
-        android:layout_marginEnd="112dp"
-        android:layout_marginBottom="95dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="108dp"
         android:backgroundTint="#AAAA00"
         android:text="Change password"
         android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="@+id/include"
-        app:layout_constraintEnd_toEndOf="@+id/include"
-        app:layout_constraintTop_toTopOf="@+id/include"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnEdit"
         tools:ignore="MissingConstraints" />
 
     <Button
@@ -208,16 +183,14 @@
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_alignParentRight="true"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="120dp"
         android:backgroundTint="#AA0000"
         android:text="Delete Account"
         android:textColor="@color/white"
         android:textSize="14dp"
-        app:layout_constraintBottom_toBottomOf="@+id/include"
-        app:layout_constraintEnd_toEndOf="@+id/include"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/include"
-        app:layout_constraintVertical_bias="0.951" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnChngPass" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -118,10 +118,14 @@ public class DetailsAnime extends AppCompatActivity {
 
             //categorias
             DBCategorias dbCategorias = new DBCategorias(DetailsAnime.this);
+            //ir buscar as categorias com o ID do anime selecionado
             Cursor c_genres = dbCategorias.getGenre(Integer.parseInt(id));
+            //se o cursor não estiver vazio
             if (c_genres.moveToFirst()){
+                //genre1 = primeira categoria encontrada
                 genre1.setText(c_genres.getString(0));
                 c_genres.moveToNext();
+                //genre2 = segunda categoria encontrada
                 genre2.setText(c_genres.getString(0));
             }
 

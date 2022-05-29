@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class DetailsAnime extends AppCompatActivity {
 
-    TextView nomeAnime, qntEpis, studioName, ratingAnime, sinopseAnime;
+    TextView nomeAnime, qntEpis, studioName, ratingAnime, sinopseAnime, genre1, genre2;
     ImageView fotoAnime;
     Button btnAddToFavorites;
 
@@ -41,7 +41,9 @@ public class DetailsAnime extends AppCompatActivity {
         sinopseAnime = findViewById(R.id.sinopseAnimeD);
         fotoAnime = findViewById(R.id.fotoAnimeD);
         btnAddToFavorites = findViewById(R.id.add_favoritos);
-        //Coloca-se nas TextViews o texto correto
+        genre1 = findViewById(R.id.Genre1);
+        genre2 = findViewById(R.id.Genre2);
+
         getAndSetIntentData();
 
         //Se o user não está autenticado
@@ -99,6 +101,19 @@ public class DetailsAnime extends AppCompatActivity {
             studioName.setText("Studio: " + studio);
             ratingAnime.setText("Rating: " + rating);
             sinopseAnime.setText("Synopsis: " + sinopse);
+
+            //categorias
+            DBCategorias dbCategorias = new DBCategorias(DetailsAnime.this);
+            //ir buscar as categorias com o ID do anime selecionado
+            Cursor c_genres = dbCategorias.getGenre(Integer.parseInt(id));
+            //se o cursor não estiver vazio
+            if (c_genres.moveToFirst()){
+                //genre1 = primeira categoria encontrada
+                genre1.setText(c_genres.getString(0));
+                c_genres.moveToNext();
+                //genre2 = segunda categoria encontrada
+                genre2.setText(c_genres.getString(0));
+            }
 
         }else{
             Toast.makeText(this, "ERROR!!!!", Toast.LENGTH_SHORT).show();

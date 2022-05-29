@@ -26,9 +26,6 @@ public class DetailsAnime extends AppCompatActivity {
     ArrayList<String> id_User = new ArrayList<String>();
     ArrayList<String> id_Anime = new ArrayList<String>();
 
-    ArrayList<String> id_User1 = new ArrayList<String>();
-    ArrayList<String> id_Anime1 = new ArrayList<String>();
-
     //dizer que o contexto é esta classe
     DatabaseFavorites database = new DatabaseFavorites(DetailsAnime.this);
 
@@ -49,16 +46,20 @@ public class DetailsAnime extends AppCompatActivity {
 
         getAndSetIntentData();
 
+        //Se o user não está autenticado
         if (user_id.equals("30")){
+            //Dita que o botão para adicionar aos favoritos fica invisivel
             btnAddToFavorites.setVisibility(View.INVISIBLE);
         }else{
+            //Dita que o botão para adicionar aos favoritos fica visivel
             btnAddToFavorites.setVisibility(View.VISIBLE);
         }
-        displayData();
-
+        //Vai ver se o user atual tem o anime visualizado como favorito
         if(storeDatainArrays(database)){
+            //Se estiver como favoritos muda o texto para o seguinte
             btnAddToFavorites.setText("Unadd to Favorites");
         }else{
+            //Se não estiver como favoritos muda o texto para o seguinte
             btnAddToFavorites.setText("Add to Favorites");
         }
 
@@ -67,35 +68,20 @@ public class DetailsAnime extends AppCompatActivity {
         btnAddToFavorites.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                //Vai alternando o valor do texto do botão cada vez que o user clique neste botão
                 if (btnAddToFavorites.getText().toString().equals("Unadd to Favorites")){
                     btnAddToFavorites.setText("Add to Favorites");
                 }else{
                     btnAddToFavorites.setText("Unadd to Favorites");
                 }
-
+                //Finalmente adiciona à base de dados o id do user e o id do anime
                 database.addToFavorites(id, user_id);
-                displayData();
             }
         });
     }
-
-    private void displayData() {
-        id_Anime1.clear();
-        id_User1.clear();
-        Cursor cursor = database.readAllData();
-        if (cursor.getCount() == 0){
-            Toast.makeText(this, "1st Favorite", Toast.LENGTH_SHORT).show();
-        }else{
-            while(cursor.moveToNext()){
-                id_Anime1.add(cursor.getString(1));
-                id_User1.add(cursor.getString(2));
-            }
-        }
-    }
-
-
+    //Coloca nas TextViews o texto correto a cada um destes
     private void getAndSetIntentData(){
+        //Verifica se foi enviado toda a informação sobre o anime
         if (getIntent().hasExtra("nome") && getIntent().hasExtra("epis") && getIntent().hasExtra("image") && getIntent().hasExtra("studio") && getIntent().hasExtra("rating") && getIntent().hasExtra("sinopse") && getIntent().hasExtra("id") && getIntent().hasExtra("idUser")){
             //Buscar os dados pelo Intent
             id = getIntent().getStringExtra("id");
@@ -133,12 +119,10 @@ public class DetailsAnime extends AppCompatActivity {
             Toast.makeText(this, "ERROR!!!!", Toast.LENGTH_SHORT).show();
         }
     }
-
+    //Coloca dentro dos arrays os valores dentro d abase de dados
     private Boolean storeDatainArrays(DatabaseFavorites database) {
         id_Anime.clear();
         id_User.clear();
-        String userid_tab;
-        String animeid_tab;
         Cursor cursor = database.readAllData();
         if (cursor.getCount() == 0){
             //Toast.makeText(this, "No data", Toast.LENGTH_SHORT).show();
@@ -154,4 +138,3 @@ public class DetailsAnime extends AppCompatActivity {
         return false;
     }
 }
-

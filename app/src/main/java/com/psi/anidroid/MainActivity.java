@@ -1,6 +1,5 @@
 package com.psi.anidroid;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -19,9 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -32,7 +29,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MainActivity extends AppCompatActivity {
 
     private TextView textViewResult, tv_id;
-    private JsonPlaceHolderApi jsonPlaceHolderApi;
     RecyclerView recyclerView;
     MyAdapter myAdapter;
     String user_id;
@@ -77,56 +73,27 @@ public class MainActivity extends AppCompatActivity {
     //id's dos animes que o user deu fav
     ArrayList<String> id_Anime = new ArrayList<>();
 
-
     //Determina se já está na view dos favoritos, 0 se não estiver, 1 se estiver
     int count = 0;
-
-    /*private ActivityMainBinding binding;
-    RecyclerView recyclerView;
-    //teste
-    FloatingActionButton add_button;
-    String teste;
-
-    MyDatabaseHelper myDB;
-    ArrayList<String> book_id, book_title, book_author, book_pages;
-    CustomAdapter customAdapter;*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         recyclerView = findViewById(R.id.recyclerView);
-
         editText = findViewById(R.id.edittext);
         editText.addTextChangedListener(new TextWatcher() {
-
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
             }
-
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
             }
-
             @Override
             public void afterTextChanged(Editable editable) {
                 getFilterdAnimes(editable.toString());
             }
         });
-
-        //textViewResult = findViewById(R.id.text_view_result);
-
-        //Gson gson = new GsonBuilder().serializeNulls().create(); //alterar o comportamento do gson, para meter mesmo os valores nulos no telemovel
-
-        /*Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://api.jikan.moe/v4/") //o URL base, ATENÇÃO PÔR SEMPRE O BACKSLASH
-                .addConverterFactory(GsonConverterFactory.create(*//*gson*//*)) //dizer que queremos usar o gson para os pedidos
-                .build();
-
-        jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);*/
 
         tv_id = findViewById(R.id.tv_id);
         recyclerView = findViewById(R.id.recyclerView);
@@ -140,8 +107,6 @@ public class MainActivity extends AppCompatActivity {
         if(intent.getExtras()!=null) {
             tv_id.setText(intent.getStringExtra("id"));
         }
-
-
 
         btnProfile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -169,22 +134,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-        /*Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://jsonplaceholder.typicode.com/") //o URL base, ATENÇÃO PÔR SEMPRE O BACKSLASH
-                .addConverterFactory(GsonConverterFactory.create(gson)) //dizer que queremos usar o gson para os pedidos
-                .build();*/
-
-        //getPosts();
-        //getComments();
-        //createPost();
-        //updatePost();
-        //deletePost();
-
-        //getSampleJsonResponse();
-        //getMidgetAPI();
+        //Vai buscar todos os valores da API
         getAllMidgetAPI();
 
+        //Vai buscar o id do user atual, vendo o texto de uma TextView
         user_id = tv_id.getText().toString();
         //Se o utilizador não estiver autenticado
         if(user_id.equals("30")){
@@ -194,53 +147,24 @@ public class MainActivity extends AppCompatActivity {
             btnFavoritos.setVisibility(View.VISIBLE);
             btnProfile.setVisibility(View.VISIBLE);
         }
-
-        //getAnime();
-
-        /*recyclerView = findViewById(R.id.recyclerView);
-        add_button = findViewById(R.id.add_button);
-        add_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, AddActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        myDB = new MyDatabaseHelper(MainActivity.this);
-        book_id = new ArrayList<>();
-        book_title = new ArrayList<>();
-        book_author = new ArrayList<>();
-        book_pages = new ArrayList<>();
-
-        storeDataInArrays();
-        customAdapter = new CustomAdapter(MainActivity.this, book_id, book_title, book_author, book_pages);
-        recyclerView.setAdapter(customAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
-
-    }
-    void storeDataInArrays(){
-        Cursor cursor = myDB.readAllData();
-        if (cursor.getCount() == 0){
-            Toast.makeText(this, "No data.", Toast.LENGTH_SHORT).show();
-        }else{
-            while (cursor.moveToNext()){
-                book_id.add(cursor.getString(0));
-                book_title.add(cursor.getString(1));
-                book_author.add(cursor.getString(2));
-                book_pages.add(cursor.getString(3));
-            }
-        }*/
     }
 
+    /*
+    Vai mudar as views para de todos os animes para a lista de só os favoritos
+     */
     private void switchViewsFav() {
+        //Vai armazenar dentro dos arrays id_Anime e id_User, os valores que se encontram dentro da base de dados
         storeDatainArrays(database);
 
+        //Se não está na lista dos favoritos
         if (count == 0){
             //Ordenar os ID's
             id_Anime.sort(Comparator.comparing(Double::parseDouble));
+            //Para todos os animes
             for (String string: id_Anime) {
+                    //Limpa os arrays
                     clearArray();
+                    //Adiciona aos novos arrays, todos os valores de só os animes favoritos
                     idAnimeListF.add(string);
                     nomeAnimeListF.add(nomeAnimeList.get(Integer.parseInt(string) - 1));
                     qntEpisListF.add(qntEpisList.get(Integer.parseInt(string) - 1));
@@ -250,9 +174,12 @@ public class MainActivity extends AppCompatActivity {
                     sinopseAnimeListF.add(sinopseAnimeList.get(Integer.parseInt(string) - 1));
             }
 
+            //Se ainda não adicionou todos
             if (id_Anime.size() != idAnimeListF.size()){
+                //Limpa de novo os arrays
                 clearArray();
                 for (String string: id_Anime) {
+                    //Adiciona aos novos arrays, todos os valores de só os animes favoritos
                     idAnimeListF.add(string);
                     nomeAnimeListF.add(nomeAnimeList.get(Integer.parseInt(string) - 1));
                     qntEpisListF.add(qntEpisList.get(Integer.parseInt(string) - 1));
@@ -262,23 +189,32 @@ public class MainActivity extends AppCompatActivity {
                     sinopseAnimeListF.add(sinopseAnimeList.get(Integer.parseInt(string) - 1));
                 }
             }
-
+            //Passa de novo para uma variável o id do user atual extraindo o texto da TextView
             user_id = tv_id.getText().toString();
+            //Quer dizer que vai mudar para a lista de todos os animes
             count = 1;
+            //Muda o texto dos botões
             btnFavoritos.setText("Unsee Favorites");
-
+            //Cria-se um novo objeto do myAdapter para mudar a nossa MainActivity para só mostrar os animes com favoritos
             myAdapter = new MyAdapter(MainActivity.this, nomeAnimeListF,qntEpisListF,idAnimeListF,fotoAnimeListF,studioAnimeListF,ratingAnimeListF,sinopseAnimeListF, user_id);
+            //Torna parte da pesquisar por animes invisivel
             editText.setVisibility(View.INVISIBLE);
         }else{
+            //Quer dizer que vai mudar para a lista dos favoritos
             count = 0;
+            //Muda o texto do botão
             btnFavoritos.setText("See Favorites");
+            //Cria-se um novo objeto do myAdapter para mudar a nossa MainActivity para só mostrar os animes com favoritos
             myAdapter = new MyAdapter(MainActivity.this, nomeAnimeList,qntEpisList,idAnimeList,fotoAnimeList,studioAnimeList,ratingAnimeList,sinopseAnimeList, user_id);
+            //Torna parte da pesquisar por animes invisivel
             editText.setVisibility(View.VISIBLE);
         }
+        //Muda a recyclerView
         recyclerView.setAdapter(myAdapter);
         recyclerView.setLayoutManager((new LinearLayoutManager((MainActivity.this))));
     }
 
+    //Limpar todos os arrayLists
     private void clearArray() {
         idAnimeListF.clear();
         nomeAnimeListF.clear();
@@ -289,10 +225,15 @@ public class MainActivity extends AppCompatActivity {
         sinopseAnimeListF.clear();
     }
 
+    //Vai ler todos os valores dentro da database e guardar dentro dos ArrayLists
     private void storeDatainArrays(DatabaseFavorites database) {
+        //limpa o arraylist
         id_Anime.clear();
+        //limpa o arraylist
         id_User.clear();
+        //Vai buscar o id do user atual
         user_id = tv_id.getText().toString();
+        //Vai ler os valores da database
         Cursor cursor = database.readAllData();
         if (cursor.getCount() == 0){
             //Toast.makeText(this, "No data", Toast.LENGTH_SHORT).show();
@@ -332,15 +273,15 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<String> sinopseAnimeList = new ArrayList<String>();
 
         MidgetAPI midgetAPI = retrofit.create(MidgetAPI.class);
-        Call<List<Anime1>> call = midgetAPI.requestAllAnimes();
+        Call<List<Anime>> call = midgetAPI.requestAllAnimes();
 
-        call.enqueue(new Callback<List<Anime1>>() {
+        call.enqueue(new Callback<List<Anime>>() {
             @Override
-            public void onResponse(Call<List<Anime1>> call, Response<List<Anime1>> response) {
+            public void onResponse(Call<List<Anime>> call, Response<List<Anime>> response) {
                 //O retrofit automaticamente separa os objetos, para ficar um array de objetos
-                List<Anime1> animes = response.body();
+                List<Anime> animes = response.body();
 
-                for (Anime1 anime : animes) {
+                for (Anime anime : animes) {
                     if(anime.getNome().toLowerCase().contains(text.toLowerCase())) {
                         nomeAnimeList.add(anime.getNome());
                         idAnimeList.add(anime.getIdAnime().toString());
@@ -349,19 +290,7 @@ public class MainActivity extends AppCompatActivity {
                         studioAnimeList.add(anime.getEstudio());
                         ratingAnimeList.add(anime.getRating().toString());
                         sinopseAnimeList.add(anime.getSinopse());
-
-
-                        String content = "";
-                        content += "ID: " + anime.getIdAnime() + "\n";
-                        content += "Nome: " + anime.getNome() + "\n";
-                        content += "Autor: " + anime.getAutor() + "\n";
-                        content += "linkFoto: " + anime.getLinkFoto() + "\n\n";
                     }
-
-
-                    //textViewResult.append(content);
-
-
                 }
                 myAdapter = new MyAdapter(MainActivity.this, nomeAnimeList,qntEpisList,idAnimeList,fotoAnimeList,studioAnimeList,ratingAnimeList,sinopseAnimeList, user_id);
                 recyclerView.setAdapter(myAdapter);
@@ -369,12 +298,11 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<List<Anime1>> call, Throwable t) {
+            public void onFailure(Call<List<Anime>> call, Throwable t) {
 
             }
         });
     }
-
 
     void OpenProfile(){
         Intent intent_profile = new Intent(this, ProfileActivity.class);
@@ -391,294 +319,46 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent_register);
     }
 
+    //Vai buscar a API do nosso projeto
     private void getAllMidgetAPI() {
+        //Usamos o retrofit para conseguirmos ir buscar a APi
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://raw.githubusercontent.com/rbento01/") //o URL base, ATENÇÃO PÔR SEMPRE O BACKSLASH
                 .addConverterFactory(GsonConverterFactory.create(/*gson*/)) //dizer que queremos usar o gson para os pedidos
                 .build();
-
-
-
+        //Criamos o objeto de acordo com uma interface onde se tem os GET's
         MidgetAPI midgetAPI = retrofit.create(MidgetAPI.class);
-        Call<List<Anime1>> call = midgetAPI.requestAllAnimes();
+        //Pedimos para ir buscar todos os animes, ao qual esta variável ("call") vai ter todos os valores dos objetos JSON
+        Call<List<Anime>> call = midgetAPI.requestAllAnimes();
 
-        call.enqueue(new Callback<List<Anime1>>() {
+        call.enqueue(new Callback<List<Anime>>() {
             @Override
-            public void onResponse(Call<List<Anime1>> call, Response<List<Anime1>> response) {
+            public void onResponse(Call<List<Anime>> call, Response<List<Anime>> response) {
                 //O retrofit automaticamente separa os objetos, para ficar um array de objetos
-                List<Anime1> animes = response.body();
+                //Vai ter todos os valores dos objetos JSON
+                List<Anime> animes = response.body();
 
-                for (Anime1 anime : animes) {
+                for (Anime anime : animes) {
+                    //Adiciona nos ArrayLists
                     nomeAnimeList.add(anime.getNome());
                     idAnimeList.add(anime.getIdAnime().toString());
                     qntEpisList.add(anime.getQuantEpisodios());
                     fotoAnimeList.add(anime.getLinkFoto());
                     studioAnimeList.add(anime.getEstudio());
                     ratingAnimeList.add(anime.getRating().toString());
-                    sinopseAnimeList.add(anime.getSinopse());/*String content = "";
-                    content += "ID: " + anime.getIdAnime() + "\n";
-                    content += "Nome: " + anime.getNome() + "\n";
-                    content += "Autor: " + anime.getAutor() + "\n";
-                    content += "linkFoto: " + anime.getLinkFoto() + "\n\n";
-                    textViewResult.append(content);*/
+                    sinopseAnimeList.add(anime.getSinopse());
                 }
+                //Vai buscar o id do User
                 user_id = tv_id.getText().toString();
+                //Vai mudar a vista do main activity para mostrar todos os animes
                 myAdapter = new MyAdapter(MainActivity.this, nomeAnimeList,qntEpisList,idAnimeList,fotoAnimeList,studioAnimeList,ratingAnimeList,sinopseAnimeList, user_id);
+                //Muda para essa vista
                 recyclerView.setAdapter(myAdapter);
                 recyclerView.setLayoutManager((new LinearLayoutManager((MainActivity.this))));
             }
-
             @Override
-            public void onFailure(Call<List<Anime1>> call, Throwable t) {
-
+            public void onFailure(Call<List<Anime>> call, Throwable t) {
             }
         });
     }
-
-    private void getMidgetAPI() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://midgetbee.azurewebsites.net/") //o URL base, ATENÇÃO PÔR SEMPRE O BACKSLASH
-                .addConverterFactory(GsonConverterFactory.create(/*gson*/)) //dizer que queremos usar o gson para os pedidos
-                .build();
-
-        MidgetAPI midgetAPI = retrofit.create((MidgetAPI.class));
-        Call<Anime1> call = midgetAPI.requestAnime();
-
-        call.enqueue(new Callback<Anime1>() {
-            @Override
-            public void onResponse(Call<Anime1> call, Response<Anime1> response) {
-                textViewResult.setText("id: " + response.body().getIdAnime() +
-                        "\nNome: " + response.body().getNome());
-            }
-
-            @Override
-            public void onFailure(Call<Anime1> call, Throwable t) {
-
-            }
-        });
-    }
-
-    private void getSampleJsonResponse() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://navneet7k.github.io/") //o URL base, ATENÇÃO PÔR SEMPRE O BACKSLASH
-                .addConverterFactory(GsonConverterFactory.create(/*gson*/)) //dizer que queremos usar o gson para os pedidos
-                .build();
-
-        RequestInterface requestInterface = retrofit.create(RequestInterface.class);
-        Call<SampleResponse> call = requestInterface.getSampleResponse();
-
-        call.enqueue(new Callback<SampleResponse>() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onResponse(Call<SampleResponse> call, Response<SampleResponse> response) {
-                if (response.isSuccessful()){
-                    textViewResult.setText("ID: " + response.body().getId() + "\nName: "
-                            + response.body().getName() + "\nDesc: "
-                            + response.body().getDescription());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<SampleResponse> call, Throwable t) {
-                textViewResult.setText(t.getMessage());
-            }
-        });
-    }
-
-    private void getAnime() {
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://api.jikan.moe/v4/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        AnimeAPI animeAPI = retrofit.create(AnimeAPI.class);
-        Call<Anime> call = animeAPI.requestAnime();
-
-        call.enqueue(new Callback<Anime>() {
-            @Override
-            public void onResponse(Call<Anime> call, Response<Anime> response) {
-                textViewResult.setText("id: " + response.body().getMalId());
-            }
-
-            @Override
-            public void onFailure(Call<Anime> call, Throwable t) {
-
-            }
-        });
-    }
-
-    private void getPosts(){
-        Map<String, String> parameters = new HashMap<>();
-        parameters.put("userId", "1");
-        parameters.put("_sort", "id");
-        parameters.put("_order", "desc");
-
-
-        //Call<List<Post>> call = jsonPlaceHolderApi.getPosts(new Integer[]{2,3,6}, "id", "desc"); //o retrofit cria a implementação destes métodos
-
-        Call<List<Post>> call = jsonPlaceHolderApi.getPosts(parameters); //o retrofit cria a implementação destes métodos
-
-        call.enqueue(new Callback<List<Post>>() {
-            @Override
-            public void onResponse(Call<List<Post>> call, Response<List<Post>> response) {
-                if (!response.isSuccessful()){
-                    textViewResult.setText("Code: " + response);
-                    return; //não fazer nada com null, parar com a app
-                }
-
-                List<Post> posts = response.body();
-
-                for (Post post : posts){
-                    String content = "";
-                    content += "ID: " + post.getId() + "\n";
-                    content += "User ID: " + post.getUserId() + "\n";
-                    content += "Title: " + post.getTitle() + "\n";
-                    content += "Text: " + post.getText() + "\n\n";
-
-                    textViewResult.append(content);
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Post>> call, Throwable t) {
-                textViewResult.setText(t.getMessage());
-            }
-        });
-    }
-
-    private void getComments(){
-        Call<List<Comment>> call = jsonPlaceHolderApi.getComments("https://jsonplaceholder.typicode.com/posts/3/comments");
-
-        call.enqueue(new Callback<List<Comment>>() {
-            @Override
-            public void onResponse(Call<List<Comment>> call, Response<List<Comment>> response) {
-                if (!response.isSuccessful()){
-                    textViewResult.setText("Code: " + response);
-                    return; //não fazer nada com null, parar com a app
-                }
-
-                List<Comment> comments = response.body();
-
-                for (Comment comment : comments) {
-                    String content = "";
-                    content += "ID: " + comment.getId() + "\n";
-                    content += "Post ID: " + comment.getPostId() + "\n";
-                    content += "Name: " + comment.getName() + "\n";
-                    content += "Email: " + comment.getEmail() + "\n";
-                    content += "Text: " + comment.getText() + "\n\n";
-
-                    textViewResult.append(content);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Comment>> call, Throwable t) {
-                textViewResult.setText(t.getMessage());
-            }
-        });
-    }
-
-    private void createPost(){
-        Post post = new Post(23, "New Title", "New Text");
-
-        Map<String, String> fields = new HashMap<>();
-        fields.put("userId", "25");
-        fields.put("title", "New Title");
-
-        Call<Post> call = jsonPlaceHolderApi.createPost(fields);
-
-        call.enqueue(new Callback<Post>() {
-            @Override
-            public void onResponse(Call<Post> call, Response<Post> response) {
-                if (!response.isSuccessful()){
-                    textViewResult.setText("Code: " + response);
-                    return; //não fazer nada com null, parar com a app
-                }
-
-                Post postResponse = response.body();
-                String content = "";
-                content += "Code: " + response.code() + "\n";
-                content += "ID: " + postResponse.getId() + "\n";
-                content += "User ID: " + postResponse.getUserId() + "\n";
-                content += "Title: " + postResponse.getTitle() + "\n";
-                content += "Text: " + postResponse.getText() + "\n\n";
-
-                textViewResult.setText(content);
-            }
-
-            @Override
-            public void onFailure(Call<Post> call, Throwable t) {
-                textViewResult.setText(t.getMessage());
-            }
-        });
-    }
-
-    private void updatePost(){
-        Post post = new Post(12, null, "New Text");
-
-        Call<Post> call = jsonPlaceHolderApi.patchPost(5, post);
-
-        call.enqueue(new Callback<Post>() {
-            @Override
-            public void onResponse(Call<Post> call, Response<Post> response) {
-                if (!response.isSuccessful()){
-                    textViewResult.setText("Code: " + response);
-                    return; //não fazer nada com null, parar com a app
-                }
-
-                Post postResponse = response.body();
-
-                String content = "";
-                content += "Code: " + response.code() + "\n";
-                content += "ID: " + postResponse.getId() + "\n";
-                content += "User ID: " + postResponse.getUserId() + "\n";
-                content += "Title: " + postResponse.getTitle() + "\n";
-                content += "Text: " + postResponse.getText() + "\n\n";
-
-                textViewResult.setText(content);
-
-            }
-
-            @Override
-            public void onFailure(Call<Post> call, Throwable t) {
-                textViewResult.setText(t.getMessage());
-            }
-        });
-    }
-
-    private void deletePost(){
-        Call<Void> call = jsonPlaceHolderApi.deletePost(5);
-
-        call.enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                textViewResult.setText("Code: " + response.code());
-
-            }
-
-            @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                textViewResult.setText(t.getMessage());
-            }
-        });
-    }
-
-        //binding = ActivityMainBinding.inflate(getLayoutInflater());
-        //setContentView(binding.getRoot());
-        //SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
-        //ViewPager viewPager = binding.viewPager;
-        //viewPager.setAdapter(sectionsPagerAdapter);
-        //TabLayout tabs = binding.tabs;
-        //tabs.setupWithViewPager(viewPager);
-        //FloatingActionButton fab = binding.fab;
-
-        //fab.setOnClickListener(new View.OnClickListener() {
-        //    @Override
-        //    public void onClick(View view) {
-        //        Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-        //                .setAction("Action", null).show();
-        //    }
-        //});
 }

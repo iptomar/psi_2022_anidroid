@@ -12,7 +12,7 @@
         android:id="@+id/include"
         layout="@layout/toolbar"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="-39dp" />
+        tools:layout_editor_absoluteY="0dp" />
 
     <View
         android:id="@+id/view"
@@ -28,7 +28,7 @@
         android:layout_width="64dp"
         android:layout_height="62dp"
         android:layout_marginStart="173dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="52dp"
         android:layout_marginEnd="174dp"
         android:src="@drawable/ic_baseline_person_24"
         app:layout_constraintEnd_toEndOf="@+id/include"
@@ -135,9 +135,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="44dp"
         android:layout_marginEnd="132dp"
-        android:backgroundTint="#AAAA00"
+        android:backgroundTint="#3F51B5"
         android:text="Edit profile"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="@+id/include"
         app:layout_constraintTop_toBottomOf="@+id/tvEmail"
         tools:ignore="MissingConstraints" />
@@ -146,13 +146,13 @@
         android:id="@+id/btnCheckUsers"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="136dp"
-        android:backgroundTint="#AAAA00"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="132dp"
+        android:backgroundTint="#3F51B5"
         android:text="Check Users"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="@+id/include"
-        app:layout_constraintTop_toBottomOf="@+id/btnDelete"
+        app:layout_constraintTop_toBottomOf="@+id/btnChngPass"
         tools:ignore="MissingConstraints" />
 
     <ImageView
@@ -171,9 +171,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="108dp"
-        android:backgroundTint="#AAAA00"
+        android:backgroundTint="#3F51B5"
         android:text="Change password"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnEdit"
         tools:ignore="MissingConstraints" />
@@ -183,14 +183,23 @@
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="120dp"
         android:backgroundTint="#AA0000"
         android:text="Delete Account"
         android:textColor="@color/white"
         android:textSize="14dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnChngPass" />
+        app:layout_constraintTop_toBottomOf="@+id/btnCheckUsers" />
+
+    <ImageView
+        android:id="@+id/imageView9"
+        android:layout_width="39dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="6dp"
+        app:layout_constraintEnd_toStartOf="@+id/btnCheckUsers"
+        app:layout_constraintTop_toTopOf="@+id/btnCheckUsers"
+        app:srcCompat="@drawable/persons" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -54,7 +54,7 @@ public class AccountsMyAdapter extends RecyclerView.Adapter<AccountsMyAdapter.My
         holder.accountlayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, AccountsMyAdapter.class);
+                Intent intent = new Intent(context, ProfileActivity.class);
 
 
                 database.deleteUser(idUser.get(position).toString());

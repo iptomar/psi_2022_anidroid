@@ -25,8 +25,12 @@ public class DetailsAnime extends AppCompatActivity {
 
     String id, nome, epis, studio, rating, sinopse, imagem, user_id;
 
+    //Vai ser caso o utilizador já tenho posto episódios vistos
+    String episAtual;
+
     ArrayList<String> id_User = new ArrayList<String>();
     ArrayList<String> id_Anime = new ArrayList<String>();
+    ArrayList<String> numEpisAtual = new ArrayList<String>();
 
     //dizer que o contexto é esta classe
     DatabaseFavorites database = new DatabaseFavorites(DetailsAnime.this);
@@ -71,6 +75,10 @@ public class DetailsAnime extends AppCompatActivity {
             btnAddToFavorites.setText("Add to Favorites");
         }
 
+        if (userAnimeInEpisodes(databaseEpis)){
+            numEpis.setText(episAtual);
+        }
+
         btnAddToFavorites.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,6 +114,23 @@ public class DetailsAnime extends AppCompatActivity {
 
             }
         });
+    }
+
+    private boolean userAnimeInEpisodes(DatabaseEpisodes databaseEpis) {
+        Cursor cursor = databaseEpis.readAllData();
+        if (cursor.getCount() == 0){
+            //Toast.makeText(this, "No data", Toast.LENGTH_SHORT).show();
+        }else{
+            while(cursor.moveToNext()){
+                //Se o user atual é igual ao user que está na linha atual
+                if (user_id.equals(cursor.getString(2)) && id.equals(cursor.getString(1))){
+                    //tem como episódio
+                    episAtual = cursor.getString(3);
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     private void checkPlus() {

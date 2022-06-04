@@ -9,7 +9,17 @@
     tools:context=".NewPassActivity">
 
 
-
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="50dp"
+        android:gravity="center_horizontal"
+        android:text="New password"
+        android:textColor="@color/black"
+        android:textSize="50dp"
+        android:textStyle="bold" />
 
     <EditText
         android:layout_width="match_parent"
@@ -21,6 +31,9 @@
         android:background="@drawable/edittextbackground"
         android:layout_marginBottom="30dp"
         android:paddingLeft="20dp"/>
+
+
+
 
     <EditText
         android:layout_width="match_parent"

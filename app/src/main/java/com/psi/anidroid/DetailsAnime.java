@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,8 +19,9 @@ import java.util.ArrayList;
 public class DetailsAnime extends AppCompatActivity {
 
     TextView nomeAnime, qntEpis, studioName, ratingAnime, sinopseAnime, genre1, genre2;
-    ImageView fotoAnime;
-    Button btnAddToFavorites;
+    ImageView fotoAnime,minus,plus;
+    Button btnAddToFavorites, btnConfirmEps;
+    EditText numEpis;
 
     String id, nome, epis, studio, rating, sinopse, imagem, user_id;
 
@@ -28,6 +30,8 @@ public class DetailsAnime extends AppCompatActivity {
 
     //dizer que o contexto é esta classe
     DatabaseFavorites database = new DatabaseFavorites(DetailsAnime.this);
+    //dizer que o contexto é esta classe
+    DatabaseEpisodes databaseEpis = new DatabaseEpisodes(DetailsAnime.this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +47,10 @@ public class DetailsAnime extends AppCompatActivity {
         btnAddToFavorites = findViewById(R.id.add_favoritos);
         genre1 = findViewById(R.id.Genre1);
         genre2 = findViewById(R.id.Genre2);
+        numEpis = findViewById(R.id.numEpis);
+        minus = findViewById(R.id.minusEp);
+        plus = findViewById(R.id.plusEp);
+        btnConfirmEps = findViewById(R.id.btn_confirm_eps);
 
         getAndSetIntentData();
 
@@ -63,8 +71,6 @@ public class DetailsAnime extends AppCompatActivity {
             btnAddToFavorites.setText("Add to Favorites");
         }
 
-
-
         btnAddToFavorites.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,14 +84,59 @@ public class DetailsAnime extends AppCompatActivity {
                 database.addToFavorites(id, user_id);
             }
         });
+
+        minus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkMinus();
+            }
+        });
+
+        plus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkPlus();
+            }
+        });
+
+        btnConfirmEps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                databaseEpis.addToEpisodeWatchlist(id, user_id, numEpis.getText().toString());
+
+            }
+        });
     }
+
+    private void checkPlus() {
+        //Número de ep. indefinido
+        if (qntEpis.getText().toString().equals("?")){
+            return;
+            //Se já chegou ao máximo de ep.
+        }else if (Integer.parseInt(numEpis.getText().toString()) >= Integer.parseInt(qntEpis.getText().toString().substring(10))){
+            return;
+        }else {
+            int aux = Integer.parseInt(numEpis.getText().toString()) + 1;
+            numEpis.setText(String.valueOf(aux));
+        }
+    }
+
+    private void checkMinus() {
+        //tentar pôr ep. negativos
+        if (numEpis.getText().toString().equals("1")){
+            return;
+        }else {
+            int aux = Integer.parseInt(numEpis.getText().toString()) - 1;
+            numEpis.setText(String.valueOf(aux));
+        }
+    }
+
     //Coloca nas TextViews o texto correto a cada um destes
     private void getAndSetIntentData(){
         //Verifica se foi enviado toda a informação sobre o anime
         if (getIntent().hasExtra("nome") && getIntent().hasExtra("epis") && getIntent().hasExtra("image") && getIntent().hasExtra("studio") && getIntent().hasExtra("rating") && getIntent().hasExtra("sinopse") && getIntent().hasExtra("id") && getIntent().hasExtra("idUser")){
             //Buscar os dados pelo Intent
             id = getIntent().getStringExtra("id");
-            System.out.println(id);
             nome = getIntent().getStringExtra("nome");
             epis = getIntent().getStringExtra("epis");
             imagem = getIntent().getStringExtra("image");

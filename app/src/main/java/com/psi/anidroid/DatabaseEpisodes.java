@@ -65,7 +65,7 @@ public class DatabaseEpisodes extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    void addToEpisodeWatchlist(String anime_id, String user_id, String num_epis){
+    void addToEpisodeWatchlist(String anime_id, String user_id, String num_epis, String failsafe){
         //O this.getWritableDatabase(); faz com que tenhamos a base de dados criada, dentro de uma variável
         //this.getWritableDatabase() obtém a base de dados criada (do extends SQLiteOpenHelper)
         DatabaseEpisodes.user_id = user_id;
@@ -75,18 +75,40 @@ public class DatabaseEpisodes extends SQLiteOpenHelper {
         cv.put(ANIME_ID, anime_id);
         cv.put(USER_ID, user_id);
         cv.put(NUM_EPIS, num_epis);
-        if (checkUserAnime(anime_id, num_epis)){
-            Toast.makeText(context, "Updated", Toast.LENGTH_SHORT).show();
-        }else{
-            long result = db.insert(TABLE_NAME,null, cv);
-            if (result == -1){
-                //Apresenta mensagem de erro
-                Toast.makeText(context, "ERROR", Toast.LENGTH_SHORT).show();
+        //Se a quantidade de episódios não for indefinida
+        if (!failsafe.equals("?")){
+            if (Integer.parseInt(num_epis) > Integer.parseInt(failsafe)){
+                Toast.makeText(context, "EPISODE TOO HIGH", Toast.LENGTH_SHORT).show();
             }else{
-                //Aprensenta que conseguiu adicionar
-                Toast.makeText(context, "Updated!", Toast.LENGTH_SHORT).show();
+                if (checkUserAnime(anime_id, num_epis)){
+                    Toast.makeText(context, "Updated", Toast.LENGTH_SHORT).show();
+                }else{
+                    long result = db.insert(TABLE_NAME,null, cv);
+                    if (result == -1){
+                        //Apresenta mensagem de erro
+                        Toast.makeText(context, "ERROR", Toast.LENGTH_SHORT).show();
+                    }else{
+                        //Aprensenta que conseguiu adicionar
+                        Toast.makeText(context, "Updated!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        }else{
+            if (checkUserAnime(anime_id, num_epis)){
+                Toast.makeText(context, "Updated", Toast.LENGTH_SHORT).show();
+            }else{
+                long result = db.insert(TABLE_NAME,null, cv);
+                if (result == -1){
+                    //Apresenta mensagem de erro
+                    Toast.makeText(context, "ERROR", Toast.LENGTH_SHORT).show();
+                }else{
+                    //Aprensenta que conseguiu adicionar
+                    Toast.makeText(context, "Updated!", Toast.LENGTH_SHORT).show();
+                }
             }
         }
+
+
     }
 
     private boolean checkUserAnime(String anime_id, String numEpis) {

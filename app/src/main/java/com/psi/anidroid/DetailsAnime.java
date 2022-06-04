@@ -110,8 +110,7 @@ public class DetailsAnime extends AppCompatActivity {
         btnConfirmEps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                databaseEpis.addToEpisodeWatchlist(id, user_id, numEpis.getText().toString());
-
+                databaseEpis.addToEpisodeWatchlist(id, user_id, numEpis.getText().toString(), qntEpis.getText().toString().substring(10));
             }
         });
     }
@@ -134,16 +133,18 @@ public class DetailsAnime extends AppCompatActivity {
     }
 
     private void checkPlus() {
-        //Número de ep. indefinido
-        if (qntEpis.getText().toString().equals("?")){
-            return;
-            //Se já chegou ao máximo de ep.
-        }else if (Integer.parseInt(numEpis.getText().toString()) >= Integer.parseInt(qntEpis.getText().toString().substring(10))){
-            return;
+        if (!qntEpis.getText().toString().substring(10).equals("?")){
+            if (Integer.parseInt(numEpis.getText().toString()) >= Integer.parseInt(qntEpis.getText().toString().substring(10)) ){
+                return;
+            }else {
+                int aux = Integer.parseInt(numEpis.getText().toString()) + 1;
+                numEpis.setText(String.valueOf(aux));
+            }
         }else {
             int aux = Integer.parseInt(numEpis.getText().toString()) + 1;
             numEpis.setText(String.valueOf(aux));
         }
+
     }
 
     private void checkMinus() {

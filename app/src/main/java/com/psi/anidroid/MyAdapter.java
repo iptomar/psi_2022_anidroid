@@ -47,15 +47,17 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
+        //Muda o nome dos textViews
         holder.nomeAnime.setText("Nome: " + nomeAnime.get(position));
         holder.epAnime.setText("Episódios: " + epAnime.get(position));
         holder.idAnime.setText(String.valueOf(idAnime.get(position)));
-
+        //Usamos uma classe para ajudar a colocar a foto no ecrã a partir de um link da net
         Glide.with(context).load(imageAnime.get(position)).into(holder.fotoAnime);
-
+        //se se clicar no anime
         holder.mainLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //Muda de classe e envia informação extra ao qual este vai estar preparado
                 Intent intent = new Intent(context, DetailsAnime.class);
                 intent.putExtra("id", String.valueOf(idAnime.get(position)));
                 intent.putExtra("nome", String.valueOf(nomeAnime.get(position)));
@@ -65,11 +67,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                 intent.putExtra("rating", String.valueOf(ratingAnime.get(position)));
                 intent.putExtra("sinopse", String.valueOf(sinopseAnime.get(position)));
                 intent.putExtra("idUser",user_id);
+                //Muda de classe
                 context.startActivity(intent);
             }
         });
     }
-
+    //Devolve o número atual de animes
     @Override
     public int getItemCount() {
         return idAnime.size();
@@ -83,6 +86,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
+            //Inicializar os TextViews de acordo com o Layout
             nomeAnime = itemView.findViewById(R.id.nomeAnimeTxt);
             epAnime = itemView.findViewById(R.id.qntEpis);
             idAnime = itemView.findViewById(R.id.idAnime);

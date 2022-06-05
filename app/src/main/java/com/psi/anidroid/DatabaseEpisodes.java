@@ -11,21 +11,23 @@ import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 
-public class DatabaseFavorites extends SQLiteOpenHelper {
+public class DatabaseEpisodes extends SQLiteOpenHelper {
     //contexto da classe
     private final Context context;
     //nome da base de dados
-    private static final String DATABASE_NAME = "Animes.db";
+    private static final String DATABASE_NAME = "Episodes.db";
     //versão da base de dados
     private static final int DATABASE_VER = 1;
     //nome da base de dados
-    private static final String TABLE_NAME = "favorites";
+    private static final String TABLE_NAME = "Episodes";
     //nome de uma coluna da base de dados
-    private static final String FAV_ID = "fav_id";
+    private static final String EPISODE_ID = "epi_id";
     //nome de uma coluna da base de dados
     private static final String ANIME_ID = "anime_id";
     //nome de uma coluna da base de dados
     private static final String USER_ID = "user_id";
+    //número do episódio
+    private static final String NUM_EPIS = "num_epis";
     //id do user atual
     private static String user_id;
 
@@ -36,7 +38,7 @@ public class DatabaseFavorites extends SQLiteOpenHelper {
     //contador para ver o índice
     int contador = 0;
 
-    public DatabaseFavorites(@Nullable Context context) {
+    public DatabaseEpisodes(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VER);
         this.context = context;
     }
@@ -44,9 +46,10 @@ public class DatabaseFavorites extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String query = "CREATE TABLE " + TABLE_NAME +
-                " (" + FAV_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                " (" + EPISODE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 ANIME_ID + " TEXT, " +
-                USER_ID + " TEXT);";
+                USER_ID + " TEXT, " +
+                NUM_EPIS + " TEXT);";
         db.execSQL(query);
     }
 
@@ -62,40 +65,60 @@ public class DatabaseFavorites extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    void addToFavorites(String anime_id, String user_id){
+    void addToEpisodeWatchlist(String anime_id, String user_id, String num_epis, String failsafe){
         //O this.getWritableDatabase(); faz com que tenhamos a base de dados criada, dentro de uma variável
         //this.getWritableDatabase() obtém a base de dados criada (do extends SQLiteOpenHelper)
-        DatabaseFavorites.user_id = user_id;
+        DatabaseEpisodes.user_id = user_id;
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         //insere dentro da base de dados os valores enviados em parâmetro
         cv.put(ANIME_ID, anime_id);
         cv.put(USER_ID, user_id);
-        //Vai verificar se já tem os valores dentro  da base de dados
-        if (checkFavorite(anime_id)){
-            Toast.makeText(context, "Unfavorited", Toast.LENGTH_SHORT).show();
-        }else{
-            long result = db.insert(TABLE_NAME,null, cv);
-            if (result == -1){
-                //Apresenta mensagem de erro
-                Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
+        cv.put(NUM_EPIS, num_epis);
+        //Se a quantidade de episódios não for indefinida
+        if (!failsafe.equals("?")){
+            if (Integer.parseInt(num_epis) > Integer.parseInt(failsafe)){
+                Toast.makeText(context, "EPISODE TOO HIGH", Toast.LENGTH_SHORT).show();
             }else{
-                //Aprensenta que conseguiu adicionar
-                Toast.makeText(context, "Favorited!", Toast.LENGTH_SHORT).show();
+                if (checkUserAnime(anime_id, num_epis)){
+                    Toast.makeText(context, "Updated", Toast.LENGTH_SHORT).show();
+                }else{
+                    long result = db.insert(TABLE_NAME,null, cv);
+                    if (result == -1){
+                        //Apresenta mensagem de erro
+                        Toast.makeText(context, "ERROR", Toast.LENGTH_SHORT).show();
+                    }else{
+                        //Aprensenta que conseguiu adicionar
+                        Toast.makeText(context, "Updated!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        }else{
+            if (checkUserAnime(anime_id, num_epis)){
+                Toast.makeText(context, "Updated", Toast.LENGTH_SHORT).show();
+            }else{
+                long result = db.insert(TABLE_NAME,null, cv);
+                if (result == -1){
+                    //Apresenta mensagem de erro
+                    Toast.makeText(context, "ERROR", Toast.LENGTH_SHORT).show();
+                }else{
+                    //Aprensenta que conseguiu adicionar
+                    Toast.makeText(context, "Updated!", Toast.LENGTH_SHORT).show();
+                }
             }
         }
+
+
     }
 
-    private boolean checkFavorite(String anime_id) {
+    private boolean checkUserAnime(String anime_id, String numEpis) {
         //Vai armazenar dentro dos arrayLists os valores dentro da base de dados
         storeDatainArrays();
         for (String string : id_Anime) {
             int aux = contador;
             //Se o user atual e o anime atual já estão na base de dados, quer dizer que o utilizador quer retirar
             if (anime_id.equals(string) && user_id.equals(id_User.get(aux))){
-                id_Anime.remove(contador);
-                id_User.remove(contador);
-                eraseDataandPopulate();
+                updateData(anime_id, user_id, numEpis);
                 return true; //se já estiver na lista de favoritos
             }
             contador++;
@@ -103,36 +126,16 @@ public class DatabaseFavorites extends SQLiteOpenHelper {
         return false; //se ainda não estiver na lista de favoritos
     }
 
-    //Apaga a base de dados e coloca nesta todos os valores posteriormente a apagar a linha
-    //Esta linha vai ser a referida que foi verificada no método checkFavorite, ao qual é
-    //Se e o user atual e o anime atual já estão na base de dados, quer dizer que o utilizador quer retirar
-    //Apaga-se esses valores dos Arrays, e coloca-se a nova informação dentro da base de dados
-    private void eraseDataandPopulate() {
-        //Apaga e cria uma nova tabela
-        deleteAndCreateDB();
-        //Vai adicionar na tabela os novos valores dos Arrays
-        for (int i = 0; i < id_User.size(); i++) {
-            addToNewFavorites(id_Anime.get(i), id_User.get(i));
-        }
+    void updateData(String anime_id, String user_id, String numEpis) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String strSQL = "UPDATE " + TABLE_NAME + " SET " + NUM_EPIS + " = " + "\"" + numEpis + "\"" +  " WHERE " + ANIME_ID + " = "+ anime_id + " AND " + USER_ID + " = " + user_id;
+        System.out.println(strSQL);
+
+        db.execSQL(strSQL);
     }
 
-    private void addToNewFavorites(String anime_id, String user_id) {
-        //O this.getWritableDatabase(); faz com que tenhamos a base de dados criada, dentro de uma variável
-        //this.getWritableDatabase() obtém a base de dados criada (do extends SQLiteOpenHelper)
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues cv = new ContentValues();
-        //Adiciona na base de dados
-        cv.put(ANIME_ID, anime_id);
-        cv.put(USER_ID, user_id);
-        long result = db.insert(TABLE_NAME,null, cv);
-        if (result == -1){
-            //Apresenta mensagem de erro
-            //Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
-        }else{
-            //Aprensenta que conseguiu adicionar
-            //Toast.makeText(context, "Added Successfully", Toast.LENGTH_SHORT).show();
-        }
-    }
+
     //Vai ler todos os valores da base de dados
     Cursor readAllData(){
         String query = "SELECT * FROM " + TABLE_NAME;

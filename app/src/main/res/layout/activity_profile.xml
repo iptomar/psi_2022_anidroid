@@ -8,16 +8,6 @@
     tools:context=".ProfileActivity">
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/mainLayoutB"
-        android:layout_width="366dp"
-        android:layout_height="355dp"
-        android:layout_marginEnd="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnCheckUsers"
-        app:layout_constraintVertical_bias="0.011" />
-  
     <include
         android:id="@+id/include"
         layout="@layout/toolbar"

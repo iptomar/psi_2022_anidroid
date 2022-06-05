@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".AccountsAnime"
     android:id="@+id/accountLayout">
 
     <androidx.cardview.widget.CardView

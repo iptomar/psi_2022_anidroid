@@ -4,9 +4,11 @@ import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,27 +17,33 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
+import java.util.stream.Stream;
 
 public class DetailsAnime extends AppCompatActivity {
 
+    String[] WatchListCategories = {"No List", "Watching", "Completed", "To Watch"};
+
     TextView nomeAnime, qntEpis, studioName, ratingAnime, sinopseAnime, genre1, genre2;
-    ImageView fotoAnime,minus,plus;
-    Button btnAddToFavorites, btnConfirmEps;
-    EditText numEpis;
+    ImageView fotoAnime;
+    Button btnAddToFavorites;
+    Spinner spinner;
 
     String id, nome, epis, studio, rating, sinopse, imagem, user_id;
 
-    //Vai ser caso o utilizador já tenho posto episódios vistos
-    String episAtual;
-
     ArrayList<String> id_User = new ArrayList<String>();
     ArrayList<String> id_Anime = new ArrayList<String>();
-    ArrayList<String> numEpisAtual = new ArrayList<String>();
+
+    ArrayList<String> id_User1 = new ArrayList<String>();
+    ArrayList<String> id_Anime1 = new ArrayList<String>();
+
+    ArrayList<String> id_UserL = new ArrayList<String>();
+    ArrayList<String> id_AnimeL = new ArrayList<String>();
 
     //dizer que o contexto é esta classe
     DatabaseFavorites database = new DatabaseFavorites(DetailsAnime.this);
-    //dizer que o contexto é esta classe
-    DatabaseEpisodes databaseEpis = new DatabaseEpisodes(DetailsAnime.this);
+
+    DBLists databaseLists = new DBLists(DetailsAnime.this);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,126 +59,98 @@ public class DetailsAnime extends AppCompatActivity {
         btnAddToFavorites = findViewById(R.id.add_favoritos);
         genre1 = findViewById(R.id.Genre1);
         genre2 = findViewById(R.id.Genre2);
-        numEpis = findViewById(R.id.numEpis);
-        minus = findViewById(R.id.minusEp);
-        plus = findViewById(R.id.plusEp);
-        btnConfirmEps = findViewById(R.id.btn_confirm_eps);
+
+        spinner = findViewById(R.id.spinnerList);
+        ArrayAdapter<String> adapterSpinner = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, WatchListCategories);
+        adapterSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapterSpinner);
 
         getAndSetIntentData();
 
-        //Se o user não está autenticado
         if (user_id.equals("30")){
-            //Dita que o botão para adicionar aos favoritos fica invisivel
             btnAddToFavorites.setVisibility(View.INVISIBLE);
-            minus.setVisibility(View.INVISIBLE);
-            plus.setVisibility(View.INVISIBLE);
-            btnConfirmEps.setVisibility(View.INVISIBLE);
-            numEpis.setVisibility(View.INVISIBLE);
         }else{
-            //Dita que o botão para adicionar aos favoritos fica visivel
             btnAddToFavorites.setVisibility(View.VISIBLE);
-            minus.setVisibility(View.VISIBLE);
-            plus.setVisibility(View.VISIBLE);
-            btnConfirmEps.setVisibility(View.VISIBLE);
-            numEpis.setVisibility(View.VISIBLE);
         }
-        //Vai ver se o user atual tem o anime visualizado como favorito
+        displayData();
+
         if(storeDatainArrays(database)){
-            //Se estiver como favoritos muda o texto para o seguinte
             btnAddToFavorites.setText("Unadd to Favorites");
         }else{
-            //Se não estiver como favoritos muda o texto para o seguinte
             btnAddToFavorites.setText("Add to Favorites");
         }
 
-        if (userAnimeInEpisodes(databaseEpis)){
-            numEpis.setText(episAtual);
-        }
+
 
         btnAddToFavorites.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Vai alternando o valor do texto do botão cada vez que o user clique neste botão
+
                 if (btnAddToFavorites.getText().toString().equals("Unadd to Favorites")){
                     btnAddToFavorites.setText("Add to Favorites");
                 }else{
                     btnAddToFavorites.setText("Unadd to Favorites");
                 }
-                //Finalmente adiciona à base de dados o id do user e o id do anime
+
                 database.addToFavorites(id, user_id);
+                displayData();
             }
         });
 
-        minus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                checkMinus();
-            }
-        });
+        spinner.setOnItemSelectedListener(
+                new AdapterView.OnItemSelectedListener() {
+                    public void onItemSelected(AdapterView<?> parent, View view, int pos, long ID) {
 
-        plus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                checkPlus();
-            }
-        });
+                        String id_lista = String.valueOf(pos);
+                        Object item = parent.getItemAtPosition(pos);
 
-        btnConfirmEps.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                databaseEpis.addToEpisodeWatchlist(id, user_id, numEpis.getText().toString(), qntEpis.getText().toString().substring(10));
-            }
-        });
+                        if(item == "No List"){
+                            if(databaseLists.checkList(id)){
+                                databaseLists.deleteRow(id_lista, id, user_id);
+                            }
+                            //databaseLists.addToList(id_lista, id, user_id, "No List");
+                        }else if(item == "Watching"){
+                            if(databaseLists.checkList(id)){
+                                databaseLists.deleteRow(id_lista, id, user_id);
+                            }
+                            databaseLists.addToList(id_lista, id, user_id, "Watching");
+                        }else if(item == "Completed"){
+                            if(databaseLists.checkList(id)){
+                                databaseLists.deleteRow(id_lista, id, user_id);
+                            }
+                            databaseLists.addToList(id_lista, id, user_id, "Completed");
+                        }else {
+                            if(databaseLists.checkList(id)){
+                                databaseLists.deleteRow(id_lista, id, user_id);
+                            }
+                            databaseLists.addToList(id_lista, id, user_id, "To Watch");
+                        }
+                    }
+                    public void onNothingSelected(AdapterView<?> parent) {
+                    }
+                });
     }
 
-    private boolean userAnimeInEpisodes(DatabaseEpisodes databaseEpis) {
-        Cursor cursor = databaseEpis.readAllData();
+    private void displayData() {
+        id_Anime1.clear();
+        id_User1.clear();
+        Cursor cursor = database.readAllData();
         if (cursor.getCount() == 0){
-            //Toast.makeText(this, "No data", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "1st Favorite", Toast.LENGTH_SHORT).show();
         }else{
             while(cursor.moveToNext()){
-                //Se o user atual é igual ao user que está na linha atual
-                if (user_id.equals(cursor.getString(2)) && id.equals(cursor.getString(1))){
-                    //tem como episódio
-                    episAtual = cursor.getString(3);
-                    return true;
-                }
+                id_Anime1.add(cursor.getString(1));
+                id_User1.add(cursor.getString(2));
             }
         }
-        return false;
     }
 
-    private void checkPlus() {
-        if (!qntEpis.getText().toString().substring(10).equals("?")){
-            if (Integer.parseInt(numEpis.getText().toString()) >= Integer.parseInt(qntEpis.getText().toString().substring(10)) ){
-                return;
-            }else {
-                int aux = Integer.parseInt(numEpis.getText().toString()) + 1;
-                numEpis.setText(String.valueOf(aux));
-            }
-        }else {
-            int aux = Integer.parseInt(numEpis.getText().toString()) + 1;
-            numEpis.setText(String.valueOf(aux));
-        }
 
-    }
-
-    private void checkMinus() {
-        //tentar pôr ep. negativos
-        if (numEpis.getText().toString().equals("1")){
-            return;
-        }else {
-            int aux = Integer.parseInt(numEpis.getText().toString()) - 1;
-            numEpis.setText(String.valueOf(aux));
-        }
-    }
-
-    //Coloca nas TextViews o texto correto a cada um destes
     private void getAndSetIntentData(){
-        //Verifica se foi enviado toda a informação sobre o anime
         if (getIntent().hasExtra("nome") && getIntent().hasExtra("epis") && getIntent().hasExtra("image") && getIntent().hasExtra("studio") && getIntent().hasExtra("rating") && getIntent().hasExtra("sinopse") && getIntent().hasExtra("id") && getIntent().hasExtra("idUser")){
             //Buscar os dados pelo Intent
             id = getIntent().getStringExtra("id");
+            System.out.println(id);
             nome = getIntent().getStringExtra("nome");
             epis = getIntent().getStringExtra("epis");
             imagem = getIntent().getStringExtra("image");
@@ -189,14 +169,10 @@ public class DetailsAnime extends AppCompatActivity {
 
             //categorias
             DBCategorias dbCategorias = new DBCategorias(DetailsAnime.this);
-            //ir buscar as categorias com o ID do anime selecionado
             Cursor c_genres = dbCategorias.getGenre(Integer.parseInt(id));
-            //se o cursor não estiver vazio
             if (c_genres.moveToFirst()){
-                //genre1 = primeira categoria encontrada
                 genre1.setText(c_genres.getString(0));
                 c_genres.moveToNext();
-                //genre2 = segunda categoria encontrada
                 genre2.setText(c_genres.getString(0));
             }
 
@@ -204,10 +180,12 @@ public class DetailsAnime extends AppCompatActivity {
             Toast.makeText(this, "ERROR!!!!", Toast.LENGTH_SHORT).show();
         }
     }
-    //Coloca dentro dos arrays os valores dentro d abase de dados
+
     private Boolean storeDatainArrays(DatabaseFavorites database) {
         id_Anime.clear();
         id_User.clear();
+        String userid_tab;
+        String animeid_tab;
         Cursor cursor = database.readAllData();
         if (cursor.getCount() == 0){
             //Toast.makeText(this, "No data", Toast.LENGTH_SHORT).show();
@@ -223,3 +201,4 @@ public class DetailsAnime extends AppCompatActivity {
         return false;
     }
 }
+

@@ -79,8 +79,8 @@
 
     <TextView
         android:id="@+id/sinopseAnimeD"
-        android:layout_width="363dp"
-        android:layout_height="424dp"
+        android:layout_width="365dp"
+        android:layout_height="393dp"
         android:fontFamily="@font/roboto_medium"
         android:justificationMode="inter_word"
         android:padding="15dp"
@@ -107,30 +107,72 @@
         android:id="@+id/Genre1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="10px"
         android:background="#dddddd"
+        android:paddingHorizontal="10px"
         android:text="no_genre1"
         android:textSize="40px"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.082"
+        app:layout_constraintHorizontal_bias="0.069"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.357" />
+        app:layout_constraintVertical_bias="0.34" />
 
     <TextView
         android:id="@+id/Genre2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="10px"
         android:background="#dddddd"
+        android:paddingHorizontal="10px"
         android:text="no_genre2"
         android:textSize="40px"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.289"
+        app:layout_constraintHorizontal_bias="0.297"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.357" />
+        app:layout_constraintVertical_bias="0.34" />
+
+    <EditText
+        android:id="@+id/numEpis"
+        android:layout_width="66dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="272dp"
+        android:inputType="number"
+        android:text="1"
+        android:textAlignment="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/minusEp"
+        android:layout_width="31dp"
+        android:layout_height="27dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="280dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/icons8_minus_48" />
+
+    <ImageView
+        android:id="@+id/plusEp"
+        android:layout_width="41dp"
+        android:layout_height="27dp"
+        android:layout_marginTop="280dp"
+        android:layout_marginEnd="256dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/icons8_plus_48" />
+
+    <Button
+        android:id="@+id/btn_confirm_eps"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="272dp"
+        android:layout_marginEnd="128dp"
+        android:text="Confirm"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

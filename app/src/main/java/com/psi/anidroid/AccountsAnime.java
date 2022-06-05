@@ -29,7 +29,6 @@ public class AccountsAnime extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         storeDatainArrays(database);
-        recyclerView = findViewById(R.id.)
         myAccountAdapter = new AccountsMyAdapter(AccountsAnime.this, id_User,username,email,roles);
         recyclerView.setAdapter(myAccountAdapter);
         recyclerView.setLayoutManager((new LinearLayoutManager((AccountsAnime.this))));

@@ -136,7 +136,6 @@ public class MainActivity extends AppCompatActivity {
 
         //Vai buscar todos os valores da API
         getAllMidgetAPI();
-
         //Vai buscar o id do user atual, vendo o texto de uma TextView
         user_id = tv_id.getText().toString();
         //Se o utilizador não estiver autenticado

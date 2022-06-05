@@ -62,9 +62,17 @@ public class DetailsAnime extends AppCompatActivity {
         if (user_id.equals("30")){
             //Dita que o botão para adicionar aos favoritos fica invisivel
             btnAddToFavorites.setVisibility(View.INVISIBLE);
+            minus.setVisibility(View.INVISIBLE);
+            plus.setVisibility(View.INVISIBLE);
+            btnConfirmEps.setVisibility(View.INVISIBLE);
+            numEpis.setVisibility(View.INVISIBLE);
         }else{
             //Dita que o botão para adicionar aos favoritos fica visivel
             btnAddToFavorites.setVisibility(View.VISIBLE);
+            minus.setVisibility(View.VISIBLE);
+            plus.setVisibility(View.VISIBLE);
+            btnConfirmEps.setVisibility(View.VISIBLE);
+            numEpis.setVisibility(View.VISIBLE);
         }
         //Vai ver se o user atual tem o anime visualizado como favorito
         if(storeDatainArrays(database)){

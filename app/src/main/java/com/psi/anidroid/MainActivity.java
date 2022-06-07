@@ -54,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> ratingAnimeList = new ArrayList<>();
     //sinopse do anime
     ArrayList<String> sinopseAnimeList = new ArrayList<>();
+    //links do anime
+    ArrayList<String> linksAnimeList = new ArrayList<>();
     //id do anime
     ArrayList<String> idAnimeListF = new ArrayList<>();
     //nome do anime
@@ -68,6 +70,8 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> ratingAnimeListF = new ArrayList<>();
     //sinopse do anime
     ArrayList<String> sinopseAnimeListF = new ArrayList<>();
+    //links do anime
+    ArrayList<String> linksAnimeListF = new ArrayList<>();
     //id do user
     ArrayList<String> id_User = new ArrayList<>();
     //id's dos animes que o user deu fav
@@ -171,6 +175,7 @@ public class MainActivity extends AppCompatActivity {
                     studioAnimeListF.add(studioAnimeList.get(Integer.parseInt(string) - 1));
                     ratingAnimeListF.add(ratingAnimeList.get(Integer.parseInt(string) - 1));
                     sinopseAnimeListF.add(sinopseAnimeList.get(Integer.parseInt(string) - 1));
+                    linksAnimeListF.add(linksAnimeList.get(Integer.parseInt(string) - 1));
             }
 
             //Se ainda não adicionou todos
@@ -186,6 +191,7 @@ public class MainActivity extends AppCompatActivity {
                     studioAnimeListF.add(studioAnimeList.get(Integer.parseInt(string) - 1));
                     ratingAnimeListF.add(ratingAnimeList.get(Integer.parseInt(string) - 1));
                     sinopseAnimeListF.add(sinopseAnimeList.get(Integer.parseInt(string) - 1));
+                    linksAnimeListF.add(linksAnimeList.get(Integer.parseInt(string) - 1));
                 }
             }
             //Passa de novo para uma variável o id do user atual extraindo o texto da TextView
@@ -195,7 +201,7 @@ public class MainActivity extends AppCompatActivity {
             //Muda o texto dos botões
             btnFavoritos.setText("Unsee Favorites");
             //Cria-se um novo objeto do myAdapter para mudar a nossa MainActivity para só mostrar os animes com favoritos
-            myAdapter = new MyAdapter(MainActivity.this, nomeAnimeListF,qntEpisListF,idAnimeListF,fotoAnimeListF,studioAnimeListF,ratingAnimeListF,sinopseAnimeListF, user_id);
+            myAdapter = new MyAdapter(MainActivity.this, nomeAnimeListF,qntEpisListF,idAnimeListF,fotoAnimeListF,studioAnimeListF,ratingAnimeListF,sinopseAnimeListF,linksAnimeListF , user_id);
             //Torna parte da pesquisar por animes invisivel
             editText.setVisibility(View.INVISIBLE);
         }else{
@@ -204,7 +210,7 @@ public class MainActivity extends AppCompatActivity {
             //Muda o texto do botão
             btnFavoritos.setText("See Favorites");
             //Cria-se um novo objeto do myAdapter para mudar a nossa MainActivity para só mostrar os animes com favoritos
-            myAdapter = new MyAdapter(MainActivity.this, nomeAnimeList,qntEpisList,idAnimeList,fotoAnimeList,studioAnimeList,ratingAnimeList,sinopseAnimeList, user_id);
+            myAdapter = new MyAdapter(MainActivity.this, nomeAnimeList,qntEpisList,idAnimeList,fotoAnimeList,studioAnimeList,ratingAnimeList,sinopseAnimeList, linksAnimeList , user_id);
             //Torna parte da pesquisar por animes invisivel
             editText.setVisibility(View.VISIBLE);
         }
@@ -222,6 +228,7 @@ public class MainActivity extends AppCompatActivity {
         studioAnimeListF.clear();
         ratingAnimeListF.clear();
         sinopseAnimeListF.clear();
+        linksAnimeListF.clear();
     }
 
     //Vai ler todos os valores dentro da database e guardar dentro dos ArrayLists
@@ -270,6 +277,8 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<String> ratingAnimeList = new ArrayList<String>();
         //sinopse do anime
         ArrayList<String> sinopseAnimeList = new ArrayList<String>();
+        //links do anime
+        ArrayList<String> linksAnimeList = new ArrayList<>();
 
         MidgetAPI midgetAPI = retrofit.create(MidgetAPI.class);
         Call<List<Anime>> call = midgetAPI.requestAllAnimes();
@@ -289,9 +298,10 @@ public class MainActivity extends AppCompatActivity {
                         studioAnimeList.add(anime.getEstudio());
                         ratingAnimeList.add(anime.getRating().toString());
                         sinopseAnimeList.add(anime.getSinopse());
+                        linksAnimeList.add(anime.getLinks());
                     }
                 }
-                myAdapter = new MyAdapter(MainActivity.this, nomeAnimeList,qntEpisList,idAnimeList,fotoAnimeList,studioAnimeList,ratingAnimeList,sinopseAnimeList, user_id);
+                myAdapter = new MyAdapter(MainActivity.this, nomeAnimeList,qntEpisList,idAnimeList,fotoAnimeList,studioAnimeList,ratingAnimeList,sinopseAnimeList, linksAnimeList , user_id);
                 recyclerView.setAdapter(myAdapter);
                 recyclerView.setLayoutManager((new LinearLayoutManager((MainActivity.this))));
             }
@@ -346,11 +356,12 @@ public class MainActivity extends AppCompatActivity {
                     studioAnimeList.add(anime.getEstudio());
                     ratingAnimeList.add(anime.getRating().toString());
                     sinopseAnimeList.add(anime.getSinopse());
+                    linksAnimeList.add(anime.getLinks());
                 }
                 //Vai buscar o id do User
                 user_id = tv_id.getText().toString();
                 //Vai mudar a vista do main activity para mostrar todos os animes
-                myAdapter = new MyAdapter(MainActivity.this, nomeAnimeList,qntEpisList,idAnimeList,fotoAnimeList,studioAnimeList,ratingAnimeList,sinopseAnimeList, user_id);
+                myAdapter = new MyAdapter(MainActivity.this, nomeAnimeList,qntEpisList,idAnimeList,fotoAnimeList,studioAnimeList,ratingAnimeList,sinopseAnimeList, linksAnimeList, user_id);
                 //Muda para essa vista
                 recyclerView.setAdapter(myAdapter);
                 recyclerView.setLayoutManager((new LinearLayoutManager((MainActivity.this))));

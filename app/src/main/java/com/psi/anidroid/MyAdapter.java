@@ -20,10 +20,10 @@ import java.util.ArrayList;
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     private final Context context;
-    private final ArrayList nomeAnime, epAnime, idAnime, imageAnime, studioAnime, ratingAnime, sinopseAnime;
+    private final ArrayList nomeAnime, epAnime, idAnime, imageAnime, studioAnime, ratingAnime, sinopseAnime, linksAnime;
     private final String user_id;
 
-    MyAdapter(Context context, ArrayList nomeAnime, ArrayList epAnime, ArrayList idAnime, ArrayList imageAnime, ArrayList<String> studioAnime, ArrayList<String> ratingAnime, ArrayList<String> sinopseAnime, String user_id){
+    MyAdapter(Context context, ArrayList nomeAnime, ArrayList epAnime, ArrayList idAnime, ArrayList imageAnime, ArrayList<String> studioAnime, ArrayList<String> ratingAnime, ArrayList<String> sinopseAnime, ArrayList<String> linksAnime , String user_id){
         this.context = context;
         this.nomeAnime = nomeAnime;
         this.epAnime = epAnime;
@@ -32,6 +32,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         this.studioAnime = studioAnime;
         this.ratingAnime = ratingAnime;
         this.sinopseAnime = sinopseAnime;
+        this.linksAnime = linksAnime;
         this.user_id = user_id;
     }
 
@@ -66,6 +67,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                 intent.putExtra("studio", String.valueOf(studioAnime.get(position)));
                 intent.putExtra("rating", String.valueOf(ratingAnime.get(position)));
                 intent.putExtra("sinopse", String.valueOf(sinopseAnime.get(position)));
+                intent.putExtra("links", String.valueOf(linksAnime.get(position)));
                 intent.putExtra("idUser",user_id);
                 //Muda de classe
                 context.startActivity(intent);

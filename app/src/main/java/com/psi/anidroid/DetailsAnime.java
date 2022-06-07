@@ -3,6 +3,7 @@ package com.psi.anidroid;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,12 +19,12 @@ import java.util.ArrayList;
 
 public class DetailsAnime extends AppCompatActivity {
 
-    TextView nomeAnime, qntEpis, studioName, ratingAnime, sinopseAnime, genre1, genre2;
+    TextView nomeAnime, qntEpis, studioName, ratingAnime, sinopseAnime, genre1, genre2, linksAnime;
     ImageView fotoAnime,minus,plus;
     Button btnAddToFavorites, btnConfirmEps;
     EditText numEpis;
 
-    String id, nome, epis, studio, rating, sinopse, imagem, user_id;
+    String id, nome, epis, studio, rating, sinopse, imagem, links, user_id;
 
     //Vai ser caso o utilizador já tenho posto episódios vistos
     String episAtual;
@@ -55,8 +56,11 @@ public class DetailsAnime extends AppCompatActivity {
         minus = findViewById(R.id.minusEp);
         plus = findViewById(R.id.plusEp);
         btnConfirmEps = findViewById(R.id.btn_confirm_eps);
+        linksAnime = findViewById(R.id.trailerD);
 
         getAndSetIntentData();
+
+        //trailerAnime.setMovementMethod(LinkMovementMethod.getInstance());
 
         //Se o user não está autenticado
         if (user_id.equals("30")){
@@ -168,7 +172,7 @@ public class DetailsAnime extends AppCompatActivity {
     //Coloca nas TextViews o texto correto a cada um destes
     private void getAndSetIntentData(){
         //Verifica se foi enviado toda a informação sobre o anime
-        if (getIntent().hasExtra("nome") && getIntent().hasExtra("epis") && getIntent().hasExtra("image") && getIntent().hasExtra("studio") && getIntent().hasExtra("rating") && getIntent().hasExtra("sinopse") && getIntent().hasExtra("id") && getIntent().hasExtra("idUser")){
+        if (getIntent().hasExtra("nome") && getIntent().hasExtra("epis") && getIntent().hasExtra("image") && getIntent().hasExtra("studio") && getIntent().hasExtra("rating") && getIntent().hasExtra("sinopse") && getIntent().hasExtra("links") && getIntent().hasExtra("id") && getIntent().hasExtra("idUser")){
             //Buscar os dados pelo Intent
             id = getIntent().getStringExtra("id");
             nome = getIntent().getStringExtra("nome");
@@ -177,6 +181,7 @@ public class DetailsAnime extends AppCompatActivity {
             studio = getIntent().getStringExtra("studio");
             rating = getIntent().getStringExtra("rating");
             sinopse = getIntent().getStringExtra("sinopse");
+            links = getIntent().getStringExtra("links");
             user_id = getIntent().getStringExtra("idUser");
 
             //Dar valores à activity
@@ -186,6 +191,7 @@ public class DetailsAnime extends AppCompatActivity {
             studioName.setText("Studio: " + studio);
             ratingAnime.setText("Rating: " + rating);
             sinopseAnime.setText("Synopsis: " + sinopse);
+            linksAnime.setText("Link: " + links);
 
             //categorias
             DBCategorias dbCategorias = new DBCategorias(DetailsAnime.this);

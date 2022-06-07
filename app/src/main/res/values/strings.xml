@@ -2,4 +2,37 @@
     <string name="app_name">Anidroid</string>
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>
+
+    <string name="naruto"><a href="https://www.imdb.com/title/tt0409591/?ref_=nv_sr_srsg_5"> Trailer </a> </string>
+    <string name="narutoshippuden"><a href="https://www.imdb.com/title/tt0988824/?ref_=nv_sr_srsg_0"> Trailer </a> </string>
+    <string name="boruto"><a href="https://www.imdb.com/title/tt6342474/?ref_=nv_sr_srsg_0"> Trailer </a> </string>
+    <string name="bleach"><a href="https://www.imdb.com/title/tt0434665/?ref_=nv_sr_srsg_0"> Trailer </a> </string>
+    <string name="onepiece"><a href="https://www.imdb.com/title/tt0388629/?ref_=nv_sr_srsg_0"> Trailer </a> </string>
+    <string name="dragonballz"><a href="https://www.imdb.com/title/tt0214341/?ref_=nv_sr_srsg_0"> Trailer </a> </string>
+    <string name="dragonballsuper"><a href="https://www.imdb.com/title/tt4644488/?ref_=nv_sr_srsg_0"> Trailer </a> </string>
+    <string name="attackontitan"><a href="https://www.imdb.com/title/tt2560140/?ref_=nv_sr_srsg_0"> Trailer </a> </string>
+    <string name="bokunohero"><a href="https://www.imdb.com/title/tt13544716/?ref_=nv_sr_srsg_0"> Trailer </a> </string>
+    <string name="jujutsukaisen"><a href="https://www.imdb.com/title/tt12343534/?ref_=nv_sr_srsg_0"> Trailer </a> </string>
+    <string name="demonslayer"><a href="https://www.imdb.com/title/tt9335498/?ref_=nv_sr_srsg_0"> Trailer </a> </string>
+    <string name="steinsgate"><a href="https://www.imdb.com/title/tt1910272/?ref_=nv_sr_srsg_0"> Trailer </a> </string>
+    <string name="redoofhealer"><a href="https://www.imdb.com/title/tt13370404/?ref_=nv_sr_srsg_0"> Trailer </a> </string>
+    <string name="deathnote"><a href="https://www.imdb.com/title/tt0877057/?ref_=nv_sr_srsg_0"> Trailer </a> </string>
+    <string name="hunterxhunter"><a href="https://www.imdb.com/title/tt2098220/?ref_=nv_sr_srsg_0"> Trailer </a> </string>
+    <string name="sevendeadlysins"><a href="https://www.imdb.com/title/tt3909224/?ref_=nv_sr_srsg_0"> Trailer </a> </string>
+    <string name="haikyuu"><a href="https://www.imdb.com/title/tt3398540/?ref_=nv_sr_srsg_0"> Trailer </a> </string>
+    <string name="codegeass"><a href="https://www.imdb.com/title/tt0994314/?ref_=nv_sr_srsg_0"> Trailer </a> </string>
+    <string name="fairytail"><a href="https://www.imdb.com/title/tt1528406/?ref_=nv_sr_srsg_0"> Trailer </a> </string>
+    <string name="blackclover"><a href="https://www.imdb.com/title/tt7441658/?ref_=nv_sr_srsg_0"> Trailer </a> </string>
+    <string name="drstone"><a href="https://www.imdb.com/title/tt9679542/?ref_=nv_sr_srsg_0"> Trailer </a> </string>
+    <string name="pokemon"><a href="https://www.imdb.com/title/tt0168366/?ref_=nv_sr_srsg_0"> Trailer </a> </string>
+    <string name="quintessential"><a href="https://www.imdb.com/title/tt9584920/?ref_=nv_sr_srsg_2"> Trailer </a> </string>
+    <string name="darlinginthefranxx"><a href="https://www.imdb.com/title/tt7865090/?ref_=nv_sr_srsg_0"> Trailer </a> </string>
+    <string name="tokyoghoul"><a href="https://www.imdb.com/title/tt3741634/?ref_=nv_sr_srsg_0"> Trailer </a> </string>
+    <string name="straydogs"><a href="https://www.imdb.com/title/tt5679720/?ref_=nv_sr_srsg_0"> Trailer </a> </string>
+    <string name="fullmetalbrotherhood"><a href="https://www.imdb.com/title/tt1355642/?ref_=nv_sr_srsg_0"> Trailer </a> </string>
+    <string name="nogamenolife"><a href="https://www.imdb.com/title/tt3431758/?ref_=nv_sr_srsg_0"> Trailer </a> </string>
+    <string name="vinlandsaga"><a href="https://www.imdb.com/title/tt10233448/?ref_=nv_sr_srsg_0"> Trailer </a> </string>
+    <string name="shokugeki"><a href="https://www.imdb.com/title/tt4731072/?ref_=nv_sr_srsg_0"> Trailer </a> </string>
+
+
 </resources>

@@ -1,6 +1,7 @@
 package com.psi.anidroid;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
@@ -15,11 +16,12 @@ import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
-public class DetailsAnime extends AppCompatActivity {
+public class DetailsAnime extends AppCompatActivity{
 
     TextView nomeAnime, qntEpis, studioName, ratingAnime, sinopseAnime, genre1, genre2;
     ImageView fotoAnime;
     Button btnAddToFavorites;
+    Button btnComentarios;
 
     String id, nome, epis, studio, rating, sinopse, imagem, user_id;
 
@@ -46,6 +48,7 @@ public class DetailsAnime extends AppCompatActivity {
         btnAddToFavorites = findViewById(R.id.add_favoritos);
         genre1 = findViewById(R.id.Genre1);
         genre2 = findViewById(R.id.Genre2);
+        btnComentarios = findViewById(R.id.comments);
 
         getAndSetIntentData();
 
@@ -78,7 +81,20 @@ public class DetailsAnime extends AppCompatActivity {
                 displayData();
             }
         });
+        btnComentarios.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openComment();
+            }
+        });
     }
+    private void openComment(){
+        Intent intent_comment = new Intent(this, ComentariosAnime.class);
+        intent_comment.putExtra("Anime_ID", id+"");
+        intent_comment.putExtra("User_ID", user_id+"");
+        startActivity(intent_comment);
+    }
+
 
     private void displayData() {
         id_Anime1.clear();

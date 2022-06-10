@@ -28,8 +28,8 @@ public class AccountsAnime extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_accounts);
-        recyclerView = findViewById(R.id.viewAccounts);
+        setContentView(R.layout.activity_accounts_anime2);
+        recyclerView = findViewById(R.id.recyclerViewUser);
         storeDatainArrays(database);
         myAccountAdapter = new AccountsMyAdapter(AccountsAnime.this, id_User,username,email,roles);
         recyclerView.setAdapter(myAccountAdapter);
@@ -46,11 +46,14 @@ public class AccountsAnime extends AppCompatActivity {
             //Toast.makeText(this, "No data", Toast.LENGTH_SHORT).show();
         }else{
             while(cursor.moveToNext()){
-                id_User.add(cursor.getString(0));
-                username.add(cursor.getString(1));
-                email.add(cursor.getString(2));
-                roles.add(cursor.getString(4));
+                if (!cursor.getString(2).equals("admin@admin.ipt")){
+                    id_User.add(cursor.getString(0));
+                    username.add(cursor.getString(1));
+                    email.add(cursor.getString(2));
+                    roles.add(cursor.getString(4));
+                }
             }
         }
     }
+
 }

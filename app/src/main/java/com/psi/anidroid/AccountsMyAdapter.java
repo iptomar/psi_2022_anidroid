@@ -3,6 +3,7 @@ package com.psi.anidroid;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ public class AccountsMyAdapter extends RecyclerView.Adapter<AccountsMyAdapter.My
 
     private final Context context;
     private final ArrayList idUser, nameUser, emailUser, roleUser;
+
 
     AccountsMyAdapter(Context context, ArrayList idUser, ArrayList nameUser, ArrayList emailUser, ArrayList roleUser){
         this.context = context;
@@ -47,18 +49,16 @@ public class AccountsMyAdapter extends RecyclerView.Adapter<AccountsMyAdapter.My
         holder.roleUser.setText("Role: " + roleUser.get(position));
         holder.idUser.setText(String.valueOf(idUser.get(position)));
 
-        /*holder.accountlayout.setOnClickListener(new View.OnClickListener() {
+        DBUsers database = new DBUsers(context);
+
+        holder.accountlayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, DetailsAnime.class);
-                intent.putExtra("id", String.valueOf(idUser.get(position)));
-                intent.putExtra("nome", String.valueOf(nameUser.get(position)));
-                intent.putExtra("email", String.valueOf(emailUser.get(position)));
-                intent.putExtra("role", String.valueOf(roleUser.get(position)));
-
+                Intent intent = new Intent(context, ProfileActivity.class);
+                database.deleteUser(idUser.get(position).toString());
                 context.startActivity(intent);
             }
-        });*/
+        });
     }
 
     @Override
@@ -80,4 +80,6 @@ public class AccountsMyAdapter extends RecyclerView.Adapter<AccountsMyAdapter.My
             accountlayout = itemView.findViewById(R.id.accountLayout);
         }
     }
+
+
 }

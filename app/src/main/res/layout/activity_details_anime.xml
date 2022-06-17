@@ -8,7 +8,7 @@
     tools:context=".DetailsAnime">
 
     <TextView
-        android:id="@+id/trailerD"
+        android:id="@+id/linkD"
         android:layout_width="224dp"
         android:layout_height="42dp"
         android:fontFamily="@font/roboto_medium"
@@ -19,7 +19,8 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.318" />
+        app:layout_constraintVertical_bias="0.32" />
+
 
     <ImageView
         android:id="@+id/fotoAnimeD"

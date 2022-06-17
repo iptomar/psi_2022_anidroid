@@ -1,9 +1,13 @@
 package com.psi.anidroid;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.res.Resources;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class DetailsAnime extends AppCompatActivity {
 
@@ -43,6 +48,9 @@ public class DetailsAnime extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details_anime);
 
+
+
+
         nomeAnime = findViewById(R.id.nomeAnimeD);
         qntEpis = findViewById(R.id.qntEpisD);
         studioName = findViewById(R.id.nomeStudioD);
@@ -56,11 +64,12 @@ public class DetailsAnime extends AppCompatActivity {
         minus = findViewById(R.id.minusEp);
         plus = findViewById(R.id.plusEp);
         btnConfirmEps = findViewById(R.id.btn_confirm_eps);
-        linksAnime = findViewById(R.id.trailerD);
+        linksAnime = findViewById(R.id.linkD);
+
 
         getAndSetIntentData();
 
-        //trailerAnime.setMovementMethod(LinkMovementMethod.getInstance());
+
 
         //Se o user não está autenticado
         if (user_id.equals("30")){
@@ -89,7 +98,16 @@ public class DetailsAnime extends AppCompatActivity {
 
         if (userAnimeInEpisodes(databaseEpis)){
             numEpis.setText(episAtual);
+
+
         }
+
+        linksAnime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                gotoUrl(links);
+            }
+        });
 
         btnAddToFavorites.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,6 +143,12 @@ public class DetailsAnime extends AppCompatActivity {
                 databaseEpis.addToEpisodeWatchlist(id, user_id, numEpis.getText().toString(), qntEpis.getText().toString().substring(10));
             }
         });
+    }
+
+
+    private void gotoUrl(String s){
+        Uri uri = Uri.parse(s);
+        startActivity(new Intent(Intent.ACTION_VIEW,uri));
     }
 
     private boolean userAnimeInEpisodes(DatabaseEpisodes databaseEpis) {

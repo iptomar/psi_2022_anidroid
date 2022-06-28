@@ -66,11 +66,6 @@ public class ProfileActivity extends AppCompatActivity {
                 String ml = setEmail.getString(0);
                 tvEmail.setText(ml);
             }
-            if (tvEmail.getText().toString().equals("admin@admin.ipt")){
-                btnCheckUsers.setVisibility(View.VISIBLE);
-            }else{
-                btnCheckUsers.setVisibility(View.INVISIBLE);
-            }
         }
 
         btnBack.setOnClickListener(new View.OnClickListener() {

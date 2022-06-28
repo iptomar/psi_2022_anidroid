@@ -21,6 +21,9 @@ public class Anime {
     @SerializedName("sinopse")
     @Expose
     private String sinopse;
+    @SerializedName("trailer")
+    @Expose
+    private String trailer;
     @SerializedName("autor")
     @Expose
     private String autor;
@@ -67,6 +70,10 @@ public class Anime {
 
     public String getSinopse() {
         return sinopse;
+    }
+
+    public String getTrailer(){
+        return trailer;
     }
 
     public String getAutor() {

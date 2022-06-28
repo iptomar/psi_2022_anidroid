@@ -56,6 +56,13 @@ public class DBLists extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    public void updateList (String lista_id, String anime_id, String user_id, String nome_lista ){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("UPDATE " + TABLE_NAME +
+                "SET lista_id='" + lista_id +"', nome_lista='"+ nome_lista
+                + "' WHERE (anime_id='"+ anime_id + "' AND user_id='"+ user_id+"';");
+    }
+
     public void deleteRow(String id_lista, String id_anime, String id_user){
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DELETE FROM " + TABLE_NAME + "WHERE lista_id=" + id_lista +
@@ -102,11 +109,6 @@ public class DBLists extends SQLiteOpenHelper {
         for (String string : id_Anime_List) {
             int aux = contador;
             if (anime_id.equals(string) && user_id.equals(id_User_List.get(aux))){
-                id_lista_List.remove(contador);
-                id_Anime_List.remove(contador);
-                id_User_List.remove(contador);
-                nome_lista_List.remove(contador);
-                eraseDataandPopulate();
                 return true; //se já estiver na lista de favoritos
             }
             contador++;

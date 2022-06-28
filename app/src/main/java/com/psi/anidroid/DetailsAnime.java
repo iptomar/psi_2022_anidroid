@@ -104,24 +104,19 @@ public class DetailsAnime extends AppCompatActivity {
                         String id_lista = String.valueOf(pos);
                         Object item = parent.getItemAtPosition(pos);
 
-                        if(item == "No List"){
-                            if(databaseLists.checkList(id)){
-                                databaseLists.deleteRow(id_lista, id, user_id);
-                            }
-                            //databaseLists.addToList(id_lista, id, user_id, "No List");
-                        }else if(item == "Watching"){
-                            if(databaseLists.checkList(id)){
-                                databaseLists.deleteRow(id_lista, id, user_id);
+                        if(item == "Watching") {
+                            if (databaseLists.checkList(id)) {
+                                databaseLists.updateList(id_lista, id, user_id, "Watching");
                             }
                             databaseLists.addToList(id_lista, id, user_id, "Watching");
                         }else if(item == "Completed"){
                             if(databaseLists.checkList(id)){
-                                databaseLists.deleteRow(id_lista, id, user_id);
+                                databaseLists.updateList(id_lista, id, user_id, "Completed");
                             }
                             databaseLists.addToList(id_lista, id, user_id, "Completed");
-                        }else {
+                        }else if(item == "To Watch"){
                             if(databaseLists.checkList(id)){
-                                databaseLists.deleteRow(id_lista, id, user_id);
+                                databaseLists.updateList(id_lista, id, user_id, "To Watch");
                             }
                             databaseLists.addToList(id_lista, id, user_id, "To Watch");
                         }

@@ -8,6 +8,48 @@
     android:layout_height="match_parent"
     tools:context=".DetailsAnime">
 
+        <EditText
+            android:id="@+id/numEpis"
+            android:layout_width="66dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="248dp"
+            android:inputType="number"
+            android:text="1"
+            android:textAlignment="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/minusEp"
+            android:layout_width="31dp"
+            android:layout_height="27dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="256dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/icons8_minus_48" />
+
+        <Button
+            android:id="@+id/btn_confirm_eps"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="248dp"
+            android:layout_marginEnd="132dp"
+            android:text="Confirm"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/plusEp"
+            android:layout_width="41dp"
+            android:layout_height="27dp"
+            android:layout_marginTop="256dp"
+            android:layout_marginEnd="256dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/icons8_plus_48" />
+
         <ImageView
             android:id="@+id/fotoAnimeD"
             android:layout_width="177dp"
@@ -80,8 +122,8 @@
 
         <TextView
             android:id="@+id/sinopseAnimeD"
-            android:layout_width="414dp"
-            android:layout_height="364dp"
+            android:layout_width="390dp"
+            android:layout_height="335dp"
             android:fontFamily="@font/roboto_medium"
             android:justificationMode="inter_word"
             android:padding="15dp"
@@ -90,17 +132,17 @@
             android:textSize="17sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintHorizontal_bias="0.476"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.779"
+            app:layout_constraintVertical_bias="0.798"
             tools:ignore="MissingConstraints" />
 
         <Button
             android:id="@+id/add_favoritos"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="24dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginBottom="16dp"
             android:text="Add to Favorites"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -110,42 +152,36 @@
             android:id="@+id/Genre1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="220dp"
             android:background="#dddddd"
             android:paddingHorizontal="10px"
             android:text="no_genre1"
             android:textSize="40px"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.048"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.342" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/Genre2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="100dp"
+            android:layout_marginTop="220dp"
             android:background="#dddddd"
             android:paddingHorizontal="10px"
             android:text="no_genre2"
             android:textSize="40px"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.399"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.342" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/comments"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="216dp"
+            android:layout_marginBottom="16dp"
             android:text="Ver Comentários"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.068"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.976" />
+            app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

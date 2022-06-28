@@ -90,7 +90,7 @@ public class DBLists extends SQLiteOpenHelper {
         cv.put(USER_ID, user_id);
         cv.put(NOME_LISTA, nome_lista);
 
-        if (checkList(anime_id)){
+        if (checkList(anime_id, user_id)){
             Toast.makeText(context, "Already on the list", Toast.LENGTH_SHORT).show();
         }else{
             long result = db.insert(TABLE_NAME,null, cv);
@@ -104,11 +104,13 @@ public class DBLists extends SQLiteOpenHelper {
         }
     }
 
-    protected boolean checkList(String anime_id) {
+    protected boolean checkList(String anime_id, String user_id) {
+        DBLists.user_id = user_id;
         storeDatainArrays();
         for (String string : id_Anime_List) {
             int aux = contador;
             if (anime_id.equals(string) && user_id.equals(id_User_List.get(aux))){
+                eraseDataandPopulate();
                 return true; //se já estiver na lista de favoritos
             }
             contador++;

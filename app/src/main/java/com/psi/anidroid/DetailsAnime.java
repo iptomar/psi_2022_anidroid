@@ -105,17 +105,17 @@ public class DetailsAnime extends AppCompatActivity {
                         Object item = parent.getItemAtPosition(pos);
 
                         if(item == "Watching") {
-                            if (databaseLists.checkList(id)) {
+                            if (databaseLists.checkList(id, user_id)) {
                                 databaseLists.updateList(id_lista, id, user_id, "Watching");
                             }
                             databaseLists.addToList(id_lista, id, user_id, "Watching");
                         }else if(item == "Completed"){
-                            if(databaseLists.checkList(id)){
+                            if(databaseLists.checkList(id, user_id)){
                                 databaseLists.updateList(id_lista, id, user_id, "Completed");
                             }
                             databaseLists.addToList(id_lista, id, user_id, "Completed");
                         }else if(item == "To Watch"){
-                            if(databaseLists.checkList(id)){
+                            if(databaseLists.checkList(id, user_id)){
                                 databaseLists.updateList(id_lista, id, user_id, "To Watch");
                             }
                             databaseLists.addToList(id_lista, id, user_id, "To Watch");

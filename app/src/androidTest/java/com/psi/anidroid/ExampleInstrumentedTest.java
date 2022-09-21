@@ -9,7 +9,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static org.junit.Assert.*;
-//teste
+//teste12
 
 /**
  * Instrumented test, which will execute on an Android device.
